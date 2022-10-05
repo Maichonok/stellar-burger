@@ -61,12 +61,12 @@ function App() {
         )}
       </main>
       {ingredientModal && (
-        <Modal open={openIngredientModal} text="Детали ингредиента" close={closePopup}>
+        <Modal isOpen={ingredientModal} text="Детали ингредиента" close={closePopup}>
           <IngredientDetails data={data.data[0]} />
         </Modal>
       )}
       {orderModal && (
-        <Modal open={openOrderModal} close={closePopup}>
+        <Modal isOpen={orderModal} close={closePopup}>
           <OrderDetails />
         </Modal>
       )}
