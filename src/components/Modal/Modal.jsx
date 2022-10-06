@@ -14,14 +14,14 @@ export default function Modal(props) {
         props.close();
       }
     }
-    if (props.open) {
+    if (props.isOpen) {
       document.addEventListener("keydown", handleEscKeydown);
 
       return () => {
         document.removeEventListener("keydown", handleEscKeydown);
       };
     }
-  }, [props.open]);
+  }, [props.isOpen]);
 
   return createPortal(
     <>
