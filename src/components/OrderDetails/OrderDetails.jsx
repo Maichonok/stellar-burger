@@ -2,13 +2,13 @@ import React from "react";
 import orderDetailsStyle from "./OrderDetails.module.css";
 import doneImg from "../../images/done.svg";
 
-function OrderDetails() {
+function OrderDetails(props) {
   return (
     <div className={`${orderDetailsStyle.wrapper}  pr-25 pl-25`}>
       <p
         className={`${orderDetailsStyle.text} text text_type_digits-large pt-15 pb-8`}
       >
-        345678
+        {props.orderNumber}
       </p>
       <p
         className={`${orderDetailsStyle.text} text text_type_main-medium pb-15`}

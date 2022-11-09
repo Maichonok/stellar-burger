@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/ingredient";
 import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
+import IngredientsContext from "../../context/ingredientsContext";
 
 export default function BurgerIngredients(props) {
   const bunRef = React.useRef(null);
@@ -47,7 +47,9 @@ export default function BurgerIngredients(props) {
     );
   }
 
-  const getArr = props.data;
+  const data = useContext(IngredientsContext);
+
+  const getArr = data;
 
   const bunArr = getArr.filter((item) => item.type === "bun");
   const mainArr = getArr.filter((item) => item.type === "main");
@@ -81,7 +83,6 @@ export default function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
   open: PropTypes.func.isRequired,
 };
 

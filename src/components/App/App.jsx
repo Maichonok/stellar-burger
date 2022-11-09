@@ -6,7 +6,8 @@ import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import appStyle from "./App.module.css";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { getData } from "../../utils/api";
+import { getData, order } from "../../utils/api";
+import IngredientsContext from "../../context/ingredientsContext";
 
 function App() {
   const [ingredientModal, setIngredientModal] = useState(false);
@@ -17,6 +18,7 @@ function App() {
     hasError: false,
     data: [],
     error: "",
+    orderNumber: 0
   });
 
   useEffect(() => {
@@ -34,8 +36,18 @@ function App() {
     setIngredientModal(false);
     setOrderModal(false);
   };
+
   const openOrderModal = () => {
-    setOrderModal(true);
+    setData({ hasError: false, isLoading: true, error: "" });
+    order(data.data.map(item => item._id))
+      .then(res => {
+        setOrderModal(true);
+
+        setData({ ...data, isLoading: false, error: "", orderNumber: res.order.number });
+      })
+      .catch((err) => {
+        setData({ ...data, hasError: true, isLoading: false, error: err });
+      });
   };
 
   const openIngredientModal = () => {
@@ -44,32 +56,36 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
-      <main className={appStyle.main}>
-        {data.isLoading === true && (
-        <h1 className={appStyle.message}>{`Загрузка...`}</h1>
-      )}
-        {data.hasError && `Упс, что-то пошло не так, произошла ошибка ${data.error}`}
-        {!data.isLoading && !data.hasError && (
-          <>
-            <BurgerIngredients
-              data={data.data}
-              open={() => openIngredientModal()}
-            />
-            <BurgerConstructor open={openOrderModal} data={data.data}/>
-          </>
+      <IngredientsContext.Provider value={data.data}>
+        <Header />
+        <main className={appStyle.main}>
+          {data.isLoading === true && (
+          <h1 className={appStyle.message}>{`Загрузка...`}</h1>
         )}
-      </main>
-      {ingredientModal && (
-        <Modal isOpen={ingredientModal} text="Детали ингредиента" close={closePopup}>
-          <IngredientDetails data={data.data[0]} />
-        </Modal>
-      )}
-      {orderModal && (
-        <Modal isOpen={orderModal} close={closePopup}>
-          <OrderDetails />
-        </Modal>
-      )}
+          {data.hasError && `Упс, что-то пошло не так, произошла ошибка ${data.error}`}
+          {!data.isLoading && !data.hasError && (
+            <>
+              <BurgerIngredients
+                open={() => openIngredientModal()}
+              />
+              <BurgerConstructor 
+                open={openOrderModal} 
+                data={data.data}
+              />
+            </>
+          )}
+        </main>
+        {ingredientModal && (
+          <Modal isOpen={ingredientModal} text="Детали ингредиента" close={closePopup}>
+            <IngredientDetails data={data.data[0]} />
+          </Modal>
+        )}
+        {orderModal && (
+          <Modal isOpen={orderModal} close={closePopup}>
+            <OrderDetails orderNumber={data.orderNumber} />
+          </Modal>
+        )}
+      </IngredientsContext.Provider>  
     </div>
   );
 }
