@@ -1,6 +1,7 @@
 import React from "react";
 import orderDetailsStyle from "./OrderDetails.module.css";
 import doneImg from "../../images/done.svg";
+import PropTypes from "prop-types";
 
 function OrderDetails(props) {
   return (
@@ -32,6 +33,10 @@ function OrderDetails(props) {
       </p>
     </div>
   );
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number
 }
 
 export { OrderDetails };

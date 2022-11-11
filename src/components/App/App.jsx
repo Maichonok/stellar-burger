@@ -70,7 +70,6 @@ function App() {
               />
               <BurgerConstructor 
                 open={openOrderModal} 
-                data={data.data}
               />
             </>
           )}

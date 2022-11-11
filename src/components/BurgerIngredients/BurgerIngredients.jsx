@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
@@ -49,11 +49,9 @@ export default function BurgerIngredients(props) {
 
   const data = useContext(IngredientsContext);
 
-  const getArr = data;
-
-  const bunArr = getArr.filter((item) => item.type === "bun");
-  const mainArr = getArr.filter((item) => item.type === "main");
-  const sauceArr = getArr.filter((item) => item.type === "sauce");
+  const bunArr = useMemo(() => data.filter((item) => item.type === "bun"), [data]);
+  const mainArr = useMemo(() => data.filter((item) => item.type === "main"), [data]);
+  const sauceArr = useMemo(() => data.filter((item) => item.type === "sauce"), [data]);
 
   return (
     <IngredientSection sectionStyle={`${burgeringredientStyle.section} mt-10`}>
