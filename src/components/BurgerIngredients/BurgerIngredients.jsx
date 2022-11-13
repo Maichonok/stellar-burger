@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/ingredient";
 import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
+import IngredientsContext from "../../context/ingredientsContext";
 
 export default function BurgerIngredients(props) {
   const bunRef = React.useRef(null);
@@ -47,11 +47,11 @@ export default function BurgerIngredients(props) {
     );
   }
 
-  const getArr = props.data;
+  const data = useContext(IngredientsContext);
 
-  const bunArr = getArr.filter((item) => item.type === "bun");
-  const mainArr = getArr.filter((item) => item.type === "main");
-  const sauceArr = getArr.filter((item) => item.type === "sauce");
+  const bunArr = useMemo(() => data.filter((item) => item.type === "bun"), [data]);
+  const mainArr = useMemo(() => data.filter((item) => item.type === "main"), [data]);
+  const sauceArr = useMemo(() => data.filter((item) => item.type === "sauce"), [data]);
 
   return (
     <IngredientSection sectionStyle={`${burgeringredientStyle.section} mt-10`}>
@@ -81,7 +81,6 @@ export default function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
   open: PropTypes.func.isRequired,
 };
 
