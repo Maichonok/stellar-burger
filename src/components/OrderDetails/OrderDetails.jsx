@@ -1,15 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import orderDetailsStyle from "./OrderDetails.module.css";
 import doneImg from "../../images/done.svg";
-import PropTypes from "prop-types";
 
-function OrderDetails(props) {
+function OrderDetails() {
+  const orderNumber = useSelector(state => state.orderDetails.data.order.number);
   return (
     <div className={`${orderDetailsStyle.wrapper}  pr-25 pl-25`}>
       <p
         className={`${orderDetailsStyle.text} text text_type_digits-large pt-15 pb-8`}
       >
-        {props.orderNumber}
+        {orderNumber}
       </p>
       <p
         className={`${orderDetailsStyle.text} text text_type_main-medium pb-15`}
@@ -33,10 +34,6 @@ function OrderDetails(props) {
       </p>
     </div>
   );
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number
 }
 
 export { OrderDetails };

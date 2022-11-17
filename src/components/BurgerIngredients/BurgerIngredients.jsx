@@ -1,4 +1,6 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
+import { useSelector } from 'react-redux'
+import { useInView } from 'react-intersection-observer';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
@@ -6,17 +8,26 @@ import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
-import IngredientsContext from "../../context/ingredientsContext";
 
 export default function BurgerIngredients(props) {
-  const bunRef = React.useRef(null);
-  const mainRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
+  const bunTopRef = React.useRef(null);
+  const mainTopRef = React.useRef(null);
+  const sauceTopRef = React.useRef(null);
+
+  const [ bunRef, bunIsInView ] = useInView({
+    threshold: 0.2
+  });
+
+  const [ mainRef, mainIsInView ] = useInView({
+    threshold: 0.2
+  });
+
+  const [ sauceRef, sauceIsInView ] = useInView({
+    threshold: 0.2
+  });
 
   function IngredientsTabs(props) {
-    const [current, setCurrent] = React.useState("bun");
-    const scrollTab = (e, tab) => {
-      setCurrent(e);
+    const scrollTab = (tab) => {
       tab.current.scrollIntoView({ behavior: "smooth" });
     };
   
@@ -24,22 +35,22 @@ export default function BurgerIngredients(props) {
       <div className={props.tabStyle}>
         <Tab
           value="bun"
-          active={current === "bun"}
-          onClick={(e) => scrollTab(e, bunRef)}
+          active={bunIsInView}
+          onClick={(e) => scrollTab(bunTopRef)}
         >
           Булки
         </Tab>
         <Tab
           value="sauce"
-          active={current === "sauce"}
-          onClick={(e) => scrollTab(e, sauceRef)}
+          active={sauceIsInView}
+          onClick={(e) => scrollTab(sauceTopRef)}
         >
           Соусы
         </Tab>
         <Tab
           value="main"
-          active={current === "main"}
-          onClick={(e) => scrollTab(e, mainRef)}
+          active={mainIsInView}
+          onClick={(e) => scrollTab(mainTopRef)}
         >
           Начинки
         </Tab>
@@ -47,7 +58,7 @@ export default function BurgerIngredients(props) {
     );
   }
 
-  const data = useContext(IngredientsContext);
+  const data = useSelector(state => state.burgerIngredients.data);
 
   const bunArr = useMemo(() => data.filter((item) => item.type === "bun"), [data]);
   const mainArr = useMemo(() => data.filter((item) => item.type === "main"), [data]);
@@ -59,20 +70,15 @@ export default function BurgerIngredients(props) {
         text="Соберите бургер"
         textStyle={`${burgeringredientStyle.title} text text_type_main-large mb-5`}
       />
-      <IngredientsTabs 
-        tabStyle={`${burgeringredientStyle.tab} mb-5`} 
-        banRef={bunRef}
-        sauceRef={sauceRef}
-        mainRef={mainRef}
-      />
+      <IngredientsTabs tabStyle={`${burgeringredientStyle.tab} mb-5`} />
       <div className={`${burgeringredientStyle.ingredientsList}`}>
-        <IngredientWrapper text="Булки" tabRef={bunRef}>
+        <IngredientWrapper text="Булки" tabTopRef={bunTopRef} tabRef={bunRef}>
           <CardMap data={bunArr} open={props.open} />
         </IngredientWrapper>
-        <IngredientWrapper text="Соусы" tabRef={sauceRef}>
+        <IngredientWrapper text="Соусы" tabTopRef={sauceTopRef} tabRef={sauceRef}>
           <CardMap data={sauceArr} open={props.open} />
         </IngredientWrapper>
-        <IngredientWrapper text="Начинки" tabRef={mainRef}>
+        <IngredientWrapper text="Начинки" tabTopRef={mainTopRef} tabRef={mainRef}>
           <CardMap data={mainArr} open={props.open} />
         </IngredientWrapper>
       </div>

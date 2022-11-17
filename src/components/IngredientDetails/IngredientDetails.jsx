@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import IngredientDetailsStyle from "./IngredientDetails.module.css";
 
-import { ingredientType } from "../../utils/ingredient";
+function IngredientDetails() {
+  const ingredients = useSelector(state => state.burgerIngredients.data);
+  const currentIngredient = useSelector(state => state.burgerIngredients.current);
+  const data = ingredients.find(i => i._id === currentIngredient);
 
-function IngredientDetails({ data }) {
   function Ingredient(data) {
     return (
       <li className={`${IngredientDetailsStyle.item}`}>
@@ -42,9 +45,5 @@ function IngredientDetails({ data }) {
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientType.isRequired,
-};
 
 export { IngredientDetails };
