@@ -1,18 +1,35 @@
 import React from "react";
+import { useDrop } from 'react-dnd';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from "./Constructor.module.css";
 import ConstructorItem from "../ConstructorItem/ConstructorItem";
 import { data } from "../../../utils/data";
 import { ingredientType } from "../../../utils/ingredient";
 import PropTypes from "prop-types";
+import { dragTypes } from "../../../utils/dragTypes";
 
 const dataItemOne = data[0];
 
-
 const Constructor = (props) => {
-const newData = props.data;
+  const [{ isOver }, dropRef] = useDrop({
+      accept: dragTypes.CARD,
+      drop: item => {
+        console.log(item);
+      },
+      collect: (monitor) => ({
+          isOver: monitor.isOver()
+      })
+  })
+
+  const newData = props.data;
+
+  const opacity = isOver ? 0.3 : 1;
+
   return (
-    <div className={constructorStyle.container}>
+    <div className={constructorStyle.container} 
+      ref={dropRef} 
+      style={{ opacity }}
+    >
       <div className={`${constructorStyle.topElement}`}>
         <ConstructorElement
           type="top"
