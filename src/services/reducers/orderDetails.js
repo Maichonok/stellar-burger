@@ -1,7 +1,9 @@
 import  {
     ORDER_REQUEST,
     ORDER_SUCCESS,
-    ORDER_FAILURE
+    ORDER_FAILURE,
+    ORDER_MODAL_OPEN,
+    ORDER_MODAL_CLOSE
 } from '../actions/order';
 
 const INITIAL_STATE = {
@@ -10,7 +12,8 @@ const INITIAL_STATE = {
     data: {
         name: '',
         order: { number: 0 }
-    }
+    },
+    open: false
 };
 
 export default function orderDetails(state = INITIAL_STATE, action) {
@@ -36,6 +39,12 @@ export default function orderDetails(state = INITIAL_STATE, action) {
                 isLoading: false,
                 error: action.payload
             }
+        }
+        case ORDER_MODAL_OPEN: {
+            return { ...state, open: true };        
+        }
+        case ORDER_MODAL_CLOSE: {
+            return { ...state, open: false };
         }
         default: {
             return state;

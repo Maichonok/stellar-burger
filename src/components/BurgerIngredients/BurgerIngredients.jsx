@@ -1,13 +1,15 @@
 import React, { useMemo } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useInView } from 'react-intersection-observer';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
-import PropTypes from "prop-types";
 import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
+
+import { toggleCurrent } from "../../services/actions/burgerIngredients";
+import { openIngredientModal } from "../../services/actions/ingredientsDetails";
 
 export default function BurgerIngredients(props) {
   const bunTopRef = React.useRef(null);
@@ -63,6 +65,12 @@ export default function BurgerIngredients(props) {
   const bunArr = useMemo(() => data.filter((item) => item.type === "bun"), [data]);
   const mainArr = useMemo(() => data.filter((item) => item.type === "main"), [data]);
   const sauceArr = useMemo(() => data.filter((item) => item.type === "sauce"), [data]);
+  const dispatch = useDispatch();
+
+  const open = id => {
+    dispatch(openIngredientModal());
+    dispatch(toggleCurrent(id));
+  }
 
   return (
     <IngredientSection sectionStyle={`${burgeringredientStyle.section} mt-10`}>
@@ -73,21 +81,18 @@ export default function BurgerIngredients(props) {
       <IngredientsTabs tabStyle={`${burgeringredientStyle.tab} mb-5`} />
       <div className={`${burgeringredientStyle.ingredientsList}`}>
         <IngredientWrapper text="Булки" tabTopRef={bunTopRef} tabRef={bunRef}>
-          <CardMap data={bunArr} open={props.open} />
+          <CardMap data={bunArr} open={open} />
         </IngredientWrapper>
         <IngredientWrapper text="Соусы" tabTopRef={sauceTopRef} tabRef={sauceRef}>
-          <CardMap data={sauceArr} open={props.open} />
+          <CardMap data={sauceArr} open={open} />
         </IngredientWrapper>
         <IngredientWrapper text="Начинки" tabTopRef={mainTopRef} tabRef={mainRef}>
-          <CardMap data={mainArr} open={props.open} />
+          <CardMap data={mainArr} open={open} />
         </IngredientWrapper>
       </div>
     </IngredientSection>
   );
 }
 
-BurgerIngredients.propTypes = {
-  open: PropTypes.func.isRequired,
-};
 
 

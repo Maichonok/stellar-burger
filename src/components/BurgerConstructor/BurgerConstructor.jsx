@@ -1,12 +1,10 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from 'react-redux'
 import burgerConstructorStyle from "./BurgerConstructor.module.css";
 import { Constructor } from "./Constructor/Constructor";
 import { ButtonLarge } from "./ButtonLarge/ButtonLarge";
 import { FullPrice } from "./FullPrice/FullPrice";
-import { order } from "../../services/actions/order";
-
+import { order, openOrderModal } from "../../services/actions/order";
 
 export default function BurgerConstructor(props) {
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ export default function BurgerConstructor(props) {
 
   const onClick = () => {
     dispatch(order(data.map((item) => item._id)))
-      .then(() => props.open());
+      .then(() => dispatch(openOrderModal()));
   }
 
   return (
@@ -32,7 +30,3 @@ export default function BurgerConstructor(props) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  open: PropTypes.func.isRequired,
-};

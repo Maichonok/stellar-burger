@@ -9,14 +9,15 @@ import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import appStyle from "./App.module.css";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { getIngredients, toggleCurrent } from "../../services/actions/burgerIngredients";
+import { getIngredients } from "../../services/actions/burgerIngredients";
+import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
+import { closeOrderModal } from "../../services/actions/order";
 
 function App() {
-  const [ingredientModal, setIngredientModal] = useState(false);
-  const [orderModal, setOrderModal] = useState(false);
-
-  const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
-  const error = useSelector((state) => state.burgerIngredients.error);
+  const ingredientModal = useSelector(state => state.ingredientsDetail.open);
+  const orderModal = useSelector(state => state.orderDetails.open);
+  const isLoading = useSelector(state => state.burgerIngredients.isLoading);
+  const error = useSelector(state => state.burgerIngredients.error);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,17 +25,8 @@ function App() {
   }, []);
 
   const closePopup = () => {
-    setIngredientModal(false);
-    setOrderModal(false);
-  };
-
-  const openOrderModal = () => {
-    setOrderModal(true);
-  };
-
-  const openIngredientModal = id => {
-    setIngredientModal(true);
-    dispatch(toggleCurrent(id));
+    dispatch(closeIngredientModal());
+    dispatch(closeOrderModal());
   };
 
   return (
@@ -45,8 +37,8 @@ function App() {
         {!!error && `Упс, что-то пошло не так, произошла ошибка ${error}`}
         {!isLoading && !error && (
           <DndProvider backend={HTML5Backend}> 
-            <BurgerIngredients open={openIngredientModal} />
-            <BurgerConstructor open={openOrderModal} />
+            <BurgerIngredients />
+            <BurgerConstructor />
           </DndProvider>
         )}
       </main>
@@ -60,7 +52,10 @@ function App() {
         </Modal>
       )}
       {orderModal && (
-        <Modal isOpen={orderModal} close={closePopup}>
+        <Modal 
+          isOpen={orderModal} 
+          close={closePopup}
+        >
           <OrderDetails />
         </Modal>
       )}

@@ -3,6 +3,8 @@ import { order as orderRequest } from "../../utils/api";
 export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
 export const ORDER_FAILURE = 'ORDER_FAILURE';
+export const ORDER_MODAL_OPEN = 'ORDER_MODAL_OPEN';
+export const ORDER_MODAL_CLOSE = 'ORDER_MODAL_CLOSE';
 
 export const order = ingredients => dispatch => {
     dispatch({
@@ -22,3 +24,6 @@ export const order = ingredients => dispatch => {
             })
         });
 }
+
+export const openOrderModal = () => ({ type: ORDER_MODAL_OPEN });
+export const closeOrderModal = () => ({ type: ORDER_MODAL_CLOSE });
