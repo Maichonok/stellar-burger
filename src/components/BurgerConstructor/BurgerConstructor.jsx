@@ -8,7 +8,7 @@ import { order, openOrderModal } from "../../services/actions/order";
 
 export default function BurgerConstructor(props) {
   const dispatch = useDispatch();
-  const data = useSelector(state => state.burgerIngredients.data);
+  const data = useSelector(state => state.orderConstructor.ingredients);
 
   const totalPrice = useMemo(
     () => data.reduce((result, item) => result + item.price, 0),

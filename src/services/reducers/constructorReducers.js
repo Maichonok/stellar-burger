@@ -1,6 +1,5 @@
 import {
     ADD_INGREDIENT,
-    ADD_INGREDIENT_BUN,
     DELETE_INGREDIENT,
     MOVE_INGREDIENT,
   } from "../actions/constructor";
@@ -15,10 +14,26 @@ export default function orderConstructor(
 ) {
   switch (action.type) {
     case ADD_INGREDIENT: {
-      return state;
+      return {
+        ...state,
+        ingredients: [...state.ingredients, action.payload]
+      };
     }
-    
-
+    case DELETE_INGREDIENT: {
+      const index = state.ingredients.findIndex(i => i._id === action.payload);
+      state.ingredients.splice(index, 1)
+      
+      return {
+        ...state,
+        ingredients: [...state.ingredients]
+      }
+    }
+    case MOVE_INGREDIENT: {
+      return {
+        ...state,
+        ingredients: action.payload
+      }
+    }
     default: {
       return state;
     }

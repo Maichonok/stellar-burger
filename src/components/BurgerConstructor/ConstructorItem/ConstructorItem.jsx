@@ -14,6 +14,7 @@ export default function ConstructorItem(props) {
         text={props.name}
         price={props.price}
         thumbnail={props.image}
+        handleClose={() => props.delete(props.uid)}
       />
     </li>
   );
@@ -23,5 +24,6 @@ ConstructorItem.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  delete: PropTypes.func.isRequired
 };
 

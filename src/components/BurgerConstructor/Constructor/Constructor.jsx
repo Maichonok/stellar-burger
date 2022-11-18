@@ -1,5 +1,6 @@
 import React from "react";
 import { useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux'
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from "./Constructor.module.css";
 import ConstructorItem from "../ConstructorItem/ConstructorItem";
@@ -7,19 +8,26 @@ import { data } from "../../../utils/data";
 import { ingredientType } from "../../../utils/ingredient";
 import PropTypes from "prop-types";
 import { dragTypes } from "../../../utils/dragTypes";
+import { addIngredient, deleteIngredient } from "../../../services/actions/constructor";
 
 const dataItemOne = data[0];
 
 const Constructor = (props) => {
+  const dispatch = useDispatch();
+
   const [{ isOver }, dropRef] = useDrop({
       accept: dragTypes.CARD,
-      drop: item => {
-        console.log(item);
+      drop: ({ data }) => {
+        dispatch(addIngredient(data));
       },
       collect: (monitor) => ({
           isOver: monitor.isOver()
       })
-  })
+  });
+
+  const onDelete = id => {
+    dispatch(deleteIngredient(id));
+  };
 
   const newData = props.data;
 
@@ -48,6 +56,8 @@ const Constructor = (props) => {
                 name={element.name}
                 price={element.price}
                 image={element.image}
+                uid={element._id}
+                delete={onDelete}
               />
             );
           } else {

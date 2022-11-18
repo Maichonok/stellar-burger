@@ -11,7 +11,7 @@ import { dragTypes } from "../../../utils/dragTypes";
 function Card(props) {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: dragTypes.CARD,
-    item: { data: props },
+    item: { data: props.data },
     collect: monitor => ({
       isDragging: monitor.isDragging()
     }),
