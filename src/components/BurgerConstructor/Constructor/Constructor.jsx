@@ -29,7 +29,17 @@ const Constructor = (props) => {
     dispatch(deleteIngredient(id));
   };
 
-  const newData = props.data;
+  const ordered = [];
+  props.data.forEach(i => {
+    const index = ordered.findIndex(o => o._id === i._id);
+    if (index < 0) {
+      ordered.push({...i});
+    } else {
+      ordered[index].price += i.price;
+    }
+  });
+
+  const newData = ordered;
 
   const opacity = isOver ? 0.3 : 1;
 
