@@ -16,7 +16,7 @@ export const getIngredients = () => dispatch => {
             dispatch({
                 type: FETCH_INGREDIENTS_SUCCESS,
                 payload: data
-            });        
+            });
         })
         .catch(error => {
             dispatch({

@@ -14,6 +14,15 @@ export default function orderConstructor(
 ) {
   switch (action.type) {
     case ADD_INGREDIENT: {
+      if (action.payload.type === "bun") {
+        const filtered = state.ingredients.filter(i => i.type !== "bun");
+        const newBun = { ...action.payload };
+        return {
+          ...state,
+          ingredients: [...filtered, newBun]
+        };    
+      }
+
       return {
         ...state,
         ingredients: [...state.ingredients, action.payload]

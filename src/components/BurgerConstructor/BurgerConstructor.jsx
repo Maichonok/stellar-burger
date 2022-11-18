@@ -11,7 +11,16 @@ export default function BurgerConstructor(props) {
   const data = useSelector(state => state.orderConstructor.ingredients);
 
   const totalPrice = useMemo(
-    () => data.reduce((result, item) => result + item.price, 0),
+    () => {
+      let sum = 0;
+      data.forEach(i => {
+        sum += i.price;
+        if (i.type === "bun") {
+          sum += i.price;
+        }
+      })
+      return sum;
+    },
     [data]
   );
 

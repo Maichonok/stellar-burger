@@ -34,3 +34,23 @@
   max-width: 575px;
   margin: 0;
 }
+
+.emptyBuns {
+  display: flex;
+  height: calc(100vh - 324px);
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed #8585ad;
+}
+
+.emptyIngredients {
+  display: flex;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  color: #F2F2F3;
+}
