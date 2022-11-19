@@ -7,7 +7,7 @@ import ConstructorItem from "../ConstructorItem/ConstructorItem";
 import { ingredientType } from "../../../utils/ingredient";
 import PropTypes from "prop-types";
 import { dragTypes } from "../../../utils/dragTypes";
-import { addIngredient, deleteIngredient } from "../../../services/actions/constructor";
+import { addIngredient, deleteIngredient, moveIngredient } from "../../../services/actions/constructor";
 
 const Constructor = (props) => {
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ const Constructor = (props) => {
     }
   });
   const newData = ordered;
+  const ingredients = newData.filter(i => i.type !== 'bun');
   const bun = newData.find(i => i.type === 'bun');
 
   const [{ isOver }, dropRef] = useDrop({
@@ -37,6 +38,22 @@ const Constructor = (props) => {
   const onDelete = id => {
     dispatch(deleteIngredient(id));
   };
+
+  const moveListItem = (dragIndex, hoverIndex) => {
+    const dragItem = ingredients[dragIndex];
+    const hoverItem = ingredients[hoverIndex];
+    const actualDragIndex = props.data.findIndex(i => dragItem._id === i._id);
+    const actualHoverIndex = props.data.findIndex(i => hoverItem._id === i._id);
+
+    const actualDragItem = props.data[actualDragIndex]
+    const actualHoverItem = props.data[actualHoverIndex]
+    
+    const sorted = [...props.data]
+    sorted[actualDragIndex] = actualHoverItem;
+    sorted[actualHoverIndex] = actualDragItem;
+
+    dispatch(moveIngredient(sorted));
+  }
 
   const opacity = isOver ? 0.3 : 1;
 
@@ -68,22 +85,18 @@ const Constructor = (props) => {
       {
         bun && newData.length > 0 && (
           <ul className={constructorStyle.itemList}>
-            {newData.map((element) => {
-              if (element.type === "sauce" || element.type === "main") {
-                return (
-                  <ConstructorItem
-                    key={element._id}
-                    name={element.name}
-                    price={element.price}
-                    image={element.image}
-                    uid={element._id}
-                    delete={onDelete}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
+            {ingredients.map((element, index) => (
+              <ConstructorItem
+                key={element._id}
+                name={element.name}
+                price={element.price}
+                image={element.image}
+                uid={element._id}
+                index={index}
+                moveListItem={moveListItem}
+                delete={onDelete}
+              />
+            ))}
           </ul>
         )
       }
