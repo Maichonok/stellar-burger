@@ -37,7 +37,11 @@ export default function orderDetails(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
+                data: {
+                    name: '',
+                    order: { number: 0 }
+                }
             }
         }
         case ORDER_MODAL_OPEN: {

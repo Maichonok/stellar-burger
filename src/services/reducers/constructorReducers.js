@@ -1,8 +1,10 @@
 import {
-    ADD_INGREDIENT,
-    DELETE_INGREDIENT,
-    MOVE_INGREDIENT,
-  } from "../actions/constructor";
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  MOVE_INGREDIENT,
+} from "../actions/constructor";
+
+import { ORDER_FAILURE } from "../actions/order";
 
 const INITIAL_STATE = {
   ingredients: []
@@ -13,14 +15,22 @@ export default function orderConstructor(
   action  
 ) {
   switch (action.type) {
+    case ORDER_FAILURE: {
+      return INITIAL_STATE;
+    }
     case ADD_INGREDIENT: {
-      if (action.payload.type === "bun") {
+      const ingredientType = action.payload.type;
+      if (ingredientType === "bun") {
         const filtered = state.ingredients.filter(i => i.type !== "bun");
         const newBun = { ...action.payload };
         return {
           ...state,
           ingredients: [...filtered, newBun]
         };    
+      }
+
+      if (state.ingredients.length === 0) {
+        return state;    
       }
 
       return {

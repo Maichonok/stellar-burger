@@ -36,7 +36,7 @@ function Card(props) {
       >
         {props.name}
       </p>
-      <Counter count={1} size="default" />
+      {!!props.count && <Counter count={props.count} size="default" />}
     </div>
   );
 }

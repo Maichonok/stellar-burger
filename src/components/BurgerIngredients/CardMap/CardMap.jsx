@@ -12,7 +12,13 @@ function CardMap({ data, open }) {
         onClick={() => open(ingr._id)} 
         className={cardMapStyle.item}
       >
-        <Card image={ingr.image} name={ingr.name} price={ingr.price} data={ingr} />
+        <Card 
+          count={ingr.count}
+          image={ingr.image} 
+          name={ingr.name} 
+          price={ingr.price} 
+          data={ingr} 
+        />
       </li>
     );
   });

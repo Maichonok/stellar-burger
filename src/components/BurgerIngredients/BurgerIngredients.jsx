@@ -60,11 +60,22 @@ export default function BurgerIngredients(props) {
     );
   }
 
+  const getData = (arr, type) => 
+    data
+      .filter((item) => item.type === type)
+      .map(i => {
+        const count = selectedIngredients
+          .filter(s => s._id === i._id).length;
+        return {...i, count};
+      });
+  
   const data = useSelector(state => state.burgerIngredients.data);
+  const selectedIngredients = useSelector(state => state.orderConstructor.ingredients);
+    
+  const bunArr = useMemo(() => getData(data, 'bun'), [data, selectedIngredients]);
+  const mainArr = useMemo(() => getData(data, 'main'), [data, selectedIngredients]);
+  const sauceArr = useMemo(() => getData(data, 'sauce'), [data, selectedIngredients]);
 
-  const bunArr = useMemo(() => data.filter((item) => item.type === "bun"), [data]);
-  const mainArr = useMemo(() => data.filter((item) => item.type === "main"), [data]);
-  const sauceArr = useMemo(() => data.filter((item) => item.type === "sauce"), [data]);
   const dispatch = useDispatch();
 
   const open = id => {
