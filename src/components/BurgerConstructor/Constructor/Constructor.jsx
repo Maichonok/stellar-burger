@@ -12,16 +12,7 @@ import { addIngredient, deleteIngredient, moveIngredient } from "../../../servic
 const Constructor = (props) => {
   const dispatch = useDispatch();
 
-  const ordered = [];
-  props.data.forEach(i => {
-    const index = ordered.findIndex(o => o._id === i._id);
-    if (index < 0) {
-      ordered.push({...i});
-    } else {
-      ordered[index].price += i.price;
-    }
-  });
-  const newData = ordered;
+  const newData = props.data;
   const ingredients = newData.filter(i => i.type !== 'bun');
   const bun = newData.find(i => i.type === 'bun');
 
@@ -42,8 +33,8 @@ const Constructor = (props) => {
   const moveListItem = (dragIndex, hoverIndex) => {
     const dragItem = ingredients[dragIndex];
     const hoverItem = ingredients[hoverIndex];
-    const actualDragIndex = props.data.findIndex(i => dragItem._id === i._id);
-    const actualHoverIndex = props.data.findIndex(i => hoverItem._id === i._id);
+    const actualDragIndex = props.data.findIndex(i => dragItem.uuid === i.uuid);
+    const actualHoverIndex = props.data.findIndex(i => hoverItem.uuid === i.uuid);
 
     const actualDragItem = props.data[actualDragIndex]
     const actualHoverItem = props.data[actualHoverIndex]
@@ -87,11 +78,11 @@ const Constructor = (props) => {
           <ul className={constructorStyle.itemList}>
             {ingredients.map((element, index) => (
               <ConstructorItem
-                key={element._id}
+                key={element.uuid}
                 name={element.name}
                 price={element.price}
                 image={element.image}
-                uid={element._id}
+                uid={element.uuid}
                 index={index}
                 moveListItem={moveListItem}
                 delete={onDelete}
