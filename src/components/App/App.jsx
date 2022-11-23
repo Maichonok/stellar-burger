@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import Header from "../Headers/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -6,85 +9,56 @@ import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import appStyle from "./App.module.css";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { getData, order } from "../../utils/api";
-import IngredientsContext from "../../context/ingredientsContext";
+import { getIngredients } from "../../services/actions/burgerIngredients";
+import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
+import { closeOrderModal } from "../../services/actions/order";
 
 function App() {
-  const [ingredientModal, setIngredientModal] = useState(false);
-  const [orderModal, setOrderModal] = useState(false);
-
-  const [data, setData] = useState({
-    isLoading: false,
-    hasError: false,
-    data: [],
-    error: "",
-    orderNumber: 0
-  });
+  const ingredientModal = useSelector(state => state.ingredientsDetail.open);
+  const orderModal = useSelector(state => state.orderDetails.open);
+  const isLoading = useSelector(state => state.burgerIngredients.isLoading);
+  const error = useSelector(state => state.burgerIngredients.error);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setData({ ...data, hasError: false, isLoading: true, error: "" });
-    getData()
-      .then((res) => {
-        setData({ ...data, data: res.data, isLoading: false, error: "" });
-      })
-      .catch((err) => {
-        setData({ ...data, hasError: true, isLoading: false, error: err });
-      });
+    dispatch(getIngredients());
   }, []);
 
   const closePopup = () => {
-    setIngredientModal(false);
-    setOrderModal(false);
-  };
-
-  const openOrderModal = () => {
-    setData({ hasError: false, isLoading: true, error: "" });
-    order(data.data.map(item => item._id))
-      .then(res => {
-        setOrderModal(true);
-
-        setData({ ...data, isLoading: false, error: "", orderNumber: res.order.number });
-      })
-      .catch((err) => {
-        setData({ ...data, hasError: true, isLoading: false, error: err });
-      });
-  };
-
-  const openIngredientModal = () => {
-    setIngredientModal(true);
+    dispatch(closeIngredientModal());
+    dispatch(closeOrderModal());
   };
 
   return (
     <div className="page">
-      <IngredientsContext.Provider value={data.data}>
-        <Header />
-        <main className={appStyle.main}>
-          {data.isLoading === true && (
-          <h1 className={appStyle.message}>{`Загрузка...`}</h1>
+      <Header />
+      <main className={appStyle.main}>
+        {isLoading && <h1 className={appStyle.message}>{`Загрузка...`}</h1>}
+        {!!error && `Упс, что-то пошло не так, произошла ошибка ${error}`}
+        {!isLoading && !error && (
+          <DndProvider backend={HTML5Backend}> 
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
         )}
-          {data.hasError && `Упс, что-то пошло не так, произошла ошибка ${data.error}`}
-          {!data.isLoading && !data.hasError && (
-            <>
-              <BurgerIngredients
-                open={() => openIngredientModal()}
-              />
-              <BurgerConstructor 
-                open={openOrderModal} 
-              />
-            </>
-          )}
-        </main>
-        {ingredientModal && (
-          <Modal isOpen={ingredientModal} text="Детали ингредиента" close={closePopup}>
-            <IngredientDetails data={data.data[0]} />
-          </Modal>
-        )}
-        {orderModal && (
-          <Modal isOpen={orderModal} close={closePopup}>
-            <OrderDetails orderNumber={data.orderNumber} />
-          </Modal>
-        )}
-      </IngredientsContext.Provider>  
+      </main>
+      {ingredientModal && (
+        <Modal
+          isOpen={ingredientModal}
+          text="Детали ингредиента"
+          close={closePopup}
+        >
+          <IngredientDetails />
+        </Modal>
+      )}
+      {orderModal && (
+        <Modal 
+          isOpen={orderModal} 
+          close={closePopup}
+        >
+          <OrderDetails />
+        </Modal>
+      )}
     </div>
   );
 }

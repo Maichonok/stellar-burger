@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 
 const ButtonLarge = (props) => {
   return (
-    <Button type="primary" size="large" onClick={props.open} htmlType="button">
+    <Button type="primary" size="large" onClick={props.onClick} htmlType="button">
       {props.text}
     </Button>
   );
 };
 
 ButtonLarge.propTypes = {
-  open: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   text: PropTypes.string
 };
 

@@ -4,9 +4,9 @@ import ingredientWrapperStyle from "./IngredientWrapper.module.css";
 
 function IngredientWrapper(props) {
   return (
-    <article>
+    <article ref={props.tabRef}>
       <h2
-        ref={props.tabRef}
+        ref={props.tabTopRef}
         className={`${ingredientWrapperStyle.subtitle} text text_type_main-medium pb-2 pt-5`}
       >
         {props.text}

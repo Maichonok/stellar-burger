@@ -7,8 +7,18 @@ import { Card } from "../Card/Card";
 function CardMap({ data, open }) {
   return data.map((ingr, index) => {
     return (
-      <li key={ingr._id} onClick={open} className={cardMapStyle.item}>
-        <Card image={ingr.image} name={ingr.name} price={ingr.price} />
+      <li 
+        key={ingr._id} 
+        onClick={() => open(ingr._id)} 
+        className={cardMapStyle.item}
+      >
+        <Card 
+          count={ingr.count}
+          image={ingr.image} 
+          name={ingr.name} 
+          price={ingr.price} 
+          data={ingr} 
+        />
       </li>
     );
   });

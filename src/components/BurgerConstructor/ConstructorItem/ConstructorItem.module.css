@@ -1,5 +1,15 @@
 .item {
-    display: flex;
-    align-items: center;
-    column-gap: 14px;
-  }
+  display: flex;
+  align-items: center;
+  column-gap: 14px;
+}
+
+.dragIconWrapper {
+  cursor: move;
+}
+
+.dragged {
+  opacity: .2;
+  transform: 'skew(20deg, 20deg)';
+  transition: all .1s;
+}
