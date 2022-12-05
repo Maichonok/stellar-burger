@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import Header from "../Headers/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Modal from "../Modal/Modal";
@@ -31,7 +30,6 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
       <main className={appStyle.main}>
         {isLoading && <h1 className={appStyle.message}>{`Загрузка...`}</h1>}
         {!!error && `Упс, что-то пошло не так, произошла ошибка ${error}`}

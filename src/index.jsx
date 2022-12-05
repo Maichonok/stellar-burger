@@ -11,6 +11,7 @@ import { Profile } from './pages/profile/Profile';
 import { Register } from './pages/register/Register';
 import { Forgot } from './pages/forgotPassword/forgotPassword';
 import { Reset} from './pages/reset/Reset';
+import Header from "./components/Headers/AppHeader";
 import rootReducer from './services/rootReducer'
 
 import './index.css';
@@ -25,6 +26,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
+        <Header />
         <Switch>
           <Route path="/login">
             <Login />
