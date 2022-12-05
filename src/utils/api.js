@@ -1,4 +1,5 @@
 const BASE_URL = "https://norma.nomoreparties.space/api";
+const AUTH_BASE_URL = "https://norma.nomoreparties.space/api/auth";
 
 const ingredientsConfig = {
   url: `${BASE_URL}/ingredients`,
@@ -12,6 +13,30 @@ const orderConfig = {
   method: "POST",
   headers: {
     Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
+
+const register = {
+  url: `${AUTH_BASE_URL}/register`,
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+const login = {
+  url: `${AUTH_BASE_URL}/login`,
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+const token = {
+  url: `${AUTH_BASE_URL}/token`,
+  method: "POST",
+  headers: {
     "Content-Type": "application/json",
   },
 };
@@ -33,4 +58,31 @@ const order = (ingredients) =>
     body: JSON.stringify({ ingredients }),
   });
 
-export { getData, order };
+const registerRequest = (name, email, pass) =>
+  request(register.url, {
+    ...register,
+    body: JSON.stringify({
+      email: email,
+      password: pass,
+      name: name,
+    }),
+  });
+
+  const loginRequest = (email, pass) =>
+  request(login.url, {
+    ...login,
+    body: JSON.stringify({
+      email: email,
+      password: pass,
+    }),
+  });
+
+  const refreshToken = (token) =>
+  request(token.url, {
+    ...login,
+    body: JSON.stringify({
+      token: token,
+    }),
+  });
+
+export { getData, order, registerRequest, loginRequest, refreshToken };
