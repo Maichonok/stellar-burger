@@ -41,6 +41,14 @@ const passwordRestore = {
   },
 };
 
+const passwordReset = {
+  url: `${BASE_URL}/password-reset/reset`,
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
 const token = {
   url: `${AUTH_BASE_URL}/token`,
   method: "POST",
@@ -93,6 +101,14 @@ const registerRequest = (name, email, pass) =>
     })
   });
   
+  const resetPassword = (pass, code) => 
+  request(passwordReset.url, {
+    ...passwordReset,
+    body: JSON.stringify({
+      password: pass,
+      token: code
+    })
+  });
 
   const refreshToken = (token) =>
   request(token.url, {
@@ -102,4 +118,4 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-export { getData, order, registerRequest, loginRequest, refreshToken, restorePassword };
+export { getData, order, registerRequest, loginRequest, refreshToken, restorePassword, resetPassword };
