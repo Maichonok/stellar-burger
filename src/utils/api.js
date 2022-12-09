@@ -33,6 +33,15 @@ const login = {
   },
 };
 
+const logout = {
+  url: `${AUTH_BASE_URL}/logout`,
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+
 const passwordRestore = {
   url: `${BASE_URL}/password-reset`,
   method: "POST",
@@ -112,10 +121,19 @@ const registerRequest = (name, email, pass) =>
 
   const refreshToken = (token) =>
   request(token.url, {
-    ...login,
+    ...token,
     body: JSON.stringify({
       token: token,
     }),
   });
+
+  const logoutRequest = () => {
+    request(logout.url, {
+      ...logout,
+      body: {
+        
+      }
+    })
+  }
 
 export { getData, order, registerRequest, loginRequest, refreshToken, restorePassword, resetPassword };
