@@ -38,6 +38,7 @@ export function Reset() {
             type="password"
             onChange={onChangePass}
             value={pass}
+            icon={"ShowIcon"}
           />
         </div>
         <div className="mt-6">
