@@ -33,7 +33,7 @@ const login = {
   },
 };
 
-const reset = {
+const passwordRestore = {
   url: `${BASE_URL}/password-reset`,
   method: "POST",
   headers: {
@@ -85,9 +85,9 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-  const resetPassword = email => 
-  request(reset.url, {
-    ...reset,
+  const restorePassword = email => 
+  request(passwordRestore.url, {
+    ...passwordRestore,
     body: JSON.stringify({
       email
     })
@@ -102,4 +102,4 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-export { getData, order, registerRequest, loginRequest, refreshToken, resetPassword };
+export { getData, order, registerRequest, loginRequest, refreshToken, restorePassword };

@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import registerStyles from "../register/Register.module.css";
-import { resetPassword } from "../../utils/api";
+import { restorePassword } from "../../utils/api";
 
 export function Forgot() {
   const history = useHistory();
@@ -15,9 +15,9 @@ export function Forgot() {
   const onSubmit = e => {
     e.preventDefault();
     setError(null);
-    resetPassword(email)
+    restorePassword(email)
       .then(() => {
-        history.push("reset-password");        
+        history.push("/reset-password");        
       })
       .catch(e => setError(e))
   };
