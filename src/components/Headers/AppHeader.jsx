@@ -25,7 +25,6 @@ export default function Appheader(props) {
     );
   }
   function MenuItem(props) {
-    console.log(props)
     return (
       <div className={props.itemStyle}>
         <NavLink to={props.link} className={`${headerStyle.link}`}>

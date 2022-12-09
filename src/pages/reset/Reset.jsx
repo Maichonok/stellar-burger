@@ -25,7 +25,7 @@ export function Reset() {
           />
         </div>
         <div className="mt-6">
-          <Button>Сохранить</Button>
+          <Button htmlType="submit">Сохранить</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вспомнили пароль?{" "}

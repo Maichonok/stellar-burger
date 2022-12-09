@@ -13,7 +13,6 @@ import { Forgot } from './pages/forgotPassword/ForgotPassword';
 import { Reset} from './pages/reset/Reset';
 import Header from "./components/Headers/AppHeader";
 import rootReducer from './services/rootReducer'
-
 import './index.css';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
