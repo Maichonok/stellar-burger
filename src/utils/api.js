@@ -127,13 +127,4 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-  const logoutRequest = () => {
-    request(logout.url, {
-      ...logout,
-      body: {
-        
-      }
-    })
-  }
-
-export { getData, order, registerRequest, loginRequest, refreshToken, restorePassword, resetPassword };
+export { getData, order, registerRequest, loginRequest, restorePassword, resetPassword, refreshToken };
