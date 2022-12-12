@@ -3,20 +3,22 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { loginRequest } from "../../utils/api";
-
+import { login } from "../../services/actions/authentication";
 import loginStyles from "./Login.module.css";
 
 export function Login() {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [error, setError] = useState(null);
+
+  const error = useSelector(state => state.auth.error);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setError(null);
-    loginRequest(email, pass).catch((e) => setError(e));
+    dispatch(login(email, pass));
   };
 
   function onChangeEmail(evt) {
@@ -29,10 +31,10 @@ export function Login() {
   return (
     <section className={loginStyles.content_box}>
       <form className={loginStyles.wrapper} onSubmit={onSubmit}>
-        {error && (
-          <p className="text text_type_main-default">{`Ошибка: ${error}`}</p>
-        )}
         <p className="text text_type_main-medium">Вход</p>
+        {error && (
+          <p className="text text_type_main-default">{`${error}`}</p>
+        )}
         <div className="mt-6">
           <Input
             name="email"

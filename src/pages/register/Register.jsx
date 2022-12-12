@@ -35,7 +35,7 @@ export function Register() {
       <form className={registerStyles.wrapper} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">Регистрация</p>
         {error && (
-          <p className="text text_type_main-default">{`Ошибка: ${error}`}</p>
+          <p className="text text_type_main-default">{`${error}`}</p>
         )}
         <div className={`${registerStyles.input_wrapper} mt-6`}>
           <Input

@@ -26,7 +26,7 @@ export function Forgot() {
     <section className={registerStyles.content_box}>
       <form className={registerStyles.wrapper} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
-        {error && <p className="text text_type_main-default">{`Ошибка: ${error}`}</p>}
+        {error && <p className="text text_type_main-default">{`${error}`}</p>}
         <div className={`${registerStyles.input_wrapper} mt-6`}>
           <Input 
             placeholder="Укажите e-mail" 

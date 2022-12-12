@@ -30,7 +30,7 @@ export function Reset() {
     <section className={resetStyles.content_box}>
       <form className={resetStyles.wrapper} onSubmit={submitReset}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
-        {error && <p className="text text_type_main-default">{`Ошибка: ${error}`}</p>}
+        {error && <p className="text text_type_main-default">{`${error}`}</p>}
         <div className={`${resetStyles.input_wrapper} mt-6`}>
           <Input
             placeholder="Введите новый пароль"

@@ -32,7 +32,7 @@ function App() {
     <div className="page">
       <main className={appStyle.main}>
         {isLoading && <h1 className={appStyle.message}>{`Загрузка...`}</h1>}
-        {!!error && `Упс, что-то пошло не так, произошла ошибка ${error}`}
+        {!!error && `${error}`}
         {!isLoading && !error && (
           <DndProvider backend={HTML5Backend}> 
             <BurgerIngredients />
