@@ -25,6 +25,14 @@ const register = {
   },
 };
 
+const userData = {
+  url: `${AUTH_BASE_URL}/user`,
+  headers: {
+    "Content-Type": "application/json",
+    authorization: ""
+  }, 
+}
+
 const login = {
   url: `${AUTH_BASE_URL}/login`,
   method: "POST",
@@ -40,7 +48,6 @@ const logout = {
     "Content-Type": "application/json",
   },
 };
-
 
 const passwordRestore = {
   url: `${BASE_URL}/password-reset`,
@@ -70,7 +77,7 @@ function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return res.json().then(t => {
+  return res.json().then((t) => {
     return Promise.reject(new Error(`${t.message}`));
   });
 }
@@ -95,7 +102,7 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-  const loginRequest = (email, pass) =>
+const loginRequest = (email, pass) =>
   request(login.url, {
     ...login,
     body: JSON.stringify({
@@ -104,24 +111,24 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-  const restorePassword = email => 
+const restorePassword = (email) =>
   request(passwordRestore.url, {
     ...passwordRestore,
     body: JSON.stringify({
-      email
-    })
+      email,
+    }),
   });
-  
-  const resetPassword = (pass, code) => 
+
+const resetPassword = (pass, code) =>
   request(passwordReset.url, {
     ...passwordReset,
     body: JSON.stringify({
       password: pass,
-      token: code
-    })
+      token: code,
+    }),
   });
 
-  const refreshToken = (token) =>
+const refreshToken = (token) =>
   request(token.url, {
     ...token,
     body: JSON.stringify({
@@ -129,4 +136,28 @@ const registerRequest = (name, email, pass) =>
     }),
   });
 
-export { getData, order, registerRequest, loginRequest, restorePassword, resetPassword, refreshToken };
+const fetchUserData = () => {
+  request(userData.url, {
+    ...userData
+  })
+};
+
+const updateUserData = data => {
+  request(userData.url, {
+    ...userData,
+    method: 'PATCH',
+    body: JSON.stringify(data)
+  })
+};
+
+
+export {
+  getData,
+  order,
+  registerRequest,
+  loginRequest,
+  restorePassword,
+  resetPassword,
+  refreshToken,
+  fetchUserData
+};

@@ -53,7 +53,7 @@ export function Login() {
           />
         </div>
         <div className="mt-6">
-          <Button>Войти</Button>
+          <Button htmlType="submit">Войти</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вы - новый пользователь?
