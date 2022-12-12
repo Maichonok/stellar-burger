@@ -4,19 +4,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { registerRequest } from "../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../services/actions/authentication";
 import registerStyles from "./Register.module.css";
 
 export function Register() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState(null);
+  
+  const error = useSelector(state => state.auth.error);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setError(null);
-    registerRequest(name, email, pass).catch((e) => setError(e));
+    dispatch(register(name, email, pass));
   };
 
   function onChangeEmail(evt) {
@@ -66,7 +68,7 @@ export function Register() {
           />
         </div>
         <div className="mt-6">
-          <Button>Зарегистрироваться</Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Уже зарегистрированы?{" "}

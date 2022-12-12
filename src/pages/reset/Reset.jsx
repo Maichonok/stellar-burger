@@ -3,14 +3,16 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { resetPass } from "../../services/actions/authentication";
 import resetStyles from "./Reset.module.css";
-import { resetPassword } from "../../utils/api";
 
 export function Reset() {
+  const dispatch = useDispatch();
   const [pass, setPass] = useState("");
   const [code, setCode] = useState("");
-  const [error, setError] = useState(null);
+  const error = useSelector(state => state.auth.error);
 
   function onChangePass(evt) {
     setPass(evt.target.value);
@@ -22,8 +24,7 @@ export function Reset() {
 
   function submitReset(evt) {
     evt.preventDefault();
-    setError(null);
-    resetPassword(pass, code).catch((e) => setError(e));
+    dispatch(resetPass(pass, code))
   }
 
   return (

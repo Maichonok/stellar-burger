@@ -4,22 +4,20 @@ import {
   Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPass } from "../../services/actions/authentication";
 import registerStyles from "../register/Register.module.css";
-import { restorePassword } from "../../utils/api";
 
 export function Forgot() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const [error, setError] = useState(null);
+  const error = useSelector(state => state.auth.error);
 
   const onSubmit = e => {
     e.preventDefault();
-    setError(null);
-    restorePassword(email)
-      .then(() => {
-        history.push("/reset-password");        
-      })
-      .catch(e => setError(e))
+    dispatch(forgotPass(email))
+      .then(() => history.push("/reset-password"));    
   };
 
   return (
