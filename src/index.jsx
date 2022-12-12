@@ -9,7 +9,7 @@ import { App } from './components/App/App';
 import { Login } from './pages/login/Login';
 import { Profile } from './pages/profile/Profile';
 import { Register } from './pages/register/Register';
-import { Forgot } from './pages/forgotPassword/ForgotPassword';
+import { Forgot } from './pages/forgotPassword/forgotPassword';
 import { Reset} from './pages/reset/Reset';
 import Header from "./components/Headers/AppHeader";
 import rootReducer from './services/rootReducer'
