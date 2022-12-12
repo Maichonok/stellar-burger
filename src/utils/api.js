@@ -70,7 +70,9 @@ function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(new Error(`${res.status}`));
+  return res.json().then(t => {
+    return Promise.reject(new Error(`${t.message}`));
+  });
 }
 
 const request = (url, options) => fetch(url, options).then(checkResponse);
