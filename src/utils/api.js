@@ -109,7 +109,12 @@ const loginRequest = (email, pass) =>
       email: email,
       password: pass,
     }),
-  });
+  })
+  .then(res => {
+    localStorage.setItem("accessToken", res.accessToken);
+    localStorage.setItem("refreshToken", res.refreshToken)
+    return res;
+  })
 
 const restorePassword = (email) =>
   request(passwordRestore.url, {
