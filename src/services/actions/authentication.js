@@ -1,7 +1,4 @@
-import { loginRequest } from "../../utils/api";
-import { registerRequest } from "../../utils/api";
-import { restorePassword } from "../../utils/api";
-import { resetPassword } from "../../utils/api";
+import { loginRequest, registerRequest, restorePassword, resetPassword, logoutRequest } from "../../utils/api";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -19,9 +16,14 @@ export const RESET_PASS_REQUEST = 'RESET_PASS_REQUEST';
 export const RESET_PASS_SUCCESS = 'RESET_PASS_SUCCESS';
 export const RESET_PASS_FAILURE = 'RESET_PASS_FAILURE';
 
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+
 export const login = (email, password) => dispatch => {
     dispatch({ type: LOGIN_REQUEST });
-    loginRequest(email, password)
+    return loginRequest(email, password)
         .then(res => {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -38,7 +40,7 @@ export const login = (email, password) => dispatch => {
 
 export const register = (name, email, pass) => dispatch => {
     dispatch({ type: REGISTER_REQUEST });
-    registerRequest(name, email, pass)
+    return registerRequest(name, email, pass)
         .then(res => {
             dispatch({
                 type: REGISTER_SUCCESS,
@@ -85,4 +87,13 @@ export const resetPass = (pass, code) => dispatch => {
                 payload: e
             });
         })
+}
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT_REQUEST
+    });
+    logoutRequest()
+        .then(() => dispatch({ type: LOGOUT_SUCCESS }))
+        .catch(() => dispatch({ type: LOGIN_FAILURE }));
 }

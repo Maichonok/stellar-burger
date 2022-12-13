@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../services/actions/authentication";
@@ -10,6 +10,7 @@ import registerStyles from "./Register.module.css";
 
 export function Register() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
@@ -18,7 +19,8 @@ export function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, pass));
+    dispatch(register(name, email, pass))
+      .then(() => history.push("/"));
   };
 
   function onChangeEmail(evt) {

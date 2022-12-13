@@ -4,12 +4,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "../../services/actions/authentication";
 import loginStyles from "./Login.module.css";
 
 export function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -18,7 +19,10 @@ export function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(email, pass));
+    dispatch(login(email, pass))
+      .then(() => {
+        history.push("/");
+      })
   };
 
   function onChangeEmail(evt) {

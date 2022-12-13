@@ -82,7 +82,19 @@ function checkResponse(res) {
   });
 }
 
-const request = (url, options) => fetch(url, options).then(checkResponse);
+const request = (url, options, checkToken = false) => {
+  if (checkToken) {
+    // check token
+    // refresh token
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    options.authorization = accessToken;
+  }
+ 
+  return fetch(url, options)
+        .then(checkResponse);
+}
 
 const getData = () => request(`${ingredientsConfig.url}`);
 
@@ -155,6 +167,18 @@ const updateUserData = data => {
   })
 };
 
+const logoutRequest = () => {
+  const token = localStorage.getItem("refreshToken");
+  localStorage.clear();
+  
+  request(logout.url, {
+    ...logout,
+    body: JSON.stringify({
+      token
+    })
+  })
+};
+
 
 export {
   getData,
@@ -164,5 +188,6 @@ export {
   restorePassword,
   resetPassword,
   refreshToken,
-  fetchUserData
+  fetchUserData,
+  logoutRequest
 };
