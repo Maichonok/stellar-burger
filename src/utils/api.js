@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const AUTH_BASE_URL = "https://norma.nomoreparties.space/api/auth";
 
@@ -84,12 +85,35 @@ function checkResponse(res) {
 
 const request = (url, options, checkToken = false) => {
   if (checkToken) {
-    // check token
-    // refresh token
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
+    if (!accessToken) {
+      return Promise.reject(new Error(`Access token should be provided`));
+    }
 
-    options.authorization = accessToken;
+    const currentDate = new Date();
+    let decoded;
+    let invalidToken = false;
+    try {
+      decoded = jwtDecode(accessToken);
+    } catch(e) {
+      invalidToken = true;
+    }
+    if (decoded.exp * 1000 < currentDate.getTime() || invalidToken) {
+      fetch(token.url, {
+        ...token,
+        body: JSON.stringify({
+          token: refreshToken
+        })
+      })
+        .then(res => res.json())
+        .then((data) => {
+          console.log("set new token", data)
+          localStorage.setItem("refreshToken", data.refreshToken);
+          localStorage.setItem("accessToken", data.accessToken);
+        });
+    } 
+    options.headers.authorization = accessToken;  
   }
  
   return fetch(url, options)
@@ -145,19 +169,11 @@ const resetPassword = (pass, code) =>
     }),
   });
 
-const refreshToken = (token) =>
-  request(token.url, {
-    ...token,
-    body: JSON.stringify({
-      token: token,
-    }),
-  });
-
-const fetchUserData = () => {
+const fetchUserData = () => 
   request(userData.url, {
     ...userData
-  })
-};
+  }, true);
+
 
 const updateUserData = data => {
   request(userData.url, {
@@ -170,7 +186,7 @@ const updateUserData = data => {
 const logoutRequest = () => {
   const token = localStorage.getItem("refreshToken");
   localStorage.clear();
-  
+
   request(logout.url, {
     ...logout,
     body: JSON.stringify({
@@ -187,7 +203,6 @@ export {
   loginRequest,
   restorePassword,
   resetPassword,
-  refreshToken,
   fetchUserData,
   logoutRequest
 };

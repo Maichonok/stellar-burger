@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest, restorePassword, resetPassword, logoutRequest } from "../../utils/api";
+import { loginRequest, registerRequest, restorePassword, resetPassword, logoutRequest, fetchUserData } from "../../utils/api";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -20,6 +20,11 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
+export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+
+export const SET_USER = 'SET_USER';
 
 export const login = (email, password) => dispatch => {
     dispatch({ type: LOGIN_REQUEST });
@@ -96,4 +101,18 @@ export const logout = () => dispatch => {
     logoutRequest()
         .then(() => dispatch({ type: LOGOUT_SUCCESS }))
         .catch(() => dispatch({ type: LOGIN_FAILURE }));
+}
+
+export const getUser = () => dispatch => {
+    dispatch({ type: FETCH_USER_REQUEST })
+    return fetchUserData()
+        .then(data => dispatch({ type: FETCH_USER_SUCCESS, payload: data }))
+        .catch(e => dispatch({ type: FETCH_USER_FAILURE, payload: e }))
+}
+
+export const setUserData = payload => {
+    return {
+        type: SET_USER,
+        payload
+    }
 }
