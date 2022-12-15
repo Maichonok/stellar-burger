@@ -11,6 +11,7 @@ import { Profile } from './pages/profile/Profile';
 import { Register } from './pages/register/Register';
 import { Forgot } from './pages/forgotPassword/forgotPassword';
 import { Reset} from './pages/reset/Reset';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Header from "./components/Headers/AppHeader";
 import rootReducer from './services/rootReducer'
 import './index.css';
@@ -30,9 +31,9 @@ root.render(
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <Profile />
-          </Route>
+          </ProtectedRoute>
           <Route path="/register">
             <Register />
           </Route>

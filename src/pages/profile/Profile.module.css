@@ -42,7 +42,9 @@
 .input {
   width: 100%;
 }
-
+.error {
+  
+}
 .buttons_wrapper {
   display: flex;
   justify-content: space-between;

@@ -136,7 +136,12 @@ const registerRequest = (name, email, pass) =>
       password: pass,
       name: name,
     }),
-  });
+  })
+  .then(res => {
+    localStorage.setItem("accessToken", res.accessToken);
+    localStorage.setItem("refreshToken", res.refreshToken)
+    return res;
+  })
 
 const loginRequest = (email, pass) =>
   request(login.url, {
@@ -176,7 +181,7 @@ const fetchUserData = () =>
 
 
 const updateUserData = data => {
-  request(userData.url, {
+  return request(userData.url, {
     ...userData,
     method: 'PATCH',
     body: JSON.stringify(data)
@@ -187,12 +192,12 @@ const logoutRequest = () => {
   const token = localStorage.getItem("refreshToken");
   localStorage.clear();
 
-  request(logout.url, {
+  return request(logout.url, {
     ...logout,
     body: JSON.stringify({
       token
     })
-  })
+  });
 };
 
 
@@ -204,5 +209,6 @@ export {
   restorePassword,
   resetPassword,
   fetchUserData,
-  logoutRequest
+  logoutRequest,
+  updateUserData
 };

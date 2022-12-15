@@ -1,27 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
-  Input
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import profileStyles from "./Profile.module.css";
-import { getUser, setUserData } from "../../services/actions/authentication";
+import {
+  getUser,
+  setUserData,
+  saveUser,
+  resetUser,
+  logout
+} from "../../services/actions/authentication";
 
 export function Profile() {
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
+  const error = useSelector((state) => state.auth.error);
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
-  const onChange = e => {
+  const onChange = (e) => {
     dispatch(setUserData({ [e.target.name]: e.target.value }));
-  }
+  };
 
-  console.log(user)
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(saveUser(user));
+  };
+
+  const onCancel = () => {
+    dispatch(resetUser());
+  };
+
+  const onLogout = () => {
+    dispatch(logout());
+  }
 
   return (
     <section className={profileStyles.content_box}>
@@ -38,7 +56,7 @@ export function Profile() {
           </li>
           <li className="mt-10">
             <NavLink
-              to="/orders"
+              to="/profile/orders"
               className={`${profileStyles.menu_button} text text_type_main-medium`}
             >
               История заказов
@@ -49,7 +67,7 @@ export function Profile() {
               className={`${profileStyles.menu_button} text text_type_main-medium`}
               to="/login"
             >
-              Выход
+              <span onClick={onLogout}>Выход</span>
             </NavLink>
           </li>
         </ul>
@@ -58,7 +76,13 @@ export function Profile() {
         </p>
       </div>
 
-      <form className={`${profileStyles.inputs_wrapper} ml-15`}>
+      <form
+        className={`${profileStyles.inputs_wrapper} ml-15`}
+        onSubmit={onSubmit}
+      >
+        {error && (
+          <p className="text text_type_main-medium pb-15">Error: {error}</p>
+        )}
         <div className={profileStyles.input}>
           <Input
             size="default"
@@ -91,7 +115,9 @@ export function Profile() {
           />
         </div>
         <div className={`${profileStyles.buttons_wrapper} mt-6`}>
-          <Button htmlType="button">Отмена</Button>
+          <Button htmlType="button" onClick={onCancel}>
+            Отмена
+          </Button>
           <Button htmlType="submit">Сохранить</Button>
         </div>
       </form>
