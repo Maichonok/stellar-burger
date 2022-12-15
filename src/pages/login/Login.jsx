@@ -4,24 +4,27 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/authentication";
 import loginStyles from "./Login.module.css";
 
 export function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
   const error = useSelector(state => state.auth.error);
 
+  const redirectURL = location.state ? location.state.prevLocation : "/";
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, pass))
       .then(() => {
-        history.push("/");
+        history.push(redirectURL);
       })
   };
 
@@ -32,6 +35,7 @@ export function Login() {
   function onChangePass(evt) {
     setPass(evt.target.value);
   }
+
   return (
     <section className={loginStyles.content_box}>
       <form className={loginStyles.wrapper} onSubmit={onSubmit}>

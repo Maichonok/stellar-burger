@@ -1,16 +1,15 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-const ProtectedRoute = ({ children: Comp, path, ...rest }) => {
-  const loggedIn = useSelector(state => state.auth.loggedIn);
+const ProtectedRoute = ({ children, path, ...rest }) => {
+  const loggedIn = localStorage.getItem("accessToken") !== null;
 
   return (
     <Route
       path={path}
       {...rest}
-      render={(props) => {
+      render={() => {
         return loggedIn ? (
-          <Comp {...props} />
+          children
         ) : (
           <Redirect
             to={{
