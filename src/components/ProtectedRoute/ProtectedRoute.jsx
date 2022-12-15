@@ -1,22 +1,19 @@
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = ({ children, path, ...rest }) => {
-  const loggedIn = localStorage.getItem("accessToken") !== null;
-
+const ProtectedRoute = ({ children, path, allow, redirectUrl, ...rest }) => {
   return (
     <Route
       path={path}
       {...rest}
       render={() => {
-        return loggedIn ? (
+        return allow ? (
           children
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: redirectUrl,
               state: {
                 prevLocation: path,
-                error: "You need to login first!",
               },
             }}
           />
