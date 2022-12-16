@@ -1,3 +1,4 @@
+import { LOCATION_CHANGE } from "react-router-dom";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -51,7 +52,6 @@ const INITIAL_STATE = {
     password: "",
     name: "",
   },
-  error: null,
   loading: false,
 };
 
@@ -61,97 +61,83 @@ const userDetails = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
     case LOGIN_SUCCESS: {
       return {
         ...state,
         loading: false,
-        error: null,
       };
     }
     case LOGIN_FAILURE: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
       };
     }
     case REGISTER_REQUEST: {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
     case REGISTER_SUCCESS: {
       return {
         ...state,
         loading: false,
-        error: null,
       };
     }
     case REGISTER_FAILURE: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
       };
     }
     case FORGOT_PASS_REQUEST: {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
     case FORGOT_PASS_SUCCESS: {
       return {
         ...state,
         loading: false,
-        error: null,
       };
     }
     case FORGOT_PASS_FAILURE: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
       };
     }
     case RESET_PASS_REQUEST: {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
     case RESET_PASS_SUCCESS: {
       return {
         ...state,
         loading: false,
-        error: null,
       };
     }
     case RESET_PASS_FAILURE: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
       };
     }
     case FETCH_USER_REQUEST: {
       return {
         ...state,
-        error: null,
         loading: true,
       };
     }
     case FETCH_USER_SUCCESS: {
       return {
         ...state,
-        error: null,
         loading: false,
         user: {
           ...state.user,
@@ -166,7 +152,6 @@ const userDetails = (state = INITIAL_STATE, action) => {
     case FETCH_USER_FAILURE: {
       return {
         ...state,
-        error: action.payload,
         loading: false,
       };
     }
@@ -182,14 +167,12 @@ const userDetails = (state = INITIAL_STATE, action) => {
     case SAVE_USER_REQUEST: {
       return {
         ...state,
-        error: null,
         loading: true,
       };
     }
     case SAVE_USER_SUCCESS: {
       return {
         ...state,
-        error: null,
         loading: false,
         defaultUser: {
           ...state.user,
@@ -200,7 +183,6 @@ const userDetails = (state = INITIAL_STATE, action) => {
     case SAVE_USER_FAILURE: {
       return {
         ...state,
-        error: action.payload,
         loading: false,
       };
     }
@@ -214,7 +196,6 @@ const userDetails = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
     case LOGOUT_SUCCESS: {
@@ -226,7 +207,6 @@ const userDetails = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
       };
     }
     case SET_RECOVERY_EMAIL: {
