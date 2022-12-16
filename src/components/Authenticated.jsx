@@ -1,10 +1,9 @@
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import { isLoggedIn } from "../utils/auth";
 
 const Authenticated = ({ children, ...rest }) => {
-  const loggedIn = localStorage.getItem("accessToken") !== null;
-
   return (
-    <ProtectedRoute allow={loggedIn} redirectUrl="/login" {...rest}>
+    <ProtectedRoute allow={isLoggedIn()} redirectUrl="/login" {...rest}>
       {children}
     </ProtectedRoute>
   );
