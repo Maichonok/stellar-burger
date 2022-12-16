@@ -9,7 +9,7 @@ import { App } from "./components/App/App";
 import { Login } from "./pages/login/Login";
 import { Profile } from "./pages/profile/Profile";
 import { Register } from "./pages/register/Register";
-import { Forgot } from "./pages/forgotPassword/forgotPassword";
+import { ForgotPassword } from "./pages/forgotPassword/ForgotPassword";
 import { Reset } from "./pages/reset/Reset";
 import Authenticated from "./components/Authenticated";
 import NonAuthenticated from "./components/NonAuthenticated";
@@ -37,7 +37,7 @@ root.render(
             <Register />
           </NonAuthenticated>
           <NonAuthenticated path="/forgot-password">
-            <Forgot />
+            <ForgotPassword />
           </NonAuthenticated>
           <NonAuthenticated path="/reset-password">
             <Reset />

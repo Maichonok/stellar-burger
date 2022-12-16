@@ -1,23 +1,29 @@
 import { useState } from "react";
 import {
   Button,
-  Input
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPass } from "../../services/actions/authentication";
+import {
+  forgotPass,
+  setRecoveryEmail,
+} from "../../services/actions/authentication";
 import registerStyles from "../register/Register.module.css";
 
-export function Forgot() {
+export function ForgotPassword() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const error = useSelector(state => state.auth.error);
+  const error = useSelector((state) => state.auth.error);
+  const email = useSelector((state) => state.auth.recoveryEmail);
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(forgotPass(email))
-      .then(() => history.push("/reset-password"));    
+    dispatch(forgotPass(email)).then(() => history.push("/reset-password"));
+  };
+
+  const onChange = (e) => {
+    dispatch(setRecoveryEmail(e.target.value));
   };
 
   return (
@@ -26,12 +32,12 @@ export function Forgot() {
         <p className="text text_type_main-medium">Восстановление пароля</p>
         {error && <p className="text text_type_main-default">{`${error}`}</p>}
         <div className={`${registerStyles.input_wrapper} mt-6`}>
-          <Input 
-            placeholder="Укажите e-mail" 
-            name="email" 
+          <Input
+            placeholder="Укажите e-mail"
+            name="email"
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={onChange}
           />
         </div>
         <div className="mt-6">

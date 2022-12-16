@@ -4,15 +4,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { resetPass } from "../../services/actions/authentication";
 import resetStyles from "./Reset.module.css";
 
 export function Reset() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [pass, setPass] = useState("");
   const [code, setCode] = useState("");
   const error = useSelector(state => state.auth.error);
+  const recoveryEmail = useSelector(state => state.auth.recoveryEmail);
+
+  if (!recoveryEmail) {
+    history.push("/forgot-password");
+  }
 
   function onChangePass(evt) {
     setPass(evt.target.value);

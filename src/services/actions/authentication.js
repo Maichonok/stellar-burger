@@ -39,6 +39,9 @@ export const SAVE_USER_FAILURE = "SAVE_USER_FAILURE";
 export const SET_USER = "SET_USER";
 export const RESET_USER = "RESET_USER";
 
+export const SET_RECOVERY_EMAIL = "SET_RECOVERY_EMAIL";
+export const UNSET_RECOVERY_EMAIL = "UNSET_RECOVERY_EMAIL";
+
 export const login = (email, password) => (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
   return loginRequest(email, password)
@@ -133,22 +136,31 @@ export const setUserData = (payload) => {
 export const saveUser = (user) => (dispatch) => {
   dispatch({ type: SAVE_USER_REQUEST });
   updateUserData(user)
-    .then(data => {
-        dispatch({
-            type: SAVE_USER_SUCCESS,
-            payload: data
-        });
+    .then((data) => {
+      dispatch({
+        type: SAVE_USER_SUCCESS,
+        payload: data,
+      });
     })
-    .catch(e => {
-        dispatch({ 
-            type: SAVE_USER_FAILURE,
-            payload: e
-        })
-    })
+    .catch((e) => {
+      dispatch({
+        type: SAVE_USER_FAILURE,
+        payload: e,
+      });
+    });
 };
 
 export const resetUser = () => {
-    return {
-        type: RESET_USER
-    }
-}
+  return {
+    type: RESET_USER,
+  };
+};
+
+export const setRecoveryEmail = (email) => ({
+  type: SET_RECOVERY_EMAIL,
+  payload: email,
+});
+
+export const unSetRecoveryEmail = () => ({
+  type: UNSET_RECOVERY_EMAIL,
+});
