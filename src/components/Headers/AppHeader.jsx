@@ -27,7 +27,12 @@ export default function Appheader(props) {
   function MenuItem(props) {
     return (
       <div className={props.itemStyle}>
-        <NavLink to={props.link} className={`${headerStyle.link}`}>
+        <NavLink
+          exact
+          activeClassName={headerStyle.linkActive}
+          to={props.link}
+          className={`${headerStyle.link} text_color_inactive`}
+        >
           {props.icon}
           <p className={props.styleText}>{props.text}</p>
         </NavLink>
@@ -47,10 +52,10 @@ export default function Appheader(props) {
           />
           <MenuItem
             text="Лента заказов"
-            link={"#"}
+            link={"/orders"}
             icon={<ListIcon type="secondary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4 pr-3`}
-            styleText={`text text_type_main-default text_color_inactive pl-2`}
+            styleText={`text text_type_main-default pl-2`}
           />
         </MenuList>
         <MenuItem
@@ -63,7 +68,7 @@ export default function Appheader(props) {
           link={"/profile"}
           icon={<ProfileIcon type="secondary" />}
           itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4`}
-          styleText={`text text_type_main-default text_color_inactive pl-2`}
+          styleText={`text text_type_main-default pl-2`}
         />
       </Menu>
     </Header>
