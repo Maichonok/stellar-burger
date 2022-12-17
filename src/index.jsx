@@ -14,6 +14,7 @@ import { Reset } from "./pages/reset/Reset";
 import Authenticated from "./components/Authenticated";
 import NonAuthenticated from "./components/NonAuthenticated";
 import Header from "./components/Headers/AppHeader";
+import { IngredientDetails } from "./components/IngredientDetails/IngredientDetails";
 import rootReducer from "./services/rootReducer";
 import "./index.css";
 
@@ -46,6 +47,9 @@ root.render(
             <App />
           </Route>
         </Switch>
+        <Route path="/ingredients/:id">
+          <IngredientDetails />
+        </Route>
       </Router>
     </Provider>
   </React.StrictMode>

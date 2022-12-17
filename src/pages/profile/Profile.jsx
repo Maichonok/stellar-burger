@@ -58,6 +58,7 @@ export function Profile() {
             <NavLink
               to="/profile/orders"
               className={`${profileStyles.menu_button} text text_type_main-medium`}
+              activeClassName={profileStyles.active_button}
             >
               История заказов
             </NavLink>
