@@ -10,7 +10,7 @@ import { Reset } from "./pages/reset/Reset";
 import Authenticated from "./components/Authenticated";
 import NonAuthenticated from "./components/NonAuthenticated";
 import Header from "./components/Headers/AppHeader";
-import { IngredientDetails } from "./components/IngredientDetails/IngredientDetails";
+import { Ingredients } from "./pages/ingredients/IngredientsPage";
 import { getIngredients } from "./services/actions/burgerIngredients";
 import "./index.css";
 
@@ -44,7 +44,7 @@ export const Wrapper = () => {
           <Main />
         </Route>
         <Route path="/ingredients/:id">
-          <IngredientDetails />
+          <Ingredients />
         </Route>
       </Switch>
     </div>
