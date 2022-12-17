@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -7,7 +7,6 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { getIngredients } from "../../services/actions/burgerIngredients";
 import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/order";
 
@@ -19,10 +18,6 @@ function Main() {
   const isLoading = useSelector(state => state.burgerIngredients.isLoading);
   const error = useSelector(state => state.burgerIngredients.error);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, []);
 
   const closePopup = () => {
     dispatch(closeIngredientModal());

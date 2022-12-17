@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { Main } from "./components/Main/Main";
 import { Login } from "./pages/login/Login";
@@ -10,9 +11,16 @@ import Authenticated from "./components/Authenticated";
 import NonAuthenticated from "./components/NonAuthenticated";
 import Header from "./components/Headers/AppHeader";
 import { IngredientDetails } from "./components/IngredientDetails/IngredientDetails";
+import { getIngredients } from "./services/actions/burgerIngredients";
 import "./index.css";
 
 export const Wrapper = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
+
   return (
     <div>
       <Header />
