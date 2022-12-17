@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
@@ -87,14 +87,12 @@ export default function BurgerIngredients(props) {
   );
 
   const dispatch = useDispatch();
-  const history = useHistory();  
-  const location = useLocation();
-  console.log(location)
+  const history = useHistory();
 
   const open = (id) => {
     dispatch(openIngredientModal());
     dispatch(toggleCurrent(id));
-    history.push(`/ingredients/${id}`);
+    history.replace(`/ingredients/${id}`);
   };
 
   return (

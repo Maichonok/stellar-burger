@@ -6,13 +6,14 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import appStyle from "./App.module.css";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import { getIngredients } from "../../services/actions/burgerIngredients";
 import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/order";
 
-function App() {
+import appStyle from "./Main.module.css";
+
+function Main() {
   const ingredientModal = useSelector(state => state.ingredientsDetail.open);
   const orderModal = useSelector(state => state.orderDetails.open);
   const isLoading = useSelector(state => state.burgerIngredients.isLoading);
@@ -61,4 +62,4 @@ function App() {
   );
 }
 
-export { App };
+export { Main };
