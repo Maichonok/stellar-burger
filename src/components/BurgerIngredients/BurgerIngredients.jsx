@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
@@ -8,7 +7,6 @@ import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
-import { toggleCurrent } from "../../services/actions/burgerIngredients";
 import { openIngredientModal } from "../../services/actions/ingredientsDetails";
 
 export default function BurgerIngredients(props) {
@@ -87,12 +85,10 @@ export default function BurgerIngredients(props) {
   );
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const open = (id) => {
     dispatch(openIngredientModal());
-    dispatch(toggleCurrent(id));
-    history.replace(`/ingredients/${id}`);
+    // dispatch(toggleCurrent(id));
   };
 
   return (

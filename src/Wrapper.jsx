@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { Main } from "./components/Main/Main";
 import { Login } from "./pages/login/Login";
 import { Profile } from "./pages/profile/Profile";
@@ -12,6 +12,7 @@ import NonAuthenticated from "./components/NonAuthenticated";
 import Header from "./components/Headers/AppHeader";
 import { Ingredients } from "./pages/ingredients/IngredientsPage";
 import { getIngredients } from "./services/actions/burgerIngredients";
+import { IngredientsModal } from "./components/ingredientsModal/IngredientsModal";
 import "./index.css";
 
 export const Wrapper = () => {
@@ -21,10 +22,13 @@ export const Wrapper = () => {
     dispatch(getIngredients());
   }, []);
 
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
   return (
     <div>
       <Header />
-      <Switch>
+      <Switch location={background || location}>
         <NonAuthenticated path="/login">
           <Login />
         </NonAuthenticated>
@@ -40,13 +44,22 @@ export const Wrapper = () => {
         <NonAuthenticated path="/reset-password">
           <Reset />
         </NonAuthenticated>
+
         <Route exact path="/">
           <Main />
         </Route>
+        {/* show full page*/}
         <Route path="/ingredients/:id">
           <Ingredients />
         </Route>
       </Switch>
+
+      {/* show modal */}
+      {background && (
+        <Route path="/ingredients/:id">
+          <IngredientsModal />
+        </Route>
+      )}
     </div>
   );
 };

@@ -1,15 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import burgerIngredients from "../../services/reducers/burgerIngredientsReducers";
 import IngredientDetailsStyle from "./IngredientDetails.module.css";
 
 function IngredientDetails() {
   const { id } = useParams();
   const ingredients = useSelector(state => state.burgerIngredients.data);
-  const idFromStore = useSelector(state => state.burgerIngredients.current);
-  const currentIngredient = id || idFromStore;
-  const data = ingredients.find(i => i._id === currentIngredient);
+  const data = ingredients.find(i => i._id === id);
 
   if (!data) {
     return null;

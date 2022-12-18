@@ -5,22 +5,22 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Modal from "../Modal/Modal";
-import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
+// import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
+// import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/order";
 
 import appStyle from "./Main.module.css";
 
 function Main() {
-  const ingredientModal = useSelector(state => state.ingredientsDetail.open);
+  // const ingredientModal = useSelector(state => state.ingredientsDetail.open);
   const orderModal = useSelector(state => state.orderDetails.open);
   const isLoading = useSelector(state => state.burgerIngredients.isLoading);
   const error = useSelector(state => state.burgerIngredients.error);
   const dispatch = useDispatch();
 
   const closePopup = () => {
-    dispatch(closeIngredientModal());
+    // dispatch(closeIngredientModal());
     dispatch(closeOrderModal());
   };
 
@@ -36,15 +36,6 @@ function Main() {
           </DndProvider>
         )}
       </main>
-      {ingredientModal && (
-        <Modal
-          isOpen={ingredientModal}
-          text="Детали ингредиента"
-          close={closePopup}
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
       {orderModal && (
         <Modal 
           isOpen={orderModal} 
