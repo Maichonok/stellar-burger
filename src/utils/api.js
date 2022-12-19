@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 const BASE_URL = "https://norma.nomoreparties.space/api";
-const AUTH_BASE_URL = "https://norma.nomoreparties.space/api/auth";
+const AUTH_BASE_URL = `${BASE_URL}/auth`;
 
 const ingredientsConfig = {
   url: `${BASE_URL}/ingredients`,
