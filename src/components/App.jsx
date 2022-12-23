@@ -5,7 +5,7 @@ import { Main } from "./Main/Main";
 import { Login } from "../pages/login/Login";
 import { Profile } from "../pages/profile/Profile";
 import { Register } from "../pages/register/Register";
-import { ForgotPassword } from "../pages/forgotPassword/ForgotPassword";
+import { RestorePassword } from "../pages/restorePassword/RestorePassword";
 import { Reset } from "../pages/reset/Reset";
 import Authenticated from "./Authenticated";
 import NonAuthenticated from "./NonAuthenticated";
@@ -39,7 +39,7 @@ export const App = () => {
           <Register />
         </NonAuthenticated>
         <NonAuthenticated path="/forgot-password">
-          <ForgotPassword />
+          <RestorePassword />
         </NonAuthenticated>
         <NonAuthenticated path="/reset-password">
           <Reset />

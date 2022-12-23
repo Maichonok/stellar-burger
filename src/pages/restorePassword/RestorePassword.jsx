@@ -10,7 +10,7 @@ import {
 } from "../../services/actions/authentication";
 import registerStyles from "../register/Register.module.css";
 
-export function ForgotPassword() {
+export function RestorePassword() {
   const history = useHistory();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
