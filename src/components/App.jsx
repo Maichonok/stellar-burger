@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { Main } from "./components/Main/Main";
-import { Login } from "./pages/login/Login";
-import { Profile } from "./pages/profile/Profile";
-import { Register } from "./pages/register/Register";
-import { ForgotPassword } from "./pages/forgotPassword/ForgotPassword";
-import { Reset } from "./pages/reset/Reset";
-import Authenticated from "./components/Authenticated";
-import NonAuthenticated from "./components/NonAuthenticated";
-import Header from "./components/Headers/AppHeader";
-import { Ingredients } from "./pages/ingredients/IngredientsPage";
-import { getIngredients } from "./services/actions/burgerIngredients";
-import { IngredientsModal } from "./components/ingredientsModal/IngredientsModal";
-import "./index.css";
+import { Main } from "./Main/Main";
+import { Login } from "../pages/login/Login";
+import { Profile } from "../pages/profile/Profile";
+import { Register } from "../pages/register/Register";
+import { ForgotPassword } from "../pages/forgotPassword/ForgotPassword";
+import { Reset } from "../pages/reset/Reset";
+import Authenticated from "./Authenticated";
+import NonAuthenticated from "./NonAuthenticated";
+import Header from "./Headers/AppHeader";
+import { Ingredients } from "../pages/ingredients/IngredientsPage";
+import { getIngredients } from "../services/actions/burgerIngredients";
+import { IngredientsModal } from "./ingredientsModal/IngredientsModal";
+import "../index.css";
 
-export const Wrapper = () => {
+export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
