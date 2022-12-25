@@ -3,51 +3,42 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../services/actions/authentication";
 import registerStyles from "./Register.module.css";
+import { useForm } from "../../hooks/useForm";
 
 export function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [name, setName] = useState("");
-  
-  const error = useSelector(state => state.auth.error);
+
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+    name: "",
+  });
+
+  const error = useSelector((state) => state.auth.error);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, pass))
-      .then(() => history.push("/"));
+    dispatch(register(values.name, values.email, values.password)).then(() =>
+      history.push("/")
+    );
   };
 
-  function onChangeEmail(evt) {
-    setEmail(evt.target.value);
-  }
-
-  function onChangePass(evt) {
-    setPass(evt.target.value);
-  }
-
-  function onChangeName(evt) {
-    setName(evt.target.value);
-  }
   return (
     <section className={registerStyles.content_box}>
       <form className={registerStyles.wrapper} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">Регистрация</p>
-        {error && (
-          <p className="text text_type_main-default">{`${error}`}</p>
-        )}
+        {error && <p className="text text_type_main-default">{`${error}`}</p>}
         <div className={`${registerStyles.input_wrapper} mt-6`}>
           <Input
             placeholder="Имя"
             name="name"
             type="text"
-            value={name}
-            onChange={onChangeName}
+            value={values.name}
+            onChange={handleChange}
           />
         </div>
         <div className="mt-6">
@@ -55,18 +46,18 @@ export function Register() {
             placeholder="E-mail"
             name="email"
             type="email"
-            value={email}
-            onChange={onChangeEmail}
+            value={values.email}
+            onChange={handleChange}
           />
         </div>
         <div className="mt-6">
           <Input
             placeholder="Пароль"
-            name="pass"
+            name="password"
             type="password"
             icon={"ShowIcon"}
-            value={pass}
-            onChange={onChangePass}
+            value={values.password}
+            onChange={handleChange}
           />
         </div>
         <div className="mt-6">
