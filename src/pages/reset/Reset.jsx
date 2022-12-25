@@ -2,35 +2,30 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { resetPass } from "../../services/actions/authentication";
 import resetStyles from "./Reset.module.css";
+import { useForm } from "../../hooks/useForm";
 
 export function Reset() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [pass, setPass] = useState("");
-  const [code, setCode] = useState("");
-  const error = useSelector(state => state.auth.error);
-  const recoveryEmail = useSelector(state => state.auth.recoveryEmail);
+  const { values, handleChange } = useForm({
+    password: "",
+    code: "",
+  });
+  const error = useSelector((state) => state.auth.error);
+  const recoveryEmail = useSelector((state) => state.auth.recoveryEmail);
 
   if (!recoveryEmail) {
     history.push("/forgot-password");
   }
 
-  function onChangePass(evt) {
-    setPass(evt.target.value);
-  }
-
-  function onChangeCode(evt) {
-    setCode(evt.target.value);
-  }
-
   function submitReset(evt) {
     evt.preventDefault();
-    dispatch(resetPass(pass, code))
+    dispatch(resetPass(values.password, values.code))
+      .then(() => history.push("/login"));
   }
 
   return (
@@ -41,10 +36,10 @@ export function Reset() {
         <div className={`${resetStyles.input_wrapper} mt-6`}>
           <Input
             placeholder="Введите новый пароль"
-            name="pass"
+            name="password"
             type="password"
-            onChange={onChangePass}
-            value={pass}
+            onChange={handleChange}
+            value={values.password}
             icon={"ShowIcon"}
           />
         </div>
@@ -53,8 +48,8 @@ export function Reset() {
             placeholder="Введите код из письма"
             name="code"
             type="text"
-            onChange={onChangeCode}
-            value={code}
+            onChange={handleChange}
+            value={values.code}
           />
         </div>
         <div className="mt-6">
