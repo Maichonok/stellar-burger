@@ -3,7 +3,7 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
 } from "../actions/constructor";
-import { ORDER_FAILURE } from "../actions/order";
+import { ORDER_FAILURE, ORDER_SUCCESS } from "../actions/order";
 import { v4 as uuid } from 'uuid';
 
 const INITIAL_STATE = {
@@ -15,6 +15,9 @@ export default function orderConstructor(
   action  
 ) {
   switch (action.type) {
+    case ORDER_SUCCESS: {
+      return INITIAL_STATE;
+    }
     case ORDER_FAILURE: {
       return INITIAL_STATE;
     }
