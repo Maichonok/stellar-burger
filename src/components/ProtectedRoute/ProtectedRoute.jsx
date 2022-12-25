@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
-import { isLoggedIn } from '../../utils/auth';
+import { isLoggedIn } from "../../utils/auth";
 
-const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
+const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
   const isAuthorized = isLoggedIn();
   const location = useLocation();
 

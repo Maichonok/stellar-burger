@@ -1,6 +1,13 @@
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const AUTH_BASE_URL = `${BASE_URL}/auth`;
+
+const setCookies = ({ refreshToken, accessToken }) => {
+  var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
+  Cookies.set("refreshToken", refreshToken, { expires: inTwentyMinutes });
+  Cookies.set("accessToken", accessToken, { expires: inTwentyMinutes });
+};
 
 const ingredientsConfig = {
   url: `${BASE_URL}/ingredients`,
@@ -30,9 +37,9 @@ const userData = {
   url: `${AUTH_BASE_URL}/user`,
   headers: {
     "Content-Type": "application/json",
-    authorization: ""
-  }, 
-}
+    authorization: "",
+  },
+};
 
 const login = {
   url: `${AUTH_BASE_URL}/login`,
@@ -85,8 +92,8 @@ function checkResponse(res) {
 
 const request = (url, options, checkToken = false) => {
   if (checkToken) {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = Cookies.get("accessToken");
+    const refreshToken = Cookies.get("refreshToken");
     if (!accessToken) {
       return Promise.reject(new Error(`Access token should be provided`));
     }
@@ -96,29 +103,26 @@ const request = (url, options, checkToken = false) => {
     let invalidToken = false;
     try {
       decoded = jwtDecode(accessToken);
-    } catch(e) {
+    } catch (e) {
       invalidToken = true;
     }
     if (decoded.exp * 1000 < currentDate.getTime() || invalidToken) {
       fetch(token.url, {
         ...token,
         body: JSON.stringify({
-          token: refreshToken
-        })
+          token: refreshToken,
+        }),
       })
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((data) => {
-          console.log("set new token", data)
-          localStorage.setItem("refreshToken", data.refreshToken);
-          localStorage.setItem("accessToken", data.accessToken);
+          setCookies(data);
         });
-    } 
-    options.headers.authorization = accessToken;  
+    }
+    options.headers.authorization = accessToken;
   }
- 
-  return fetch(url, options)
-        .then(checkResponse);
-}
+
+  return fetch(url, options).then(checkResponse);
+};
 
 const getData = () => request(`${ingredientsConfig.url}`);
 
@@ -136,12 +140,10 @@ const registerRequest = (name, email, pass) =>
       password: pass,
       name: name,
     }),
-  })
-  .then(res => {
-    localStorage.setItem("accessToken", res.accessToken);
-    localStorage.setItem("refreshToken", res.refreshToken)
+  }).then((res) => {
+    setCookies(res);
     return res;
-  })
+  });
 
 const loginRequest = (email, pass) =>
   request(login.url, {
@@ -150,12 +152,10 @@ const loginRequest = (email, pass) =>
       email: email,
       password: pass,
     }),
-  })
-  .then(res => {
-    localStorage.setItem("accessToken", res.accessToken);
-    localStorage.setItem("refreshToken", res.refreshToken)
+  }).then((res) => {
+    setCookies(res);
     return res;
-  })
+  });
 
 const restorePassword = (email) =>
   request(passwordRestore.url, {
@@ -174,32 +174,35 @@ const resetPassword = (pass, code) =>
     }),
   });
 
-const fetchUserData = () => 
-  request(userData.url, {
-    ...userData
-  }, true);
+const fetchUserData = () =>
+  request(
+    userData.url,
+    {
+      ...userData,
+    },
+    true
+  );
 
-
-const updateUserData = data => {
+const updateUserData = (data) => {
   return request(userData.url, {
     ...userData,
-    method: 'PATCH',
-    body: JSON.stringify(data)
-  })
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
 };
 
 const logoutRequest = () => {
-  const token = localStorage.getItem("refreshToken");
-  localStorage.clear();
+  const token = Cookies.get("refreshToken");
+  Cookies.remove("refreshToken");
+  Cookies.remove("accessToken");
 
   return request(logout.url, {
     ...logout,
     body: JSON.stringify({
-      token
-    })
+      token,
+    }),
   });
 };
-
 
 export {
   getData,
@@ -210,5 +213,5 @@ export {
   resetPassword,
   fetchUserData,
   logoutRequest,
-  updateUserData
+  updateUserData,
 };
