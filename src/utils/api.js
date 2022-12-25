@@ -1,10 +1,9 @@
-import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const AUTH_BASE_URL = `${BASE_URL}/auth`;
 
 const setCookies = ({ refreshToken, accessToken }) => {
-  var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
+  const inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
   Cookies.set("refreshToken", refreshToken, { expires: inTwentyMinutes });
   Cookies.set("accessToken", accessToken, { expires: inTwentyMinutes });
 };
