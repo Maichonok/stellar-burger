@@ -7,8 +7,7 @@ import { Profile } from "../pages/profile/Profile";
 import { Register } from "../pages/register/Register";
 import { RestorePassword } from "../pages/restorePassword/RestorePassword";
 import { Reset } from "../pages/reset/Reset";
-import Authenticated from "./Authenticated";
-import NonAuthenticated from "./NonAuthenticated";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Header from "./Headers/AppHeader";
 import { Ingredients } from "../pages/ingredients/IngredientsPage";
 import { getIngredients } from "../services/actions/burgerIngredients";
@@ -29,21 +28,21 @@ export const App = () => {
     <div>
       <Header />
       <Switch location={background || location}>
-        <NonAuthenticated path="/login">
+        <ProtectedRoute path="/login">
           <Login />
-        </NonAuthenticated>
-        <Authenticated path="/profile">
+        </ProtectedRoute>
+        <ProtectedRoute onlyForAuth path="/profile">
           <Profile />
-        </Authenticated>
-        <NonAuthenticated path="/register">
+        </ProtectedRoute>
+        <ProtectedRoute path="/register">
           <Register />
-        </NonAuthenticated>
-        <NonAuthenticated path="/forgot-password">
+        </ProtectedRoute>
+        <ProtectedRoute path="/forgot-password">
           <RestorePassword />
-        </NonAuthenticated>
-        <NonAuthenticated path="/reset-password">
+        </ProtectedRoute>
+        <ProtectedRoute path="/reset-password">
           <Reset />
-        </NonAuthenticated>
+        </ProtectedRoute>
 
         <Route exact path="/">
           <Main />

@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import burgerConstructorStyle from "./BurgerConstructor.module.css";
-import { isLoggedIn } from "../../utils/auth";
 import { Constructor } from "./Constructor/Constructor";
 import { ButtonLarge } from "./ButtonLarge/ButtonLarge";
 import { FullPrice } from "./FullPrice/FullPrice";
 import { order, openOrderModal } from "../../services/actions/order";
+import { isLoggedIn } from "../../utils/auth";
 
 export default function BurgerConstructor(props) {
   const dispatch = useDispatch();
