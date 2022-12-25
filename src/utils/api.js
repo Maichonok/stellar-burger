@@ -94,31 +94,30 @@ const request = (url, options, checkToken = false) => {
   if (checkToken) {
     const accessToken = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
-    if (!accessToken) {
-      return Promise.reject(new Error(`Access token should be provided`));
-    }
 
-    const currentDate = new Date();
-    let decoded;
-    let invalidToken = false;
-    try {
-      decoded = jwtDecode(accessToken);
-    } catch (e) {
-      invalidToken = true;
+    if (accessToken) {
+      // we assume it is valid token
+      options.headers.authorization = accessToken;
+    } else {
+      // otherwise prolong or reject completely
+      // should prolong
+      if (refreshToken) {
+        fetch(token.url, {
+          ...token,
+          body: JSON.stringify({
+            token: refreshToken,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setCookies(data);
+            options.headers.authorization = data.accessToken;
+          });
+      } else {
+        // completely new visitor
+        return Promise.reject(new Error(`Access token should be provided`));
+      }
     }
-    if (decoded.exp * 1000 < currentDate.getTime() || invalidToken) {
-      fetch(token.url, {
-        ...token,
-        body: JSON.stringify({
-          token: refreshToken,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setCookies(data);
-        });
-    }
-    options.headers.authorization = accessToken;
   }
 
   return fetch(url, options).then(checkResponse);
