@@ -94,7 +94,7 @@ const request = (url, options, checkToken = false) => {
     const accessToken = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
 
-    if (accessToken) {
+    if (!!accessToken) {
       // we assume it is valid token
       options.headers.authorization = accessToken;
     } else {

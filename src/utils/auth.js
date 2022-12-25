@@ -1,5 +1,5 @@
-import Cookes from "js-cookie";
+import Cookies from "js-cookie";
 
 export const isLoggedIn = () => {
-  return !!Cookes.get("accessToken");
+  return !!Cookies.get("accessToken");
 };
