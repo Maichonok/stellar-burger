@@ -15,7 +15,7 @@ export default function BurgerIngredients(props) {
   const sauceTopRef = React.useRef(null);
 
   const [bunRef, bunIsInView] = useInView({
-    threshold: 0.2,
+    threshold: 1,
   });
 
   const [mainRef, mainIsInView] = useInView({

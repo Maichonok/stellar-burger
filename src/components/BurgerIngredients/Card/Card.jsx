@@ -1,5 +1,5 @@
 import React from "react";
-import { useDrag } from 'react-dnd'
+import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
 import cardStyle from "./Card.module.css";
 import {
@@ -12,8 +12,8 @@ function Card(props) {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: dragTypes.CARD,
     item: { data: props.data },
-    collect: monitor => ({
-      isDragging: monitor.isDragging()
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
     }),
   }));
 
@@ -21,9 +21,9 @@ function Card(props) {
   const cursor = isDragging ? "grabbing" : "pointer";
 
   return (
-    <div 
-      className={cardStyle.cardWrapper} 
-      ref={dragRef} 
+    <div
+      className={cardStyle.cardWrapper}
+      ref={dragRef}
       style={{ opacity, cursor }}
     >
       <img src={props.image} alt={props.name} className={cardStyle.cardImage} />
@@ -31,11 +31,7 @@ function Card(props) {
         <p className="text text_type_digits-default mr-2">{props.price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <p
-        className={`${cardStyle.cardName} text text_type_main-default pb-10 pt-1`}
-      >
-        {props.name}
-      </p>
+      <h3 className="text text_type_main-default pb-10 pt-1">{props.name}</h3>
       {!!props.count && <Counter count={props.count} size="default" />}
     </div>
   );
