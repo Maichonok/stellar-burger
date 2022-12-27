@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect} from "react";
+import { NavLink } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -26,10 +27,15 @@ export default function Appheader(props) {
   function MenuItem(props) {
     return (
       <div className={props.itemStyle}>
-        <a href={props.link} className={`${headerStyle.link}`}>
+        <NavLink
+          exact
+          activeClassName={headerStyle.linkActive}
+          to={props.link}
+          className={`${headerStyle.link} text_color_inactive`}
+        >
           {props.icon}
           <p className={props.styleText}>{props.text}</p>
-        </a>
+        </NavLink>
       </div>
     );
   }
@@ -39,30 +45,30 @@ export default function Appheader(props) {
         <MenuList>
           <MenuItem
             text="Конструктор"
-            link={"#"}
+            link={"/"}
             icon={<BurgerIcon type="primary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-1 pt-4 pb-4 pr-5 mr-2`}
             styleText={`text text_type_main-default pl-2`}
           />
           <MenuItem
             text="Лента заказов"
-            link={"#"}
+            link={"/orders"}
             icon={<ListIcon type="secondary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4 pr-3`}
-            styleText={`text text_type_main-default text_color_inactive pl-2`}
+            styleText={`text text_type_main-default pl-2`}
           />
         </MenuList>
         <MenuItem
-          link={"#"}
+          link={"/"}
           icon={<Logo />}
           itemStyle={`${headerStyle.logo}`}
         />
         <MenuItem
           text="Личный кабинет"
-          link={"#"}
+          link={"/profile"}
           icon={<ProfileIcon type="secondary" />}
           itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4`}
-          styleText={`text text_type_main-default text_color_inactive pl-2`}
+          styleText={`text text_type_main-default pl-2`}
         />
       </Menu>
     </Header>

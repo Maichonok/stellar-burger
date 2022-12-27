@@ -1,14 +1,12 @@
 import React, { useMemo } from "react";
-import { useSelector, useDispatch } from 'react-redux'
-import { useInView } from 'react-intersection-observer';
+import { useSelector, useDispatch } from "react-redux";
+import { useInView } from "react-intersection-observer";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
 import { IngredientSection } from "./IngredientSection/IngredientSection";
 import { IngredientsTitle } from "./IngredientsTitle/IngredientsTitle";
 import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
-
-import { toggleCurrent } from "../../services/actions/burgerIngredients";
 import { openIngredientModal } from "../../services/actions/ingredientsDetails";
 
 export default function BurgerIngredients(props) {
@@ -16,23 +14,23 @@ export default function BurgerIngredients(props) {
   const mainTopRef = React.useRef(null);
   const sauceTopRef = React.useRef(null);
 
-  const [ bunRef, bunIsInView ] = useInView({
-    threshold: 0.2
+  const [bunRef, bunIsInView] = useInView({
+    threshold: 1,
   });
 
-  const [ mainRef, mainIsInView ] = useInView({
-    threshold: 0.2
+  const [mainRef, mainIsInView] = useInView({
+    threshold: 0.2,
   });
 
-  const [ sauceRef, sauceIsInView ] = useInView({
-    threshold: 0.2
+  const [sauceRef, sauceIsInView] = useInView({
+    threshold: 0.2,
   });
 
   function IngredientsTabs(props) {
     const scrollTab = (tab) => {
       tab.current.scrollIntoView({ behavior: "smooth" });
     };
-  
+
     return (
       <div className={props.tabStyle}>
         <Tab
@@ -60,28 +58,38 @@ export default function BurgerIngredients(props) {
     );
   }
 
-  const getData = (arr, type) => 
+  const getData = (arr, type) =>
     data
       .filter((item) => item.type === type)
-      .map(i => {
-        const count = selectedIngredients
-          .filter(s => s._id === i._id).length;
-        return {...i, count};
+      .map((i) => {
+        const count = selectedIngredients.filter((s) => s._id === i._id).length;
+        return { ...i, count };
       });
-  
-  const data = useSelector(state => state.burgerIngredients.data);
-  const selectedIngredients = useSelector(state => state.orderConstructor.ingredients);
-    
-  const bunArr = useMemo(() => getData(data, 'bun'), [data, selectedIngredients]);
-  const mainArr = useMemo(() => getData(data, 'main'), [data, selectedIngredients]);
-  const sauceArr = useMemo(() => getData(data, 'sauce'), [data, selectedIngredients]);
+
+  const data = useSelector((state) => state.burgerIngredients.data);
+  const selectedIngredients = useSelector(
+    (state) => state.orderConstructor.ingredients
+  );
+
+  const bunArr = useMemo(
+    () => getData(data, "bun"),
+    [data, selectedIngredients]
+  );
+  const mainArr = useMemo(
+    () => getData(data, "main"),
+    [data, selectedIngredients]
+  );
+  const sauceArr = useMemo(
+    () => getData(data, "sauce"),
+    [data, selectedIngredients]
+  );
 
   const dispatch = useDispatch();
 
-  const open = id => {
+  const open = (id) => {
     dispatch(openIngredientModal());
-    dispatch(toggleCurrent(id));
-  }
+    // dispatch(toggleCurrent(id));
+  };
 
   return (
     <IngredientSection sectionStyle={`${burgeringredientStyle.section} mt-10`}>
@@ -94,16 +102,21 @@ export default function BurgerIngredients(props) {
         <IngredientWrapper text="Булки" tabTopRef={bunTopRef} tabRef={bunRef}>
           <CardMap data={bunArr} open={open} />
         </IngredientWrapper>
-        <IngredientWrapper text="Соусы" tabTopRef={sauceTopRef} tabRef={sauceRef}>
+        <IngredientWrapper
+          text="Соусы"
+          tabTopRef={sauceTopRef}
+          tabRef={sauceRef}
+        >
           <CardMap data={sauceArr} open={open} />
         </IngredientWrapper>
-        <IngredientWrapper text="Начинки" tabTopRef={mainTopRef} tabRef={mainRef}>
+        <IngredientWrapper
+          text="Начинки"
+          tabTopRef={mainTopRef}
+          tabRef={mainRef}
+        >
           <CardMap data={mainArr} open={open} />
         </IngredientWrapper>
       </div>
     </IngredientSection>
   );
 }
-
-
-

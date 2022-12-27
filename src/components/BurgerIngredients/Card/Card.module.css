@@ -4,6 +4,7 @@
   width: 100%;
   cursor: pointer;
   max-width: 272px;
+  color: #fff;
 }
 
 .cardImage {
@@ -14,8 +15,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.cardName {
-  text-align: center;
 }
