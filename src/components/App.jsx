@@ -9,10 +9,13 @@ import { RestorePassword } from "../pages/restorePassword/RestorePassword";
 import { Reset } from "../pages/reset/Reset";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Header from "./Headers/AppHeader";
+import { Feed } from "./Feed/OrderFeed";
 import { Ingredients } from "../pages/ingredients/IngredientsPage";
 import { getIngredients } from "../services/actions/burgerIngredients";
 import { IngredientsModal } from "./ingredientsModal/IngredientsModal";
+import { OrderHistory } from "./OrderHistory/OrderHistory";
 import "../index.css";
+import { FeedItem } from "./FeedItem/FeedItem";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +37,9 @@ export const App = () => {
         <ProtectedRoute onlyForAuth path="/profile">
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute onlyForAuth path="/profile/orders">
+          <OrderHistory />
+        </ProtectedRoute>
         <ProtectedRoute path="/register">
           <Register />
         </ProtectedRoute>
@@ -43,7 +49,9 @@ export const App = () => {
         <ProtectedRoute path="/reset-password">
           <Reset />
         </ProtectedRoute>
-
+        <Route path="/feed">
+          <Feed />
+        </Route>
         <Route exact path="/">
           <Main />
         </Route>
@@ -51,9 +59,13 @@ export const App = () => {
         <Route path="/ingredients/:id">
           <Ingredients />
         </Route>
+        <Route path="/feed/:id">
+          <FeedItem />
+        </Route>
       </Switch>
-
+      
       {/* show modal */}
+     
       {background && (
         <Route path="/ingredients/:id">
           <IngredientsModal />

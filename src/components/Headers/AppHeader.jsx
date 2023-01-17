@@ -52,7 +52,7 @@ export default function Appheader(props) {
           />
           <MenuItem
             text="Лента заказов"
-            link={"/orders"}
+            link={"/feed"}
             icon={<ListIcon type="secondary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4 pr-3`}
             styleText={`text text_type_main-default pl-2`}
