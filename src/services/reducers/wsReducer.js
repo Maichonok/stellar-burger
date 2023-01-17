@@ -32,11 +32,12 @@ export function wsReducer(state = initialState, action) {
         isConnect: false,
       };
     case WS_GET_ORDERS:
+      console.log(action,111)
       return {
         ...state,
-        orders: action.payload.orders,
-        total: action.payload.total,
-        totalToday: action.payload.totalToday,
+        // orders: action.payload.orders,
+        // total: action.payload.total,
+        // totalToday: action.payload.totalToday,
       };
     default:
       return state;

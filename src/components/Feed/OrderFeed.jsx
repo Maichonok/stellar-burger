@@ -1,12 +1,21 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { FeedItem } from "../FeedItem/FeedItem";
 import { OrdersBoard } from "../Board/OrdersBoard";
 import feedStyles from "./OrderFeed.module.css";
 
 export function Feed() {
+  const dispatch = useDispatch();
   const orders = useSelector((store) => store.wsReducer.orders);
   const location = useLocation();
+
+  useEffect(() => {
+    dispatch({
+      type: "WS_CONNECTION_START"
+    });  
+  }, []);
+
   return (
     <section className={feedStyles.feed_section}>
       <h2 className="text text_type_main-large mt-10">Лента заказов</h2>
