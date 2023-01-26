@@ -1,4 +1,4 @@
-import { getToken } from "../../utils/auth";
+import { getRawToken } from "../../utils/auth";
 
 export function socketMiddleware(url, actions, isLogin = false) {
   return (store) => {
@@ -10,27 +10,22 @@ export function socketMiddleware(url, actions, isLogin = false) {
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
         actions;
 
-      const token = getToken();
+      const token = getRawToken();
 
       if (type === wsInit) {
-        console.log("hey nnaaaaa")
         socket = !isLogin
           ? new WebSocket(url)
           : new WebSocket(`${url}?token=${token}`);
-        
         // function that is called when opening a socket
         socket.onopen = (event) => {
-          console.log("hey nnaaaaa")
           dispatch({ type: onOpen, payload: event });
         };
         // error connection
         socket.onerror = (event) => {
-          console.log("hey nnaaaaa")
           dispatch({ type: onError, payload: event });
         };
         // receiving event from server
         socket.onmessage = (event) => {
-          console.log("hey nnaaaaa")
           let { data } = event;
           data = JSON.parse(data);
           dispatch({ type: onMessage, payload: data });

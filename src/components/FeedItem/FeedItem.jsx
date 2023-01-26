@@ -1,15 +1,12 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import feedItemStyles from "./FeedItem.module.css";
 
-export function FeedItem({ order }) {
+export function FeedItem({ order, ingredientsData }) {
   const { createdAt, number, name } = order;
-  const ingredients = useSelector(
-    (store) => store.ingredients.burgerIngredients
-  );
+  
   const ingrList = order.ingredients;
   let resArr = [];
-  for (let el of ingredients) {
+  for (let el of ingredientsData) {
     for (let id of ingrList) {
       if (el._id === id) {
         resArr.push(el);

@@ -11,11 +11,13 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Header from "./Headers/AppHeader";
 import { Feed } from "./Feed/OrderFeed";
 import { Ingredients } from "../pages/ingredients/IngredientsPage";
+import { ItemOfFeed } from "../pages/feedItem/FeedItemPage";
 import { getIngredients } from "../services/actions/burgerIngredients";
-import { IngredientsModal } from "./ingredientsModal/IngredientsModal";
-import { OrderHistory } from "./OrderHistory/OrderHistory";
+import { IngredientsModal } from "./IngredientsModal/IngredientsModal";
 import "../index.css";
-import { FeedItem } from "./FeedItem/FeedItem";
+import { OrderInfo } from "./OrderInfo/OrderInfo";
+import { ProfileOrders } from "./ProfileOrders/ProfileOrders";
+import { FeedItemModal } from "./FeedItemModal/FeedItemModal";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -34,11 +36,16 @@ export const App = () => {
         <ProtectedRoute path="/login">
           <Login />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth path="/profile">
-          <Profile />
+
+        <ProtectedRoute onlyForAuth path="/profile/orders/:id">
+          <OrderInfo />
         </ProtectedRoute>
         <ProtectedRoute onlyForAuth path="/profile/orders">
-          <OrderHistory />
+          <ProfileOrders />
+        </ProtectedRoute>
+
+        <ProtectedRoute onlyForAuth path="/profile">
+          <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/register">
           <Register />
@@ -49,9 +56,6 @@ export const App = () => {
         <ProtectedRoute path="/reset-password">
           <Reset />
         </ProtectedRoute>
-        <Route path="/feed">
-          <Feed />
-        </Route>
         <Route exact path="/">
           <Main />
         </Route>
@@ -59,18 +63,30 @@ export const App = () => {
         <Route path="/ingredients/:id">
           <Ingredients />
         </Route>
+
         <Route path="/feed/:id">
-          <FeedItem />
+          <ItemOfFeed />
+        </Route>
+        <Route path="/feed">
+          <Feed />
         </Route>
       </Switch>
-      
+
       {/* show modal */}
-     
+
       {background && (
         <Route path="/ingredients/:id">
           <IngredientsModal />
         </Route>
       )}
+
+      {background && (
+        <Route path="/feed/:id">
+          <FeedItemModal />
+        </Route>
+      )}
+
+        
     </div>
   );
 };

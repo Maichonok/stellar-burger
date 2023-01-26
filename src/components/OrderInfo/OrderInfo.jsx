@@ -5,22 +5,21 @@ import detailsStyles from "./OrderInfo.module.css";
 
 export function OrderInfo() {
   const orders = useSelector((store) => store.wsUserReducer.orders);
-  const isLogin = useSelector((store) => store.register.isLogin);
   const ingredients = useSelector(
-    (store) => store.ingredients.burgerIngredients
+    (store) => store.burgerIngredients.data
   );
   const { id } = useParams();
 
   const order = orders?.find((el) => el._id === id);
   const ingrList = order?.ingredients;
-  let summ = 0;
+  let sum = 0;
   let resArr = [];
   if (ingrList) {
     for (let el of ingredients) {
       for (let id of ingrList) {
         if (el._id === id) {
           resArr.push(el);
-          summ += el.price;
+          sum += el.price;
         }
       }
     }
@@ -38,6 +37,7 @@ export function OrderInfo() {
       {resArr && (
         <div className={detailsStyles.background}>
           <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
+            123
             <div>
               <p
                 className={`${detailsStyles.number} text text_type_digits-default`}
@@ -90,12 +90,12 @@ export function OrderInfo() {
                   })}
                 </ul>
               </div>
-              <div className={`${detailsStyles.summ_wrapper} mt-10`}>
+              <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
                   {order?.createdAt}
                 </p>
-                <div className={detailsStyles.summ_wrapper_small}>
-                  <p className="text text_type_digits-default mr-2">{summ}</p>
+                <div className={detailsStyles.sum_wrapper_small}>
+                  <p className="text text_type_digits-default mr-2">{sum}</p>
                   <CurrencyIcon />
                 </div>
               </div>

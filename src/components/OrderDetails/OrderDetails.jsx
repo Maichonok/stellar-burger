@@ -7,7 +7,7 @@ function OrderDetails() {
   const orderNumber = useSelector(
     (state) => state.orderDetails.data.order.number
   );
-  const error = useSelector((state) => state.orderDetails.erorr);
+  const error = useSelector((state) => state.orderDetails.error);
   
   return (
     <div className={`${orderDetailsStyle.wrapper}  pr-25 pl-25`}>

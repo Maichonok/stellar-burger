@@ -1,12 +1,11 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import ordersStyles from "./OrderHistory.module.css";
+import ordersStyles from "./ProfileOrderItem.module.css";
 
-export function OrderHistory({ order }) {
+export function ProfileOrderItem({ order }) {
   const { createdAt, number, name } = order;
-  const ingredients = useSelector(
-    (store) => store.ingredients.burgerIngredients
-  );
+  const ingredients = useSelector((store) => store.burgerIngredients.data);
+
   const ingrList = order.ingredients;
   let resArr = [];
   for (let el of ingredients) {
