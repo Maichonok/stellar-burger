@@ -33,19 +33,3 @@
 .active_button {
   color: #fff;
 }
-
-.inputs_wrapper {
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-}
-.input {
-  width: 100%;
-}
-.error {
-  
-}
-.buttons_wrapper {
-  display: flex;
-  justify-content: space-between;
-}

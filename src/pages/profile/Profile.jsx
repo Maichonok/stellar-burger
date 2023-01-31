@@ -1,45 +1,20 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  Button,
-  Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
+import { Route, Switch, useLocation, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
+import { ProfileForm } from "../../components/ProfileForm/ProfileForm";
+import { ProfileOrders } from "../../components/ProfileOrders/ProfileOrders";
 import profileStyles from "./Profile.module.css";
-import {
-  getUser,
-  setUserData,
-  saveUser,
-  resetUser,
-  logout
-} from "../../services/actions/authentication";
+import { logout } from "../../services/actions/authentication";
 
 export function Profile() {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth.user);
-  const error = useSelector((state) => state.auth.error);
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
-  const onChange = (e) => {
-    dispatch(setUserData({ [e.target.name]: e.target.value }));
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(saveUser(user));
-  };
-
-  const onCancel = () => {
-    dispatch(resetUser());
-  };
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   const onLogout = () => {
     dispatch(logout());
-  }
+  };
 
   return (
     <section className={profileStyles.content_box}>
@@ -76,52 +51,17 @@ export function Profile() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-
-      <form
-        className={`${profileStyles.inputs_wrapper} ml-15`}
-        onSubmit={onSubmit}
-      >
-        {error && (
-          <p className="text text_type_main-medium pb-15">Error: {error}</p>
-        )}
-        <div className={profileStyles.input}>
-          <Input
-            size="default"
-            placeholder="Имя"
-            icon={"EditIcon"}
-            name="name"
-            type="text"
-            value={user.name}
-            onChange={onChange}
-          />
-        </div>
-        <div className="mt-6">
-          <Input
-            placeholder="Логин"
-            icon={"EditIcon"}
-            name="email"
-            type="email"
-            value={user.email}
-            onChange={onChange}
-          />
-        </div>
-        <div className="mt-6">
-          <Input
-            placeholder="Пароль"
-            icon={"EditIcon"}
-            name="password"
-            type="password"
-            value={user.password}
-            onChange={onChange}
-          />
-        </div>
-        <div className={`${profileStyles.buttons_wrapper} mt-6`}>
-          <Button htmlType="button" onClick={onCancel}>
-            Отмена
-          </Button>
-          <Button htmlType="submit">Сохранить</Button>
-        </div>
-      </form>
+      <Switch>
+        <Route exact path="/profile">
+          <ProfileForm />
+        </Route>
+        <Route path="/profile/orders">
+          <ProfileOrders />
+        </Route>
+        {/* <ProtectedRoute path="/orders">
+          <ProfileForm />
+        </ProtectedRoute> */}
+      </Switch>
     </section>
   );
 }

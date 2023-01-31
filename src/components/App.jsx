@@ -7,7 +7,7 @@ import { Profile } from "../pages/profile/Profile";
 import { Register } from "../pages/register/Register";
 import { RestorePassword } from "../pages/restorePassword/RestorePassword";
 import { Reset } from "../pages/reset/Reset";
-import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute/ProtectedRoute";
 import Header from "./Headers/AppHeader";
 import { Feed } from "./Feed/OrderFeed";
 import { Ingredients } from "../pages/ingredients/IngredientsPage";
@@ -15,9 +15,10 @@ import { ItemOfFeed } from "../pages/feedItem/FeedItemPage";
 import { getIngredients } from "../services/actions/burgerIngredients";
 import { IngredientsModal } from "./IngredientsModal/IngredientsModal";
 import "../index.css";
-import { OrderInfo } from "./OrderInfo/OrderInfo";
-import { ProfileOrders } from "./ProfileOrders/ProfileOrders";
+// import { OrderInfo } from "./OrderInfo/OrderInfo";
+// import { ProfileOrders } from "./ProfileOrders/ProfileOrders";
 import { FeedItemModal } from "./FeedItemModal/FeedItemModal";
+import { ProfileOrderItem } from "./ProfileOrderItem/ProfileOrderItem";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -37,12 +38,12 @@ export const App = () => {
           <Login />
         </ProtectedRoute>
 
-        <ProtectedRoute onlyForAuth path="/profile/orders/:id">
+        {/* <ProtectedRoute onlyForAuth path="/profile/orders/:id">
           <OrderInfo />
         </ProtectedRoute>
         <ProtectedRoute onlyForAuth path="/profile/orders">
           <ProfileOrders />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
 
         <ProtectedRoute onlyForAuth path="/profile">
           <Profile />
@@ -70,6 +71,9 @@ export const App = () => {
         <Route path="/feed">
           <Feed />
         </Route>
+        {/* <Route path="/profile/orders/:id">
+          <ItemOfFeed />
+        </Route> */}
       </Switch>
 
       {/* show modal */}
@@ -85,8 +89,6 @@ export const App = () => {
           <FeedItemModal />
         </Route>
       )}
-
-        
     </div>
   );
 };
