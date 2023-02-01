@@ -5,6 +5,8 @@ import { ProfileForm } from "../../components/ProfileForm/ProfileForm";
 import { ProfileOrders } from "../../components/ProfileOrders/ProfileOrders";
 import profileStyles from "./Profile.module.css";
 import { logout } from "../../services/actions/authentication";
+import { ProfileOrderModal } from "../../components/ProfileOrderModal/ProfileOrderModal";
+import { ProfileOrderPage } from "./ProfileOrderPage";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -51,16 +53,13 @@ export function Profile() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <Switch>
+      <Switch location={background || location}>
         <Route exact path="/profile">
           <ProfileForm />
         </Route>
         <Route path="/profile/orders">
           <ProfileOrders />
         </Route>
-        {/* <ProtectedRoute path="/orders">
-          <ProfileForm />
-        </ProtectedRoute> */}
       </Switch>
     </section>
   );

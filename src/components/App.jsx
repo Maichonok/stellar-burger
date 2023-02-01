@@ -19,6 +19,8 @@ import "../index.css";
 // import { ProfileOrders } from "./ProfileOrders/ProfileOrders";
 import { FeedItemModal } from "./FeedItemModal/FeedItemModal";
 import { ProfileOrderItem } from "./ProfileOrderItem/ProfileOrderItem";
+import { ProfileOrderModal } from "./ProfileOrderModal/ProfileOrderModal";
+import { ProfileOrderPage } from "../pages/profile/ProfileOrderPage";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -38,12 +40,9 @@ export const App = () => {
           <Login />
         </ProtectedRoute>
 
-        {/* <ProtectedRoute onlyForAuth path="/profile/orders/:id">
-          <OrderInfo />
+        <ProtectedRoute onlyForAuth path="/profile/orders/:id">
+          <ProfileOrderPage />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth path="/profile/orders">
-          <ProfileOrders />
-        </ProtectedRoute> */}
 
         <ProtectedRoute onlyForAuth path="/profile">
           <Profile />
@@ -71,9 +70,6 @@ export const App = () => {
         <Route path="/feed">
           <Feed />
         </Route>
-        {/* <Route path="/profile/orders/:id">
-          <ItemOfFeed />
-        </Route> */}
       </Switch>
 
       {/* show modal */}
@@ -87,6 +83,12 @@ export const App = () => {
       {background && (
         <Route path="/feed/:id">
           <FeedItemModal />
+        </Route>
+      )}
+
+      {background && (
+        <Route path="/profile/orders/:id">
+          <ProfileOrderModal />
         </Route>
       )}
     </div>
