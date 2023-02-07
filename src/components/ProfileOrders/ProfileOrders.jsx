@@ -4,7 +4,8 @@ import { ProfileOrderItem } from "../ProfileOrderItem/ProfileOrderItem";
 import profileOrdersStyles from "./ProfileOrders.module.css";
 
 export function ProfileOrders() {
-  const orders = useSelector((store) => store.wsUserReducer.orders);
+  const orders = useSelector((store) => store.wsUserReducer.orders)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const location = useLocation();
 
   return (

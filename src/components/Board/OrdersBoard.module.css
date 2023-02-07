@@ -23,8 +23,11 @@
   width: 272px;
 }
 
+
 .ready_digits {
   color: #00cccc;
+  margin: 0;
+  padding: 0;
 }
 
 .total_digits {

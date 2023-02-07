@@ -20,7 +20,7 @@ export function OrdersBoard() {
                   key={index}
                   className={`${boardStyles.ready_digits} text text_type_digits-default mt-2`}
                 >
-                  <p>{el.number}</p>
+                  <p className="text text_type_digits-default mt-2">{el.number}</p>
                 </li>
               ))}
             </ul>

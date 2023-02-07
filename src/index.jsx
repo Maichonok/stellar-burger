@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
-import { compose, createStore, applyMiddleware } from "redux";
+import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { App } from "./components/App";
@@ -50,14 +50,12 @@ const wsUserActions = {
   onMessage: WS_USER_GET_ORDERS,
 };
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(
-    applyMiddleware(thunk),
-    applyMiddleware(socketMiddleware(wsUrl, wsActions, false)),
-    applyMiddleware(socketMiddleware(wsUrlUser, wsUserActions, true))
-  )
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  applyMiddleware(socketMiddleware(wsUrl, wsActions, false)),
+  applyMiddleware(socketMiddleware(wsUrlUser, wsUserActions, true))
 );
+const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -37,7 +37,6 @@ export function OrderInfo() {
       {resArr && (
         <div className={detailsStyles.background}>
           <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
-            123
             <div>
               <p
                 className={`${detailsStyles.number} text text_type_digits-default`}

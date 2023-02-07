@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { ProfileOrderItem } from "../../components/ProfileOrderItem/ProfileOrderItem";
+import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
 import FeedItemPageStyles from "../feedItem/FeedItemPage.module.css";
 import { wsConnectedStart } from "../../services/actions/wsActions";
 
@@ -12,7 +12,7 @@ export const ProfileOrderPage = () => {
 
   return (
     <div className={FeedItemPageStyles.content_box}>
-       <ProfileOrderItem />
+       <OrderInfo />
     </div>
   );
 };

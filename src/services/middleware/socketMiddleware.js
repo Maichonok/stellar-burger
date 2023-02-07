@@ -28,6 +28,7 @@ export function socketMiddleware(url, actions, isLogin = false) {
         socket.onmessage = (event) => {
           let { data } = event;
           data = JSON.parse(data);
+
           dispatch({ type: onMessage, payload: data });
         };
         // close connecting

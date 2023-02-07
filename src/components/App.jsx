@@ -15,10 +15,7 @@ import { ItemOfFeed } from "../pages/feedItem/FeedItemPage";
 import { getIngredients } from "../services/actions/burgerIngredients";
 import { IngredientsModal } from "./IngredientsModal/IngredientsModal";
 import "../index.css";
-// import { OrderInfo } from "./OrderInfo/OrderInfo";
-// import { ProfileOrders } from "./ProfileOrders/ProfileOrders";
 import { FeedItemModal } from "./FeedItemModal/FeedItemModal";
-import { ProfileOrderItem } from "./ProfileOrderItem/ProfileOrderItem";
 import { ProfileOrderModal } from "./ProfileOrderModal/ProfileOrderModal";
 import { ProfileOrderPage } from "../pages/profile/ProfileOrderPage";
 
@@ -39,11 +36,9 @@ export const App = () => {
         <ProtectedRoute path="/login">
           <Login />
         </ProtectedRoute>
-
         <ProtectedRoute onlyForAuth path="/profile/orders/:id">
           <ProfileOrderPage />
         </ProtectedRoute>
-
         <ProtectedRoute onlyForAuth path="/profile">
           <Profile />
         </ProtectedRoute>

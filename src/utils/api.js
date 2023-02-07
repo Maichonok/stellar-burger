@@ -128,7 +128,7 @@ const order = (ingredients) =>
   request(orderConfig.url, {
     ...orderConfig,
     body: JSON.stringify({ ingredients }),
-  });
+  }, true);
 
 const registerRequest = (name, email, pass) =>
   request(register.url, {

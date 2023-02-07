@@ -5,8 +5,7 @@ import { ProfileForm } from "../../components/ProfileForm/ProfileForm";
 import { ProfileOrders } from "../../components/ProfileOrders/ProfileOrders";
 import profileStyles from "./Profile.module.css";
 import { logout } from "../../services/actions/authentication";
-import { ProfileOrderModal } from "../../components/ProfileOrderModal/ProfileOrderModal";
-import { ProfileOrderPage } from "./ProfileOrderPage";
+
 
 export function Profile() {
   const dispatch = useDispatch();

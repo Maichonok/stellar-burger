@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Modal from "../Modal/Modal";
-import { ProfileOrderItem } from "../ProfileOrderItem/ProfileOrderItem";
+import { OrderInfo } from "../OrderInfo/OrderInfo";
 
 export const ProfileOrderModal = (props) => {
   let history = useHistory();
@@ -12,7 +12,7 @@ export const ProfileOrderModal = (props) => {
 
   return (
     <Modal isOpen close={back}>
-    <ProfileOrderItem />
+    <OrderInfo />
   </Modal>
   );
 };
