@@ -1,11 +1,12 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { FormattedDate } from "react-intl";
 import detailsStyles from "./FeedDetails.module.css";
 
 export function FeedDetails() {
   const orders = useSelector((store) => store.wsReducer.orders);
-  const ingredients = useSelector(state => state.burgerIngredients.data);
+  const ingredients = useSelector((state) => state.burgerIngredients.data);
 
   const { id } = useParams();
   const order = orders?.find((el) => el._id === id);
@@ -29,7 +30,12 @@ export function FeedDetails() {
     }).length;
     return count;
   }
-  const showContent = resArr && order && ingredients;  
+  const showContent = resArr && order && ingredients;
+  console.log(order);
+
+  if (!order) {
+    return;
+  }
 
   return (
     <>
@@ -90,7 +96,14 @@ export function FeedDetails() {
               </div>
               <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
-                  {order?.createdAt}
+                  <FormattedDate
+                    value={order.createdAt}
+                    day="numeric"
+                    month="long"
+                    year="numeric"
+                    hour="numeric"
+                    minute="numeric"
+                  />
                 </p>
                 <div className={detailsStyles.sum_wrapper_small}>
                   <p className="text text_type_digits-default mr-2">{sum}</p>

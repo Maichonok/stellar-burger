@@ -24,6 +24,7 @@
   color: #8585ad;
   text-align: left;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .menu_button:hover {

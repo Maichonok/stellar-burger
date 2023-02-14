@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { FeedItem } from "../FeedItem/FeedItem";
+import { OrderItems } from "../OrderItems/OrderItems";
 import { OrdersBoard } from "../Board/OrdersBoard";
 import feedStyles from "./OrderFeed.module.css";
 import { wsConnectedStart } from "../../services/actions/wsActions";
@@ -30,7 +30,7 @@ export function Feed() {
                     state: { background: location },
                   }}
                 >
-                  <FeedItem order={order} ingredientsData={ingredients} />
+                  <OrderItems order={order} ingredientsData={ingredients} />
                 </Link>
               </li>
             ))}

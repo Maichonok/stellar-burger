@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { IntlProvider } from "react-intl";
 import Modal from "../Modal/Modal";
 import { OrderInfo } from "../OrderInfo/OrderInfo";
 
@@ -11,8 +12,10 @@ export const ProfileOrderModal = (props) => {
   };
 
   return (
-    <Modal isOpen close={back}>
-    <OrderInfo />
-  </Modal>
+    <IntlProvider messages={{}} locale="ru" defaultLocale="ru">
+      <Modal isOpen close={back}>
+        <OrderInfo />
+      </Modal>
+    </IntlProvider>
   );
 };

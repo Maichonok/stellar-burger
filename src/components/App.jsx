@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
+import { IntlProvider } from "react-intl";
 import { Main } from "./Main/Main";
 import { Login } from "../pages/login/Login";
 import { Profile } from "../pages/profile/Profile";
@@ -31,42 +32,43 @@ export const App = () => {
 
   return (
     <div>
-      <Header />
-      <Switch location={background || location}>
-        <ProtectedRoute path="/login">
-          <Login />
-        </ProtectedRoute>
-        <ProtectedRoute onlyForAuth path="/profile/orders/:id">
-          <ProfileOrderPage />
-        </ProtectedRoute>
-        <ProtectedRoute onlyForAuth path="/profile">
-          <Profile />
-        </ProtectedRoute>
-        <ProtectedRoute path="/register">
-          <Register />
-        </ProtectedRoute>
-        <ProtectedRoute path="/forgot-password">
-          <RestorePassword />
-        </ProtectedRoute>
-        <ProtectedRoute path="/reset-password">
-          <Reset />
-        </ProtectedRoute>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        {/* show full page*/}
-        <Route path="/ingredients/:id">
-          <Ingredients />
-        </Route>
+      <IntlProvider messages={{}} locale="ru" defaultLocale="ru">
+        <Header />
+        <Switch location={background || location}>
+          <ProtectedRoute path="/login">
+            <Login />
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth path="/profile/orders/:id">
+            <ProfileOrderPage />
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth path="/profile">
+            <Profile />
+          </ProtectedRoute>
+          <ProtectedRoute path="/register">
+            <Register />
+          </ProtectedRoute>
+          <ProtectedRoute path="/forgot-password">
+            <RestorePassword />
+          </ProtectedRoute>
+          <ProtectedRoute path="/reset-password">
+            <Reset />
+          </ProtectedRoute>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          {/* show full page*/}
+          <Route path="/ingredients/:id">
+            <Ingredients />
+          </Route>
 
-        <Route path="/feed/:id">
-          <ItemOfFeed />
-        </Route>
-        <Route path="/feed">
-          <Feed />
-        </Route>
-      </Switch>
-
+          <Route path="/feed/:id">
+            <ItemOfFeed />
+          </Route>
+          <Route path="/feed">
+            <Feed />
+          </Route>
+        </Switch>
+      </IntlProvider>
       {/* show modal */}
 
       {background && (

@@ -1,6 +1,7 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { FormattedDate } from "react-intl";
 import detailsStyles from "./OrderInfo.module.css";
 
 export function OrderInfo() {
@@ -91,7 +92,14 @@ export function OrderInfo() {
               </div>
               <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
-                  {order?.createdAt}
+                <FormattedDate
+                    value={order.createdAt}
+                    day="numeric"
+                    month="long"
+                    year="numeric"
+                    hour="numeric"
+                    minute="numeric"
+                  />
                 </p>
                 <div className={detailsStyles.sum_wrapper_small}>
                   <p className="text text_type_digits-default mr-2">{sum}</p>

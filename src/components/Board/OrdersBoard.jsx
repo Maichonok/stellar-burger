@@ -9,7 +9,6 @@ export function OrdersBoard() {
   const pendingArray = orders.filter((el) => el.status === "pending");
 
   return (
-    <>
       <div>
         <div className={boardStyles.status_container}>
           <div className={boardStyles.ready_wrapper}>
@@ -59,6 +58,5 @@ export function OrdersBoard() {
           </p>
         </div>
       </div>
-    </>
   );
 }
