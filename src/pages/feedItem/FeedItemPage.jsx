@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { FeedDetails } from "../../components/FeedDetails/FeedDetails";
 import FeedItemPageStyles from "../feedItem/FeedItemPage.module.css";
@@ -10,7 +10,7 @@ export const ItemOfFeed = () => {
     dispatch(wsConnectedStart());
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(wsConnectedClosed());
   }, []);
 

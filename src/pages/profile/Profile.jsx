@@ -26,6 +26,7 @@ export function Profile() {
               to="/profile"
               className={`${profileStyles.menu_button} text text_type_main-medium`}
               activeClassName={profileStyles.active_button}
+              exact
             >
               Профиль
             </NavLink>
@@ -35,6 +36,7 @@ export function Profile() {
               to="/profile/orders"
               className={`${profileStyles.menu_button} text text_type_main-medium`}
               activeClassName={profileStyles.active_button}
+              exact
             >
               История заказов
             </NavLink>
@@ -43,6 +45,7 @@ export function Profile() {
             <NavLink
               className={`${profileStyles.menu_button} text text_type_main-medium`}
               to="/login"
+              exact
             >
               <span onClick={onLogout}>Выход</span>
             </NavLink>

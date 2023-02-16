@@ -9,7 +9,8 @@ export function FeedDetails() {
   const ingredients = useSelector((state) => state.burgerIngredients.data);
 
   const { id } = useParams();
-  const order = orders?.find((el) => el._id === id);
+
+  const order = orders.find((el) => el._id === id);
   const ingrList = order?.ingredients;
   let sum = 0;
   let resArr = [];
@@ -31,7 +32,6 @@ export function FeedDetails() {
     return count;
   }
   const showContent = resArr && order && ingredients;
-  console.log(order);
 
   if (!order) {
     return;

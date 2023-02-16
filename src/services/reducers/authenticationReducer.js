@@ -53,6 +53,7 @@ const INITIAL_STATE = {
     name: "",
   },
   loading: false,
+  showButtons: false
 };
 
 const userDetails = (state = INITIAL_STATE, action) => {
@@ -162,6 +163,7 @@ const userDetails = (state = INITIAL_STATE, action) => {
           ...state.user,
           ...action.payload,
         },
+        showButtons: true
       };
     }
     case SAVE_USER_REQUEST: {
@@ -178,6 +180,7 @@ const userDetails = (state = INITIAL_STATE, action) => {
           ...state.user,
           ...action.payload,
         },
+        showButtons: false
       };
     }
     case SAVE_USER_FAILURE: {
@@ -190,6 +193,7 @@ const userDetails = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: { ...state.defaultUser },
+        showButtons: false
       };
     }
     case LOGOUT_REQUEST: {

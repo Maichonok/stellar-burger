@@ -32,7 +32,7 @@ export function OrderItems({ order }) {
           <p className="text text_type_digits-default">#{number}</p>
           <p className="text text_type_main-default text_color_inactive">
             <FormattedDate
-              value={order.createdAt}
+              value={order?.createdAt}
               day="numeric"
               month="long"
               year="numeric"

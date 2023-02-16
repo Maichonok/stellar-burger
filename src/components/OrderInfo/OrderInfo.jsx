@@ -93,7 +93,7 @@ export function OrderInfo() {
               <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
                 <FormattedDate
-                    value={order.createdAt}
+                    value={order?.createdAt}
                     day="numeric"
                     month="long"
                     year="numeric"
