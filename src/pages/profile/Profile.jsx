@@ -1,6 +1,5 @@
 import { Route, Switch, useLocation, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { ProfileForm } from "../../components/ProfileForm/ProfileForm";
 import { ProfileOrders } from "../../components/ProfileOrders/ProfileOrders";
 import profileStyles from "./Profile.module.css";

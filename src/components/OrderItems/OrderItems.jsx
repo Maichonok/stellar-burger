@@ -15,10 +15,8 @@ export function OrderItems({ order }) {
       }
     }
   }
-  let totalPrice = 0;
-  resArr.map((el) => {
-    totalPrice += el.price;
-  });
+
+  const totalPrice = resArr.reduce((acc, current) => acc + current.price, 0);
 
   const maxLength = resArr.length;
   const hideItems = maxLength - 6;

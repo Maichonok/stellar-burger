@@ -4,7 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import { OrderItems } from "../OrderItems/OrderItems";
 import { OrdersBoard } from "../Board/OrdersBoard";
 import feedStyles from "./OrderFeed.module.css";
-import { wsConnectedStart } from "../../services/actions/wsActions";
+import {
+  wsConnectedStart,
+  wsConnectedClosed,
+} from "../../services/actions/wsActions";
 
 export function Feed() {
   const dispatch = useDispatch();
@@ -14,8 +17,9 @@ export function Feed() {
 
   useEffect(() => {
     dispatch(wsConnectedStart());
+    return () => dispatch(wsConnectedClosed());
   }, []);
-
+ 
   return (
     <section className={feedStyles.feed_section}>
       <h2 className="text text_type_main-large mt-10">Лента заказов</h2>

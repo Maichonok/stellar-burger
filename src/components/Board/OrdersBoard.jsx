@@ -14,9 +14,9 @@ export function OrdersBoard() {
           <div className={boardStyles.ready_wrapper}>
             <p className={` text text_type_main-medium`}>Готовы:</p>
             <ul className={boardStyles.ready_list}>
-              {doneArray.map((el, index) => (
+              {doneArray.map(el => (
                 <li
-                  key={index}
+                  key={el._id}
                   className={`${boardStyles.ready_digits} text text_type_digits-default mt-2`}
                 >
                   <p className="text text_type_digits-default mt-2">{el.number}</p>
@@ -29,8 +29,8 @@ export function OrdersBoard() {
               В работе:
             </p>
             <ul className={boardStyles.ready_list}>
-              {pendingArray.map((el, index) => (
-                <li key={index}>
+              {pendingArray.map(el => (
+                <li key={el._id}>
                   <p className="text text_type_digits-default mt-2">
                     {el.number}
                   </p>

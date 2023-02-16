@@ -59,11 +59,11 @@ export function OrderInfo() {
               <p className="text text_type_main-medium mt-15">Состав:</p>
               <div className={`${detailsStyles.ingr_box} mt-6 pr-6`}>
                 <ul className={detailsStyles.ingr_wrapper}>
-                  {[...new Set(resArr)].map((el, index) => {
+                  {[...new Set(resArr)].map(el => {
                     return (
                       <li
                         className={`${detailsStyles.ingr_item} mt-6`}
-                        key={index}
+                        key={el._id}
                       >
                         <div className={detailsStyles.firs_ingr_wrapper}>
                           <div className={detailsStyles.image_wrapper}>
