@@ -1,3 +1,15 @@
 .wrapper {
   list-style-type: none;
+  overflow: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 270px);
+}
+
+.wrapper::-webkit-scrollbar {
+  background-color: #2f2f37;
+  width: 8px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
 }

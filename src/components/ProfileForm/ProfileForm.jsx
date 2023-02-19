@@ -65,18 +65,18 @@ export const ProfileForm = () => {
           onChange={onChange}
         />
       </div>
+      <div className="mt-6">
+        <Input
+          placeholder="Пароль"
+          icon={"EditIcon"}
+          name="password"
+          type="password"
+          value={user.password}
+          onChange={onChange}
+        />
+      </div>
       {showButtons && (
         <>
-          <div className="mt-6">
-            <Input
-              placeholder="Пароль"
-              icon={"EditIcon"}
-              name="password"
-              type="password"
-              value={user.password}
-              onChange={onChange}
-            />
-          </div>
           <div className={`${profileFormStyles.buttons_wrapper} mt-6`}>
             <Button htmlType="button" onClick={onCancel}>
               Отмена

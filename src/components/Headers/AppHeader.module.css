@@ -55,6 +55,10 @@
   color: #f2f2f3;
 }
 
+.linkActive svg {
+  fill: #f2f2f3;
+}
+
 .logo {
   display: flex;
   align-items: center;
