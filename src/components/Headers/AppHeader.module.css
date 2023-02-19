@@ -65,3 +65,7 @@
   justify-content: center;
   margin-right: 155px;
 }
+
+.logo svg {
+  fill: none;
+}
