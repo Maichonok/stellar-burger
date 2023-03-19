@@ -3,11 +3,12 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
 } from "../actions/constructor";
-import { ORDER_FAILURE, ORDER_SUCCESS } from "../actions/order";
+import { ORDER_REQUEST, ORDER_FAILURE, ORDER_SUCCESS } from "../actions/order";
 import { v4 as uuid } from 'uuid';
 
 const INITIAL_STATE = {
-  ingredients: []
+  ingredients: [],
+  loading: false
 };
 
 export default function orderConstructor(
@@ -15,6 +16,12 @@ export default function orderConstructor(
   action  
 ) {
   switch (action.type) {
+    case ORDER_REQUEST: {
+      return {
+        ...state,
+        loading: true
+      };  
+    }
     case ORDER_SUCCESS: {
       return INITIAL_STATE;
     }

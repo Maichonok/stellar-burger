@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   Logo,
@@ -28,7 +28,7 @@ export default function Appheader(props) {
     return (
       <div className={props.itemStyle}>
         <NavLink
-          exact
+          exact={props.exact}
           activeClassName={headerStyle.linkActive}
           to={props.link}
           className={`${headerStyle.link} text_color_inactive`}
@@ -45,14 +45,15 @@ export default function Appheader(props) {
         <MenuList>
           <MenuItem
             text="Конструктор"
+            exact
             link={"/"}
-            icon={<BurgerIcon type="primary" />}
+            icon={<BurgerIcon type="secondary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-1 pt-4 pb-4 pr-5 mr-2`}
             styleText={`text text_type_main-default pl-2`}
           />
           <MenuItem
             text="Лента заказов"
-            link={"/orders"}
+            link={"/feed"}
             icon={<ListIcon type="secondary" />}
             itemStyle={`${headerStyle.menuItems} mt-4 mb-4 pl-5 pt-4 pb-4 pr-3`}
             styleText={`text text_type_main-default pl-2`}
@@ -60,7 +61,7 @@ export default function Appheader(props) {
         </MenuList>
         <MenuItem
           link={"/"}
-          icon={<Logo />}
+          icon={<Logo type="secondary" />}
           itemStyle={`${headerStyle.logo}`}
         />
         <MenuItem

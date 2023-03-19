@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { isLoggedIn } from "../../utils/auth";
 
-const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
+export const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
   const isAuthorized = isLoggedIn();
   const location = useLocation();
 
@@ -14,7 +14,6 @@ const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
       </Route>
     );
   }
-
   if (onlyForAuth && !isAuthorized) {
     return (
       <Route {...rest}>
@@ -22,7 +21,5 @@ const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
       </Route>
     );
   }
-
   return <Route {...rest}>{children}</Route>;
 };
-export default ProtectedRoute;

@@ -11,7 +11,8 @@ import { isLoggedIn } from "../../utils/auth";
 export default function BurgerConstructor(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const data = useSelector((state) => state.orderConstructor.ingredients);
+  const data = useSelector(state => state.orderConstructor.ingredients);
+  const loading = useSelector(state => state.orderConstructor.loading);
 
   const totalPrice = useMemo(() => {
     let sum = 0;
@@ -39,7 +40,12 @@ export default function BurgerConstructor(props) {
       <Constructor data={data} />
       <div className={`${burgerConstructorStyle.total} pr-4 pb-10`}>
         <FullPrice price={Number(totalPrice)} />
-        <ButtonLarge text={"Оформить заказ"} onClick={onClick} />
+        <ButtonLarge 
+          text={"Оформить заказ"}
+          loadingText={"Заказ оформляется..."}
+          loading={loading}
+          onClick={onClick} 
+        />
       </div>
     </section>
   );

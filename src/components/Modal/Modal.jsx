@@ -30,11 +30,13 @@ export default function Modal(props) {
   return createPortal(
     <>
       <div className={modalStyle.wrapper}>
-        <h3
+        {props.text && (
+          <h3
           className={`${modalStyle.title} text text_type_main-large pt-15 pb-1 pl-10`}
         >
           {props.text}
         </h3>
+        )}
         <button onClick={props.close} className={modalStyle.btnClose}>
           {<CloseIcon />}
         </button>
