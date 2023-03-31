@@ -1,7 +1,7 @@
 import { TIngredient } from "../models/ingredients";
-export const ADD_INGREDIENT = "ADD_INGREDIENT";
-export const MOVE_INGREDIENT = "MOVE_INGREDIENT";
-export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const ADD_INGREDIENT: "ADD_INGREDIENT" = "ADD_INGREDIENT";
+export const MOVE_INGREDIENT: "MOVE_INGREDIENT" = "MOVE_INGREDIENT";
+export const DELETE_INGREDIENT: "DELETE_INGREDIENT" = "DELETE_INGREDIENT";
 
 export type TConstructor = AddIngredient | MoveIngredient | DeleteIngredient;
 

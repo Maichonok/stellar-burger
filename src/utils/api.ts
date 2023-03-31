@@ -2,7 +2,11 @@ import Cookies from "js-cookie";
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const AUTH_BASE_URL = `${BASE_URL}/auth`;
 
-const setCookies = ({ refreshToken, accessToken }) => {
+type Tokens = {
+  refreshToken: string, accessToken: string
+}
+
+const setCookies = ({ refreshToken, accessToken }: Tokens) => {
   const inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
   Cookies.set("refreshToken", refreshToken, { expires: inTwentyMinutes });
   Cookies.set("accessToken", accessToken, { expires: inTwentyMinutes });
@@ -80,7 +84,7 @@ const token = {
   },
 };
 
-function checkResponse(res) {
+function checkResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }

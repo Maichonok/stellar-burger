@@ -1,18 +1,25 @@
 import {
   WS_USER_CONNECTION_CLOSED,
   WS_USER_CONNECTION_FAILED,
-  WS_USER_CONNECTION_START,
   WS_USER_CONNECTION_SUCCESS,
   WS_USER_GET_ORDERS,
 } from "../actions/wsUserActions";
+import { Order } from "../models/orders";
+import { TWsUserAction } from "../actions/wsUserActions";
 
-const initialState = {
+interface WsUserReducer {
+  orders: Array<Order>,
+  isConnect: boolean,
+  isError: boolean
+}
+
+const initialState: WsUserReducer  = {
   orders: [],
   isConnect: false,
   isError: false,
 };
 
-export function wsUserReducer(state = initialState, action) {
+export function wsUserReducer(state = initialState, action: TWsUserAction) {
   switch (action.type) {
     case WS_USER_CONNECTION_SUCCESS: {
       return {

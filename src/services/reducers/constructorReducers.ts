@@ -7,7 +7,8 @@ import {
 } from "../actions/burgerConstructor";
 import { ORDER_REQUEST, ORDER_FAILURE, ORDER_SUCCESS } from "../actions/order";
 import { TIngredient } from "../models/ingredients";
-import * as actions from "../actions/burgerConstructor";
+import { TConstructor } from "../actions/burgerConstructor";
+import { TOrder } from "../actions/order";
 
 export interface ConstructorState {
   ingredients: Array<TIngredient>;
@@ -21,21 +22,21 @@ const INITIAL_STATE: ConstructorState = {
 
 export default function orderConstructor(
   state = INITIAL_STATE,
-  action: actions.TConstructor
+  action: TConstructor | TOrder
 ) {
   switch (action.type) {
-    // case ORDER_REQUEST: {
-    //   return {
-    //     ...state,
-    //     loading: true
-    //   };
-    // }
-    // case ORDER_SUCCESS: {
-    //   return INITIAL_STATE;
-    // }
-    // case ORDER_FAILURE: {
-    //   return INITIAL_STATE;
-    // }
+    case ORDER_REQUEST: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case ORDER_SUCCESS: {
+      return INITIAL_STATE;
+    }
+    case ORDER_FAILURE: {
+      return INITIAL_STATE;
+    }
     case ADD_INGREDIENT: {
       const ingredientType = action.payload.type;
       if (ingredientType === "bun") {

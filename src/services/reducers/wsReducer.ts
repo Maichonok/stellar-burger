@@ -4,8 +4,18 @@ import {
   WS_GET_ORDERS,
   WS_CONNECTION_CLOSED,
 } from "../actions/wsActions";
+import { TWsConnection } from "../actions/wsActions";
+import { Order } from "../models/orders";
 
-const initialState = {
+interface WsReducer {
+  orders: Array<Order>,
+  isError: boolean,
+  total: null | number,
+  totalToday: null | number
+  isConnect: boolean,
+}
+
+const initialState: WsReducer = {
   orders: [],
   isConnect: false,
   isError: false,
@@ -13,7 +23,7 @@ const initialState = {
   totalToday: null,
 };
 
-export function wsReducer(state = initialState, action) {
+export function wsReducer(state = initialState, action: TWsConnection) {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

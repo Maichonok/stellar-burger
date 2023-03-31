@@ -23,6 +23,7 @@ import {
   WS_USER_GET_ORDERS,
   WS_USER_SEND_ORDERS,
 } from "./services/actions/wsUserActions";
+import { SocketActions } from "./services/models/wsActions";
 
 declare global {
   interface Window {
@@ -34,7 +35,7 @@ const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_C
 const wsUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsUrlUser = "wss://norma.nomoreparties.space/orders";
 
-const wsActions = {
+const wsActions: SocketActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_ORDERS,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -43,7 +44,7 @@ const wsActions = {
   onMessage: WS_GET_ORDERS,
 };
 
-const wsUserActions = {
+const wsUserActions: SocketActions = {
   wsInit: WS_USER_CONNECTION_START,
   wsSendMessage: WS_USER_SEND_ORDERS,
   onOpen: WS_USER_CONNECTION_SUCCESS,

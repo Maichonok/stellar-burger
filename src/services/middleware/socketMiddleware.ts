@@ -1,14 +1,27 @@
-import { getRawToken } from "../../utils/auth";
+import { Middleware, MiddlewareAPI } from "redux";
 
-export function socketMiddleware(url, actions, isLogin = false) {
-  return (store) => {
-    let socket = null;
+import { getRawToken } from "../../utils/auth";
+import { SocketActions } from "../models/wsActions";
+
+export function socketMiddleware(
+  url: string,
+  actions: SocketActions,
+  isLogin: boolean = false
+): Middleware {
+  return (store: MiddlewareAPI) => {
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
-        actions;
+      const {
+        wsInit,
+        wsSendMessage,
+        onOpen,
+        onClose,
+        onError,
+        onMessage,
+      } = actions;
 
       const token = getRawToken();
 
