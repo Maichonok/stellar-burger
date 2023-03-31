@@ -7,7 +7,7 @@ import auth from './reducers/authenticationReducer';
 import { wsReducer } from './reducers/wsReducer';
 import { wsUserReducer}  from './reducers/wsUserReducer';
 
-const rootReducer = combineReducers({
+const rootReducer:any = combineReducers({
     orderConstructor,
     burgerIngredients,
     ingredientsDetail,

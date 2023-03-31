@@ -24,10 +24,12 @@ import {
   WS_USER_SEND_ORDERS,
 } from "./services/actions/wsUserActions";
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+  interface Window {
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const wsUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsUrlUser = "wss://norma.nomoreparties.space/orders";
@@ -55,9 +57,9 @@ const enhancer = composeEnhancers(
   applyMiddleware(socketMiddleware(wsUrl, wsActions, false)),
   applyMiddleware(socketMiddleware(wsUrlUser, wsUserActions, true))
 );
-const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <React.StrictMode>

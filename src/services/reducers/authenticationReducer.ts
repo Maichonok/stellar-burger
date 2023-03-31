@@ -1,4 +1,7 @@
-import { LOCATION_CHANGE } from "react-router-dom";
+import { ActionType } from 'typesafe-actions';
+import * as actions from "../actions/authentication";
+import { User } from "../models/authentication";
+
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -40,7 +43,15 @@ import {
   UNSET_RECOVERY_EMAIL,
 } from "../actions/authentication";
 
-const INITIAL_STATE = {
+export type AuthState = Readonly<{
+  recoveryEmail: string,
+  user: User,
+  defaultUser: User,
+  loading: boolean,
+  showButtons: boolean
+}>;
+
+const INITIAL_STATE: AuthState = {
   recoveryEmail: "",
   user: {
     email: "",
@@ -56,7 +67,7 @@ const INITIAL_STATE = {
   showButtons: false
 };
 
-const userDetails = (state = INITIAL_STATE, action) => {
+const userDetails = (state = INITIAL_STATE, action: actions.TUser) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {
