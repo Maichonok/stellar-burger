@@ -1,9 +1,18 @@
 import Cookies from "js-cookie";
+import { TIngredient } from "../services/models/ingredients";
+import { User } from "../services/models/authentication";
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const AUTH_BASE_URL = `${BASE_URL}/auth`;
 
 type Tokens = {
-  refreshToken: string, accessToken: string
+  refreshToken: string;
+  accessToken: string;
+};
+
+interface FetchOptions {
+  method?: string;
+  headers?: any;
+  body?: any;
 }
 
 const setCookies = ({ refreshToken, accessToken }: Tokens) => {
@@ -93,7 +102,11 @@ function checkResponse(res: Response) {
   });
 }
 
-const request = (url, options, checkToken = false) => {
+const request = (
+  url: string,
+  options: FetchOptions = {},
+  checkToken: boolean = false
+) => {
   if (checkToken) {
     const accessToken = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
@@ -128,13 +141,17 @@ const request = (url, options, checkToken = false) => {
 
 const getData = () => request(`${ingredientsConfig.url}`);
 
-const order = (ingredients) =>
-  request(orderConfig.url, {
-    ...orderConfig,
-    body: JSON.stringify({ ingredients }),
-  }, true);
+const order = (ingredients: Array<TIngredient>) =>
+  request(
+    orderConfig.url,
+    {
+      ...orderConfig,
+      body: JSON.stringify({ ingredients }),
+    },
+    true
+  );
 
-const registerRequest = (name, email, pass) =>
+const registerRequest = (name: string, email: string, pass: string) =>
   request(register.url, {
     ...register,
     body: JSON.stringify({
@@ -147,7 +164,7 @@ const registerRequest = (name, email, pass) =>
     return res;
   });
 
-const loginRequest = (email, pass) =>
+const loginRequest = (email: string, pass: string) =>
   request(login.url, {
     ...login,
     body: JSON.stringify({
@@ -159,7 +176,7 @@ const loginRequest = (email, pass) =>
     return res;
   });
 
-const restorePassword = (email) =>
+const restorePassword = (email: string) =>
   request(passwordRestore.url, {
     ...passwordRestore,
     body: JSON.stringify({
@@ -167,7 +184,7 @@ const restorePassword = (email) =>
     }),
   });
 
-const resetPassword = (pass, code) =>
+const resetPassword = (pass: string, code: string) =>
   request(passwordReset.url, {
     ...passwordReset,
     body: JSON.stringify({
@@ -185,7 +202,7 @@ const fetchUserData = () =>
     true
   );
 
-const updateUserData = (data) => {
+const updateUserData = (data: User) => {
   return request(userData.url, {
     ...userData,
     method: "PATCH",
@@ -205,8 +222,6 @@ const logoutRequest = () => {
     }),
   });
 };
-
-
 
 export {
   getData,
