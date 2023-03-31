@@ -7,7 +7,7 @@ import ConstructorItem from "../ConstructorItem/ConstructorItem";
 import { ingredientType } from "../../../utils/ingredient";
 import PropTypes from "prop-types";
 import { dragTypes } from "../../../utils/dragTypes";
-import { addIngredient, deleteIngredient, moveIngredient } from "../../../services/actions/constructor";
+import { addIngredient, deleteIngredient, moveIngredient } from "../../../services/actions/burgerConstructor";
 
 const Constructor = (props) => {
   const dispatch = useDispatch();

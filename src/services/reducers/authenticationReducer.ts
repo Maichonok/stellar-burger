@@ -1,4 +1,3 @@
-import { ActionType } from 'typesafe-actions';
 import * as actions from "../actions/authentication";
 import { User } from "../models/authentication";
 
@@ -6,49 +5,36 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-} from "../actions/authentication";
-import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-} from "../actions/authentication";
-import {
   FORGOT_PASS_REQUEST,
   FORGOT_PASS_SUCCESS,
   FORGOT_PASS_FAILURE,
-} from "../actions/authentication";
-import {
   RESET_PASS_REQUEST,
   RESET_PASS_SUCCESS,
   RESET_PASS_FAILURE,
-} from "../actions/authentication";
-import {
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
-} from "../actions/authentication";
-import {
   SAVE_USER_REQUEST,
   SAVE_USER_SUCCESS,
   SAVE_USER_FAILURE,
-} from "../actions/authentication";
-import { SET_USER, RESET_USER } from "../actions/authentication";
-import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
-} from "../actions/authentication";
-import {
   SET_RECOVERY_EMAIL,
   UNSET_RECOVERY_EMAIL,
+  SET_USER,
+  RESET_USER,
 } from "../actions/authentication";
 
 export type AuthState = Readonly<{
-  recoveryEmail: string,
-  user: User,
-  defaultUser: User,
-  loading: boolean,
-  showButtons: boolean
+  recoveryEmail: string;
+  user: User;
+  defaultUser: User;
+  loading: boolean;
+  showButtons: boolean;
 }>;
 
 const INITIAL_STATE: AuthState = {
@@ -64,7 +50,7 @@ const INITIAL_STATE: AuthState = {
     name: "",
   },
   loading: false,
-  showButtons: false
+  showButtons: false,
 };
 
 const userDetails = (state = INITIAL_STATE, action: actions.TUser) => {
@@ -174,7 +160,7 @@ const userDetails = (state = INITIAL_STATE, action: actions.TUser) => {
           ...state.user,
           ...action.payload,
         },
-        showButtons: true
+        showButtons: true,
       };
     }
     case SAVE_USER_REQUEST: {
@@ -191,7 +177,7 @@ const userDetails = (state = INITIAL_STATE, action: actions.TUser) => {
           ...state.user,
           ...action.payload,
         },
-        showButtons: false
+        showButtons: false,
       };
     }
     case SAVE_USER_FAILURE: {
@@ -204,7 +190,7 @@ const userDetails = (state = INITIAL_STATE, action: actions.TUser) => {
       return {
         ...state,
         user: { ...state.defaultUser },
-        showButtons: false
+        showButtons: false,
       };
     }
     case LOGOUT_REQUEST: {
