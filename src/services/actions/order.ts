@@ -1,8 +1,7 @@
-import { AppDispatch } from "../models";
+import { AppDispatch, AppThunk } from "../models";
 import { order as orderRequest } from "../../utils/api";
 import { TIngredient } from "../models/ingredients";
 import { Order } from "../models/orders";
-
 
 export const ORDER_REQUEST: "ORDER_REQUEST" = "ORDER_REQUEST";
 export const ORDER_SUCCESS: "ORDER_SUCCESS" = "ORDER_SUCCESS";
@@ -16,7 +15,10 @@ export interface OrderRequest {
 
 export interface OrderRequestSuccess {
   readonly type: typeof ORDER_SUCCESS;
-  payload: Order;
+  payload: {
+    name: string;
+    order: Order;
+  };
 }
 
 export interface OrderRequestFailure {
@@ -24,26 +26,6 @@ export interface OrderRequestFailure {
   readonly payload: string;
 }
 export type TOrder = OrderRequest | OrderRequestSuccess | OrderRequestFailure;
-
-export const order =
-  (ingredients: Array<TIngredient>) => (dispatch: AppDispatch) => {
-    dispatch({
-      type: ORDER_REQUEST,
-    });
-    return orderRequest(ingredients)
-      .then(({ name, order }) => {
-        dispatch({
-          type: ORDER_SUCCESS,
-          payload: { name, order },
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: ORDER_FAILURE,
-          payload: error,
-        });
-      });
-  };
 
 export interface OpenOrderModal {
   readonly type: typeof ORDER_MODAL_OPEN;
@@ -66,3 +48,23 @@ export const closeOrderModal = (): CloseOrderModal => {
     type: ORDER_MODAL_CLOSE,
   };
 };
+
+export const order: AppThunk =
+  (ingredients: Array<TIngredient>) => (dispatch: AppDispatch) => {
+    dispatch({
+      type: ORDER_REQUEST,
+    });
+    return orderRequest(ingredients)
+      .then(({ name, order }) => {
+        dispatch({
+          type: ORDER_SUCCESS,
+          payload: { name, order },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ORDER_FAILURE,
+          payload: error,
+        });
+      });
+  };

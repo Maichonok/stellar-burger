@@ -15,7 +15,7 @@ interface FetchOptions {
   body?: any;
 }
 
-const setCookies = ({ refreshToken, accessToken }: Tokens) => {
+const setCookies = ({ refreshToken, accessToken }: Tokens): void => {
   const inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
   Cookies.set("refreshToken", refreshToken, { expires: inTwentyMinutes });
   Cookies.set("accessToken", accessToken, { expires: inTwentyMinutes });
@@ -93,7 +93,7 @@ const token = {
   },
 };
 
-function checkResponse(res: Response) {
+function checkResponse(res: Response): Promise<any> {
   if (res.ok) {
     return res.json();
   }
@@ -106,7 +106,7 @@ const request = (
   url: string,
   options: FetchOptions = {},
   checkToken: boolean = false
-) => {
+): Promise<any> => {
   if (checkToken) {
     const accessToken = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
@@ -139,9 +139,9 @@ const request = (
   return fetch(url, options).then(checkResponse);
 };
 
-const getData = () => request(`${ingredientsConfig.url}`);
+const getData = (): Promise<any> => request(`${ingredientsConfig.url}`);
 
-const order = (ingredients: Array<TIngredient>) =>
+const order = (ingredients: Array<TIngredient>): Promise<any> =>
   request(
     orderConfig.url,
     {
@@ -151,7 +151,11 @@ const order = (ingredients: Array<TIngredient>) =>
     true
   );
 
-const registerRequest = (name: string, email: string, pass: string) =>
+const registerRequest = (
+  name: string,
+  email: string,
+  pass: string
+): Promise<any> =>
   request(register.url, {
     ...register,
     body: JSON.stringify({
@@ -164,7 +168,7 @@ const registerRequest = (name: string, email: string, pass: string) =>
     return res;
   });
 
-const loginRequest = (email: string, pass: string) =>
+const loginRequest = (email: string, pass: string): Promise<any> =>
   request(login.url, {
     ...login,
     body: JSON.stringify({
@@ -176,7 +180,7 @@ const loginRequest = (email: string, pass: string) =>
     return res;
   });
 
-const restorePassword = (email: string) =>
+const restorePassword = (email: string): Promise<any> =>
   request(passwordRestore.url, {
     ...passwordRestore,
     body: JSON.stringify({
@@ -184,7 +188,7 @@ const restorePassword = (email: string) =>
     }),
   });
 
-const resetPassword = (pass: string, code: string) =>
+const resetPassword = (pass: string, code: string): Promise<any> =>
   request(passwordReset.url, {
     ...passwordReset,
     body: JSON.stringify({
@@ -193,7 +197,7 @@ const resetPassword = (pass: string, code: string) =>
     }),
   });
 
-const fetchUserData = () =>
+const fetchUserData = (): Promise<any> =>
   request(
     userData.url,
     {
@@ -202,7 +206,7 @@ const fetchUserData = () =>
     true
   );
 
-const updateUserData = (data: User) => {
+const updateUserData = (data: User): Promise<any> => {
   return request(userData.url, {
     ...userData,
     method: "PATCH",
@@ -210,7 +214,7 @@ const updateUserData = (data: User) => {
   });
 };
 
-const logoutRequest = () => {
+const logoutRequest = (): Promise<any> => {
   const token = Cookies.get("refreshToken");
   Cookies.remove("refreshToken");
   Cookies.remove("accessToken");

@@ -1,4 +1,4 @@
-import { AppDispatch } from "../models";
+import { AppDispatch, AppThunk } from "../models";
 import { getData } from "../../utils/api";
 import { TIngredient } from "../models/ingredients";
 export const FETCH_INGREDIENTS_REQUEST: "FETCH_INGREDIENTS_REQUEST" =
@@ -35,7 +35,7 @@ export interface ToggleIngredient {
   payload: TIngredient
 }
 
-export const getIngredients = () => (dispatch: AppDispatch) => {
+export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({
     type: FETCH_INGREDIENTS_REQUEST,
   });
@@ -55,7 +55,7 @@ export const getIngredients = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const toggleCurrent = (id: string) => ({
+export const toggleCurrent = (id: TIngredient):TIngredients => ({
   type: TOGGLE_CURRENT_INGREDIENT,
   payload: id,
 });

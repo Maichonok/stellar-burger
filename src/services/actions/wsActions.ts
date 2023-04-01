@@ -28,11 +28,12 @@ export interface ConnectionClosed {
 
 export interface GetOrders {
   readonly type: typeof WS_GET_ORDERS;
-  payload: Orders
+  payload: Orders;
 }
 
 export interface SendOrders {
   readonly type: typeof WS_SEND_ORDERS;
+  payload: Orders
 }
 
 export type TWsConnection =
@@ -43,38 +44,38 @@ export type TWsConnection =
   | GetOrders
   | SendOrders;
 
-export function wsConnectedStart() {
+export function wsConnectedStart(): TWsConnection {
   return {
     type: WS_CONNECTION_START,
   };
 }
 
-export function wsConnectedSuccess() {
+export function wsConnectedSuccess(): TWsConnection {
   return {
     type: WS_CONNECTION_SUCCESS,
   };
 }
 
-export function wsConnectedClosed() {
+export function wsConnectedClosed(): TWsConnection {
   return {
     type: WS_CONNECTION_CLOSED,
   };
 }
 
-export function wsConnectedFailed() {
+export function wsConnectedFailed(): TWsConnection {
   return {
     type: WS_CONNECTION_FAILED,
   };
 }
 
-export function wsGetMessage(orders: Orders) {
+export function wsGetMessage(orders: Orders): TWsConnection {
   return {
     type: WS_GET_ORDERS,
     payload: orders,
   };
 }
 
-export function wsSendMessage(orders: Orders) {
+export function wsSendMessage(orders: Orders): TWsConnection {
   return {
     type: WS_SEND_ORDERS,
     payload: orders,

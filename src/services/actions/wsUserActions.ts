@@ -44,38 +44,38 @@ export type TWsUserAction =
   | WsUserGetOrders
   | WsUserSendOrders;
 
-export function wsUserConnectedStart() {
+export function wsUserConnectedStart(): TWsUserAction {
   return {
     type: WS_USER_CONNECTION_START,
   };
 }
 
-export function wsUserConnectedSuccess() {
+export function wsUserConnectedSuccess(): TWsUserAction {
   return {
     type: WS_USER_CONNECTION_SUCCESS,
   };
 }
 
-export function wsUserConnectedClosed() {
+export function wsUserConnectedClosed(): TWsUserAction {
   return {
     type: WS_USER_CONNECTION_CLOSED,
   };
 }
 
-export function wsUserConnectedFailed() {
+export function wsUserConnectedFailed(): TWsUserAction {
   return {
     type: WS_USER_CONNECTION_FAILED,
   };
 }
 
-export function wsUserGetMessage(orders: Orders) {
+export function wsUserGetMessage(orders: Orders): TWsUserAction {
   return {
     type: WS_USER_GET_ORDERS,
     payload: orders,
   };
 }
 
-export function wsUserSendMessage(orders: Orders) {
+export function wsUserSendMessage(orders: Orders): TWsUserAction {
   return {
     type: WS_USER_SEND_ORDERS,
     payload: orders,
