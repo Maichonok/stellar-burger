@@ -16,7 +16,7 @@ interface Props {
   data: Array<TIngredient>;
 }
 
-const Constructor: FC<Props> = (props) => {
+export const Constructor: FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const newData = props.data;
@@ -119,5 +119,3 @@ const Constructor: FC<Props> = (props) => {
     </div>
   );
 };
-
-export { Constructor };

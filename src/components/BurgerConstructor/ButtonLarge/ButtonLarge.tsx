@@ -9,7 +9,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const ButtonLarge: FC<Props> = ({
+export const ButtonLarge: FC<Props> = ({
   onClick,
   disabled,
   loading,
@@ -35,5 +35,3 @@ ButtonLarge.defaultProps = {
   loading: false,
   disabled: false,
 };
-
-export { ButtonLarge };

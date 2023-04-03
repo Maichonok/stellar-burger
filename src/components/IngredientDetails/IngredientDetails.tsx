@@ -8,7 +8,7 @@ interface Props {
   value: number;
 }
 
-function IngredientDetails() {
+export function IngredientDetails() {
   const { id } = useParams<{ id: string }>();
   const ingredients = useSelector((state) => state.burgerIngredients.data);
   const data = ingredients.find((i) => i._id === id);
@@ -55,5 +55,3 @@ function IngredientDetails() {
     </div>
   );
 }
-
-export { IngredientDetails };

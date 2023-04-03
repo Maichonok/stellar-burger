@@ -3,7 +3,7 @@ import orderDetailsStyle from "./OrderDetails.module.css";
 import doneImg from "../../images/done.svg";
 import { useSelector } from "../../services/models";
 
-function OrderDetails() {
+export function OrderDetails() {
   const orderNumber = useSelector(
     (state) => state.orderDetails.data.order.number
   );
@@ -53,5 +53,3 @@ function OrderDetails() {
     </div>
   );
 }
-
-export { OrderDetails };
