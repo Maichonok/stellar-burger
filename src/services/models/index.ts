@@ -4,7 +4,7 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook,
 } from "react-redux";
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { store } from "../../index";
 import { TUser } from "../actions/authentication";
 import { TConstructor } from "../actions/burgerConstructor";

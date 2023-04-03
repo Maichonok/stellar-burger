@@ -1,14 +1,16 @@
+import { ChangeEvent, FormEvent } from "react";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
   forgotPass,
   setRecoveryEmail,
 } from "../../services/actions/authentication";
 import registerStyles from "../register/Register.module.css";
+
+import { useDispatch, useSelector } from "../../services/models";
 
 export function RestorePassword() {
   const history = useHistory();
@@ -16,12 +18,13 @@ export function RestorePassword() {
   const error = useSelector((state) => state.auth.error);
   const email = useSelector((state) => state.auth.recoveryEmail);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(forgotPass(email)).then(() => history.push("/reset-password"));
+    dispatch(forgotPass(email))
+    // .then(() => history.push("/reset-password"));
   };
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setRecoveryEmail(e.target.value));
   };
 

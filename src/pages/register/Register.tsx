@@ -3,10 +3,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../services/actions/authentication";
 import registerStyles from "./Register.module.css";
 import { useForm } from "../../hooks/useForm";
+
+import { useDispatch, useSelector } from "../../services/models";
+import { FormEvent } from "react";
 
 export function Register() {
   const dispatch = useDispatch();
@@ -20,11 +22,10 @@ export function Register() {
 
   const error = useSelector((state) => state.auth.error);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(register(values.name, values.email, values.password)).then(() =>
-      history.push("/")
-    );
+    dispatch(register(values.name, values.email, values.password))
+    // .then(() =>  history.push("/"));
   };
 
   return (

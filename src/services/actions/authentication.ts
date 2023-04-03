@@ -215,6 +215,7 @@ export const register: AppThunk =
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
+        console.log("register")
       })
       .catch((e) => {
         dispatch({
@@ -233,6 +234,7 @@ export const forgotPass: AppThunk =
           type: FORGOT_PASS_SUCCESS,
           payload: res.data,
         });
+
       })
       .catch((e) => {
         dispatch({
@@ -251,6 +253,7 @@ export const resetPass: AppThunk =
           type: RESET_PASS_SUCCESS,
           payload: res.data,
         });
+        console.log("reset")
       })
       .catch((e) => {
         dispatch({

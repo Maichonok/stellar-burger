@@ -1,15 +1,16 @@
 import { Route, Switch, useLocation, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Location } from 'history'; 
 import { ProfileForm } from "../../components/ProfileForm/ProfileForm";
 import { ProfileOrders } from "../../components/ProfileOrders/ProfileOrders";
 import profileStyles from "./Profile.module.css";
 import { logout } from "../../services/actions/authentication";
 
+import { useDispatch } from "../../services/models";
 
 export function Profile() {
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location = useLocation<{background: Location}>();
   const background = location.state && location.state.background;
 
   const onLogout = () => {

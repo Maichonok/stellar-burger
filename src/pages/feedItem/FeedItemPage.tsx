@@ -1,32 +1,32 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
+import { FeedDetails } from "../../components/FeedDetails/FeedDetails";
 import FeedItemPageStyles from "../feedItem/FeedItemPage.module.css";
 import {
-  wsUserConnectedStart,
-  wsUserConnectedClosed,
-} from "../../services/actions/wsUserActions";
+  wsConnectedStart,
+  wsConnectedClosed,
+} from "../../services/actions/wsActions";
 
-export const ProfileOrderPage = () => {
+import { useDispatch } from "../../services/models";
+
+export const ItemOfFeed = () => {
   const dispatch = useDispatch();
-
   let socketConnect = useRef(false);
 
   useEffect(() => {
     if (!socketConnect.current) {
-      dispatch(wsUserConnectedStart());
+      dispatch(wsConnectedStart());
     }
     return () => {
       if (socketConnect.current) {
-        dispatch(wsUserConnectedClosed());
+        dispatch(wsConnectedClosed());
       }
       socketConnect.current = true;
-    };
+    }
   }, []);
 
   return (
     <div className={FeedItemPageStyles.content_box}>
-      <OrderInfo />
+      <FeedDetails />
     </div>
   );
 };

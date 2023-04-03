@@ -2,11 +2,13 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { resetPass } from "../../services/actions/authentication";
 import resetStyles from "./Reset.module.css";
 import { useForm } from "../../hooks/useForm";
+
+import { useDispatch, useSelector } from "../../services/models";
+import { FormEvent } from "react";
 
 export function Reset() {
   const dispatch = useDispatch();
@@ -22,10 +24,10 @@ export function Reset() {
     history.push("/forgot-password");
   }
 
-  function submitReset(evt) {
+  function submitReset(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(resetPass(values.password, values.code))
-      .then(() => history.push("/login"));
+      // .then(() => history.push("/login"));
   }
 
   return (

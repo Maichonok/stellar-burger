@@ -2,16 +2,19 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { Location } from "history";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/authentication";
 import loginStyles from "./Login.module.css";
 import { useForm } from "../../hooks/useForm";
 
+import { useDispatch, useSelector } from "../../services/models";
+import { FormEvent } from "react";
+
 export function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{ prevLocation: Location }>();
 
   const { values, handleChange } = useForm({
     password: "",
@@ -22,11 +25,10 @@ export function Login() {
 
   const redirectURL = location.state ? location.state.prevLocation : "/";
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(values.email, values.password)).then(() => {
-      history.push(redirectURL);
-    });
+    dispatch(login(values.email, values.password))
+    // .then(() => history.push(redirectURL));
   };
 
   return (
