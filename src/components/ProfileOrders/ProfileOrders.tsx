@@ -17,7 +17,9 @@ export function ProfileOrders() {
 
   useEffect(() => {
     dispatch(wsUserConnectedStart());
-    dispatch(wsUserConnectedClosed());
+    return () => {
+      dispatch(wsUserConnectedClosed())
+    }
   }, []);
 
   const location = useLocation();
