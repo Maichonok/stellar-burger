@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import {
   Button,
   Input,
@@ -8,7 +9,6 @@ import resetStyles from "./Reset.module.css";
 import { useForm } from "../../hooks/useForm";
 
 import { useDispatch, useSelector } from "../../services/models";
-import { FormEvent } from "react";
 
 export function Reset() {
   const dispatch = useDispatch();
@@ -26,8 +26,7 @@ export function Reset() {
 
   function submitReset(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    dispatch(resetPass(values.password, values.code))
-      // .then(() => history.push("/login"));
+    dispatch(resetPass(values.password, values.code));
   }
 
   return (

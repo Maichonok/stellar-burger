@@ -1,18 +1,17 @@
+import { FormEvent } from "react";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { register } from "../../services/actions/authentication";
 import registerStyles from "./Register.module.css";
 import { useForm } from "../../hooks/useForm";
 
 import { useDispatch, useSelector } from "../../services/models";
-import { FormEvent } from "react";
 
 export function Register() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { values, handleChange } = useForm({
     email: "",
@@ -24,8 +23,7 @@ export function Register() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(register(values.name, values.email, values.password))
-    // .then(() =>  history.push("/"));
+    dispatch(register(values.name, values.email, values.password));
   };
 
   return (

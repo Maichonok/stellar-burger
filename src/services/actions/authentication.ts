@@ -9,6 +9,7 @@ import {
   updateUserData,
 } from "../../utils/api";
 import { User, UserInfo } from "../models/authentication";
+import { history } from "../../history";
 
 export const LOGIN_REQUEST: "LOGIN_REQUEST" = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS: "LOGIN_SUCCESS" = "LOGIN_SUCCESS";
@@ -197,6 +198,11 @@ export const login: AppThunk =
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
+
+        const state: any = history.location.state;
+        const redirectURL = state ? state.prevLocation : "/";
+
+        history.push(redirectURL);
       })
       .catch((e) => {
         dispatch({
@@ -215,7 +221,7 @@ export const register: AppThunk =
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
-        console.log("register")
+        history.push("/");
       })
       .catch((e) => {
         dispatch({
@@ -234,7 +240,7 @@ export const forgotPass: AppThunk =
           type: FORGOT_PASS_SUCCESS,
           payload: res.data,
         });
-
+        history.push("/reset-password");
       })
       .catch((e) => {
         dispatch({
@@ -253,7 +259,7 @@ export const resetPass: AppThunk =
           type: RESET_PASS_SUCCESS,
           payload: res.data,
         });
-        console.log("reset")
+        history.push("/login");
       })
       .catch((e) => {
         dispatch({

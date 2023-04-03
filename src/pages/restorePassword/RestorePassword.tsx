@@ -3,7 +3,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   forgotPass,
   setRecoveryEmail,
@@ -13,15 +13,13 @@ import registerStyles from "../register/Register.module.css";
 import { useDispatch, useSelector } from "../../services/models";
 
 export function RestorePassword() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
   const email = useSelector((state) => state.auth.recoveryEmail);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(forgotPass(email))
-    // .then(() => history.push("/reset-password"));
+    dispatch(forgotPass(email));
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

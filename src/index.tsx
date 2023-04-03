@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
@@ -24,6 +24,7 @@ import {
   WS_USER_SEND_ORDERS,
 } from "./services/actions/wsUserActions";
 import { SocketActions } from "./services/models/wsActions";
+import { history } from "./history";
 
 declare global {
   interface Window {
@@ -62,10 +63,11 @@ export const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <App />
       </Router>
     </Provider>
