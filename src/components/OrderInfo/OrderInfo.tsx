@@ -1,19 +1,21 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FormattedDate } from "react-intl";
-import detailsStyles from "./FeedDetails.module.css";
+import detailsStyles from "./OrderInfo.module.css";
+import { useSelector } from "../../services/models";
+import { TIngredient } from "../../services/models/ingredients";
 
-export function FeedDetails() {
-  const orders = useSelector((store) => store.wsReducer.orders);
-  const ingredients = useSelector((state) => state.burgerIngredients.data);
+export function OrderInfo() {
+  const orders = useSelector((store) => store.wsUserReducer.orders);
+  const ingredients = useSelector(
+    (store) => store.burgerIngredients.data
+  );
+  const { id } = useParams<{ id: string }>();
 
-  const { id } = useParams();
-
-  const order = orders.find((el) => el._id === id);
+  const order = orders?.find((el) => el._id === id);
   const ingrList = order?.ingredients;
   let sum = 0;
-  let resArr = [];
+  let resArr:TIngredient[] = [];
   if (ingrList) {
     for (let el of ingredients) {
       for (let id of ingrList) {
@@ -25,21 +27,16 @@ export function FeedDetails() {
     }
   }
 
-  function isCount(el) {
+  function isCount(el: TIngredient) {
     let count = resArr.filter((item) => {
       return item === el;
     }).length;
     return count;
   }
-  const showContent = resArr && order && ingredients;
-
-  if (!order) {
-    return;
-  }
 
   return (
     <>
-      {showContent && (
+      {resArr && (
         <div className={detailsStyles.background}>
           <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
             <div>
@@ -87,7 +84,7 @@ export function FeedDetails() {
                           <p className="text text_type_digits-default mr-2">
                             {isCount(el)} x {el.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type="primary" />
                         </div>
                       </li>
                     );
@@ -96,8 +93,8 @@ export function FeedDetails() {
               </div>
               <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
-                  <FormattedDate
-                    value={order.createdAt}
+                <FormattedDate
+                    value={order?.createdAt}
                     day="numeric"
                     month="long"
                     year="numeric"
@@ -107,7 +104,7 @@ export function FeedDetails() {
                 </p>
                 <div className={detailsStyles.sum_wrapper_small}>
                   <p className="text text_type_digits-default mr-2">{sum}</p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </div>
             </div>

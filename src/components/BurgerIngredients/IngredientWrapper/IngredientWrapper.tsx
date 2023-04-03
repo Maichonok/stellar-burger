@@ -1,8 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { FC, ReactNode, RefObject } from "react";
 import ingredientWrapperStyle from "./IngredientWrapper.module.css";
 
-function IngredientWrapper(props) {
+export const IngredientWrapper: FC<{
+  text: string;
+  children: ReactNode;
+  tabRef: (el: HTMLElement) => void;
+  tabTopRef: RefObject<any>;
+}> = (props) => {
   return (
     <article ref={props.tabRef}>
       <h2
@@ -14,11 +18,4 @@ function IngredientWrapper(props) {
       <ul className={`${ingredientWrapperStyle.itemList}`}>{props.children}</ul>
     </article>
   );
-}
-
-IngredientWrapper.propTypes = {
-  text: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
-
-export { IngredientWrapper };

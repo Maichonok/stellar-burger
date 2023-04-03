@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, EffectCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { OrderItems } from "../OrderItems/OrderItems";
 import { OrdersBoard } from "../Board/OrdersBoard";
@@ -8,18 +7,20 @@ import {
   wsConnectedStart,
   wsConnectedClosed,
 } from "../../services/actions/wsActions";
+import { useSelector, useDispatch } from "../../services/models";
 
 export function Feed() {
   const dispatch = useDispatch();
   const orders = useSelector((store) => store.wsReducer.orders);
-  const ingredients = useSelector((store) => store.burgerIngredients.data);
   const location = useLocation();
 
-  useEffect(() => {
+  useEffect((): ReturnType<EffectCallback> => {
     dispatch(wsConnectedStart());
-    return () => dispatch(wsConnectedClosed());
+    return () => {
+      dispatch(wsConnectedClosed());
+    };
   }, []);
- 
+
   return (
     <section className={feedStyles.feed_section}>
       <h2 className="text text_type_main-large mt-10">Лента заказов</h2>
@@ -34,7 +35,7 @@ export function Feed() {
                     state: { background: location },
                   }}
                 >
-                  <OrderItems order={order} ingredientsData={ingredients} />
+                  <OrderItems order={order} />
                 </Link>
               </li>
             ))}

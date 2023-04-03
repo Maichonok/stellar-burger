@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/models/index";
 import boardStyles from "./OrdersBoard.module.css";
 
 export function OrdersBoard() {

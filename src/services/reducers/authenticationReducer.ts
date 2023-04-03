@@ -35,6 +35,7 @@ export type AuthState = Readonly<{
   defaultUser: User;
   loading: boolean;
   showButtons: boolean;
+  error?: string;
 }>;
 
 const INITIAL_STATE: AuthState = {

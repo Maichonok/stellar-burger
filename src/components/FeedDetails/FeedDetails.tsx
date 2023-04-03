@@ -1,20 +1,20 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FormattedDate } from "react-intl";
-import detailsStyles from "./OrderInfo.module.css";
+import detailsStyles from "./FeedDetails.module.css";
+import { useSelector } from "../../services/models";
+import { TIngredient } from "../../services/models/ingredients";
 
-export function OrderInfo() {
-  const orders = useSelector((store) => store.wsUserReducer.orders);
-  const ingredients = useSelector(
-    (store) => store.burgerIngredients.data
-  );
-  const { id } = useParams();
+export function FeedDetails() {
+  const orders = useSelector((store) => store.wsReducer.orders);
+  const ingredients = useSelector((state) => state.burgerIngredients.data);
 
-  const order = orders?.find((el) => el._id === id);
+  const { id } = useParams<{ id: string }>();
+
+  const order = orders.find((el) => el._id === id);
   const ingrList = order?.ingredients;
   let sum = 0;
-  let resArr = [];
+  let resArr: TIngredient[] = [];
   if (ingrList) {
     for (let el of ingredients) {
       for (let id of ingrList) {
@@ -26,16 +26,21 @@ export function OrderInfo() {
     }
   }
 
-  function isCount(el) {
+  function isCount(el: TIngredient) {
     let count = resArr.filter((item) => {
       return item === el;
     }).length;
     return count;
   }
+  const showContent = resArr && order && ingredients;
+
+  if (!order) {
+    return null;
+  }
 
   return (
     <>
-      {resArr && (
+      {showContent && (
         <div className={detailsStyles.background}>
           <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
             <div>
@@ -59,7 +64,7 @@ export function OrderInfo() {
               <p className="text text_type_main-medium mt-15">Состав:</p>
               <div className={`${detailsStyles.ingr_box} mt-6 pr-6`}>
                 <ul className={detailsStyles.ingr_wrapper}>
-                  {[...new Set(resArr)].map(el => {
+                  {[...new Set(resArr)].map((el) => {
                     return (
                       <li
                         className={`${detailsStyles.ingr_item} mt-6`}
@@ -83,7 +88,7 @@ export function OrderInfo() {
                           <p className="text text_type_digits-default mr-2">
                             {isCount(el)} x {el.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type="primary" />
                         </div>
                       </li>
                     );
@@ -92,8 +97,8 @@ export function OrderInfo() {
               </div>
               <div className={`${detailsStyles.sum_wrapper} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">
-                <FormattedDate
-                    value={order?.createdAt}
+                  <FormattedDate
+                    value={order.createdAt}
                     day="numeric"
                     month="long"
                     year="numeric"
@@ -103,7 +108,7 @@ export function OrderInfo() {
                 </p>
                 <div className={detailsStyles.sum_wrapper_small}>
                   <p className="text text_type_digits-default mr-2">{sum}</p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </div>
             </div>

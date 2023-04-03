@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, ReactNode, ReactElement } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Logo,
@@ -8,23 +8,30 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyle from "./AppHeader.module.css";
 
-export default function Appheader(props) {
-  function Header(props) {
+const Appheader: FC = () => {
+  const Header: FC<{ children: ReactNode }> = (props) => {
     return (
       <header className={`${headerStyle.header}`}>{props.children}</header>
     );
-  }
-  function Menu(props) {
+  };
+  const Menu: FC<{ children: ReactNode }> = (props) => {
     return <nav className={`${headerStyle.navbar}`}>{props.children}</nav>;
-  }
-  function MenuList(props) {
+  };
+  const MenuList: FC<{ children: ReactNode }> = (props) => {
     return (
       <ul className={`${headerStyle.menu}`}>
         <li className={headerStyle.menuList}>{props.children}</li>
       </ul>
     );
-  }
-  function MenuItem(props) {
+  };
+  const MenuItem: FC<{
+    itemStyle: string;
+    exact?: boolean;
+    link: string;
+    icon: ReactNode;
+    text?: string;
+    styleText?: string;
+  }> = (props) => {
     return (
       <div className={props.itemStyle}>
         <NavLink
@@ -38,7 +45,7 @@ export default function Appheader(props) {
         </NavLink>
       </div>
     );
-  }
+  };
   return (
     <Header>
       <Menu>
@@ -61,7 +68,7 @@ export default function Appheader(props) {
         </MenuList>
         <MenuItem
           link={"/"}
-          icon={<Logo type="secondary" />}
+          icon={<Logo />}
           itemStyle={`${headerStyle.logo}`}
         />
         <MenuItem
@@ -74,4 +81,6 @@ export default function Appheader(props) {
       </Menu>
     </Header>
   );
-}
+};
+
+export default Appheader;

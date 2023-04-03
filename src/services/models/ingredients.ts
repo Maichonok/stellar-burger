@@ -3,7 +3,7 @@ export interface TIngredient {
     __v: number;
     _id: string;
     id?: string;
-    uuid?: string;
+    uuid: string;
     count?: number;
     calories: number;
     carbohydrates: number;

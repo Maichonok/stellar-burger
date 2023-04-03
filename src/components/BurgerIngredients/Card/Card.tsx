@@ -1,14 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDrag } from "react-dnd";
-import PropTypes from "prop-types";
 import cardStyle from "./Card.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { dragTypes } from "../../../utils/dragTypes";
+import { TIngredient } from "../../../services/models/ingredients";
 
-function Card(props) {
+export const Card: FC<{
+  image: string;
+  name: string;
+  price: number;
+  count: number | undefined;
+  data: TIngredient;
+}> = (props) => {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: dragTypes.CARD,
     item: { data: props.data },
@@ -35,12 +41,4 @@ function Card(props) {
       {!!props.count && <Counter count={props.count} size="default" />}
     </div>
   );
-}
-
-Card.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
 };
-
-export { Card };

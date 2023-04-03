@@ -1,13 +1,19 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { isLoggedIn } from "../../utils/auth";
 
-export const ProtectedRoute = ({ onlyForAuth = false, children, ...rest }) => {
+interface Props {
+  onlyForAuth?: boolean;
+  children: ReactNode;
+  path: string;
+};
+
+export const ProtectedRoute: FC<Props> = ({ onlyForAuth = false, children, ...rest }) => {
   const isAuthorized = isLoggedIn();
   const location = useLocation();
 
   if (!onlyForAuth && isAuthorized) {
-    const { from } = location.state || { from: { pathname: "/" } };
+    const { from } = location.state as any || { from: { pathname: "/" } };
     return (
       <Route {...rest}>
         <Redirect to={from} />

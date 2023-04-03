@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useMemo, FC, RefObject } from "react";
 import { useInView } from "react-intersection-observer";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgeringredientStyle from "./BurgerIngredients.module.css";
@@ -9,7 +8,10 @@ import { CardMap } from "./CardMap/CardMap";
 import { IngredientWrapper } from "./IngredientWrapper/IngredientWrapper";
 import { openIngredientModal } from "../../services/actions/ingredientsDetails";
 
-export default function BurgerIngredients(props) {
+import { useSelector, useDispatch } from "../../services/models";
+import { TIngredient } from "../../services/models/ingredients";
+
+export default function BurgerIngredients() {
   const bunTopRef = React.useRef(null);
   const mainTopRef = React.useRef(null);
   const sauceTopRef = React.useRef(null);
@@ -26,10 +28,11 @@ export default function BurgerIngredients(props) {
     threshold: 0.2,
   });
 
-  function IngredientsTabs(props) {
-    const scrollTab = (tab) => {
-      tab.current.scrollIntoView({ behavior: "smooth" });
-    };
+  const IngredientsTabs: FC<{
+    tabStyle: string;
+  }> = (props) => {
+    const scrollTab = (tab: RefObject<HTMLDivElement>) =>
+      tab.current?.scrollIntoView({ behavior: "smooth" });
 
     return (
       <div className={props.tabStyle}>
@@ -56,9 +59,9 @@ export default function BurgerIngredients(props) {
         </Tab>
       </div>
     );
-  }
+  };
 
-  const getData = (arr, type) =>
+  const getData = (arr: Array<TIngredient>, type: string) =>
     data
       .filter((item) => item.type === type)
       .map((i) => {
@@ -86,9 +89,8 @@ export default function BurgerIngredients(props) {
 
   const dispatch = useDispatch();
 
-  const open = (id) => {
+  const open = (id: string) => {
     dispatch(openIngredientModal());
-    // dispatch(toggleCurrent(id));
   };
 
   return (

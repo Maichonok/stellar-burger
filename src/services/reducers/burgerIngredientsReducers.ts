@@ -8,12 +8,12 @@ import {
 import { TIngredient } from "../models/ingredients";
 import * as actions from "../actions/burgerIngredients";
 
-export interface IngredientsState {
-  data: Array<TIngredient>,
-  isLoading: boolean,
-  error: string,
-  current: TIngredient | null,
-};
+export type IngredientsState = Readonly<{
+  data: Array<TIngredient>;
+  isLoading: boolean;
+  error: string;
+  current: TIngredient | null;
+}>;
 
 const INITIAL_STATE: IngredientsState = {
   data: [],
@@ -22,12 +22,15 @@ const INITIAL_STATE: IngredientsState = {
   current: null,
 };
 
-export default function burgerIngredients(state = INITIAL_STATE, action: actions.TIngredients) {
+export default function burgerIngredients(
+  state: IngredientsState = INITIAL_STATE,
+  action: actions.TIngredients
+) {
   switch (action.type) {
     case FETCH_INGREDIENTS_REQUEST: {
       return {
         ...state,
-        error: null,
+        error: "",
         isLoading: true,
       };
     }
@@ -35,7 +38,7 @@ export default function burgerIngredients(state = INITIAL_STATE, action: actions
       return {
         ...state,
         isLoading: false,
-        error: null,
+        error: "",
         data: action.payload,
       };
     }
@@ -49,7 +52,8 @@ export default function burgerIngredients(state = INITIAL_STATE, action: actions
     case TOGGLE_CURRENT_INGREDIENT: {
       return {
         ...state,
-        current: state.current !== action.payload && action.payload,
+        current:
+          state.current !== action.payload ? action.payload : state.current,
       };
     }
     default: {

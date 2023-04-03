@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { FormEvent, useEffect } from "react";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import profileFormStyles from "./ProfileForm.module.css";
+import { useSelector, useDispatch } from "../../services/models";
 import {
   getUser,
   setUserData,
   saveUser,
   resetUser,
 } from "../../services/actions/authentication";
+
+import profileFormStyles from "./ProfileForm.module.css";
 
 export const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -24,11 +24,17 @@ export const ProfileForm = () => {
     dispatch(getUser());
   }, []);
 
-  const onChange = (e) => {
-    dispatch(setUserData({ [e.target.name]: e.target.value }));
+  const onChange = (e: FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const value: string = target.value;
+    dispatch(
+      setUserData({
+        [target.name]: value,
+      })
+    );
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(saveUser(user));
   };

@@ -1,9 +1,15 @@
+import { FC } from "react";
 import { FormattedDate } from "react-intl";
-import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderItemsStyles from "./OrderItems.module.css";
+import { Order } from "../../services/models/orders";
+import { useSelector } from "../../services/models";
 
-export function OrderItems({ order }) {
+interface Props {
+  order: Order;
+}
+
+export const OrderItems: FC<Props> = ({ order }) => {
   const { number, name } = order;
   const ingredients = useSelector((store) => store.burgerIngredients.data);
   const ingrList = order.ingredients;
@@ -102,4 +108,4 @@ export function OrderItems({ order }) {
       </div>
     </div>
   );
-}
+};

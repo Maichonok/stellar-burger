@@ -22,7 +22,7 @@ export interface FetchIngredientsRequest {
 
 export interface FetchIngredientsSuccess {
   readonly type: typeof FETCH_INGREDIENTS_SUCCESS;
-  payload: Array<TIngredient>;
+  payload: TIngredient[];
 }
 
 export interface FetchIngredientsFailure {

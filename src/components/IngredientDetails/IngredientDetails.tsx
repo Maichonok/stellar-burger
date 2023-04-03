@@ -1,33 +1,38 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
+import React, { FC } from "react";
+import { useParams } from "react-router-dom";
 import IngredientDetailsStyle from "./IngredientDetails.module.css";
+import { useSelector } from "../../services/models";
+
+interface Props {
+  text: string;
+  value: number;
+}
 
 function IngredientDetails() {
-  const { id } = useParams();
-  const ingredients = useSelector(state => state.burgerIngredients.data);
-  const data = ingredients.find(i => i._id === id);
+  const { id } = useParams<{ id: string }>();
+  const ingredients = useSelector((state) => state.burgerIngredients.data);
+  const data = ingredients.find((i) => i._id === id);
 
   if (!data) {
     return null;
   }
 
-  function Ingredient(data) {
+  const Ingredient: FC<Props> = (props) => {
     return (
       <li className={`${IngredientDetailsStyle.item}`}>
         <p
           className={`${IngredientDetailsStyle.text} text text_type_main-default text_color_inactive pb-2`}
         >
-          {data.text}
+          {props.text}
         </p>
         <p
           className={`${IngredientDetailsStyle.text} text text_type_main-default text_color_inactive`}
         >
-          {data.value}
+          {props.value}
         </p>
       </li>
     );
-  }
+  };
 
   return (
     <div className={`${IngredientDetailsStyle.wrapper}  pr-25 pb-15 pl-25`}>

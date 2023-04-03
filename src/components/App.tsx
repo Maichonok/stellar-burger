@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../services/models";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 import { Main } from "./Main/Main";
@@ -28,7 +28,8 @@ export const App = () => {
   }, []);
 
   const location = useLocation();
-  const background = location.state && location.state.background;
+  const { state } = location as any;
+  const background = state && state.background;
 
   return (
     <div>

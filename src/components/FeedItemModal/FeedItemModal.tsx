@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import { FeedDetails } from "../FeedDetails/FeedDetails";
 
-export const FeedItemModal = (props) => {
+export const FeedItemModal = () => {
   const history = useHistory();
 
-  const back = (e) => {
+  const back = () => {
     history.goBack();
   };
 

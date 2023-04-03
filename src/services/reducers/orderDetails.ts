@@ -5,18 +5,18 @@ import {
   ORDER_MODAL_OPEN,
   ORDER_MODAL_CLOSE,
 } from "../actions/order";
-import { TOrder, TOrderModal} from "../actions/order";
+import { TOrder, TOrderModal } from "../actions/order";
 
-interface OrderInitialState {
+interface OrderState {
   isLoading: boolean;
-  error: null | boolean;
-  data: { name: string; order: {number: number } };
+  error: string;
+  data: { name: string; order: { number: number } };
   open: boolean;
 }
 
-const INITIAL_STATE: OrderInitialState = {
+const INITIAL_STATE: OrderState = {
   isLoading: false,
-  error: null,
+  error: "",
   data: {
     name: "",
     order: { number: 0 },
@@ -24,12 +24,15 @@ const INITIAL_STATE: OrderInitialState = {
   open: false,
 };
 
-export default function orderDetails(state = INITIAL_STATE, action: TOrder | TOrderModal) {
+export default function orderDetails(
+  state: OrderState = INITIAL_STATE,
+  action: TOrder | TOrderModal
+) {
   switch (action.type) {
     case ORDER_REQUEST: {
       return {
         ...state,
-        error: null,
+        error: "",
         isLoading: true,
       };
     }
@@ -37,7 +40,7 @@ export default function orderDetails(state = INITIAL_STATE, action: TOrder | TOr
       return {
         ...state,
         isLoading: false,
-        error: null,
+        error: "",
         data: action.payload,
       };
     }

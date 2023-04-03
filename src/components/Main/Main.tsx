@@ -1,19 +1,17 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Modal from "../Modal/Modal";
-// import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
-// import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/order";
+
+import { useSelector, useDispatch } from "../../services/models";
 
 import appStyle from "./Main.module.css";
 
 function Main() {
-  // const ingredientModal = useSelector(state => state.ingredientsDetail.open);
   const orderModal = useSelector(state => state.orderDetails.open);
   const isLoading = useSelector(state => state.burgerIngredients.isLoading);
   const error = useSelector(state => state.burgerIngredients.error);

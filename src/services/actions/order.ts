@@ -55,16 +55,19 @@ export const order: AppThunk =
       type: ORDER_REQUEST,
     });
     return orderRequest(ingredients)
-      .then(({ name, order }) => {
+      .then(({ name, order }) =>
         dispatch({
           type: ORDER_SUCCESS,
           payload: { name, order },
-        });
-      })
-      .catch((error) => {
+        })
+      )
+      .catch((error) =>
         dispatch({
           type: ORDER_FAILURE,
           payload: error,
-        });
+        })
+      )
+      .then(() => {
+        dispatch(openOrderModal());
       });
   };

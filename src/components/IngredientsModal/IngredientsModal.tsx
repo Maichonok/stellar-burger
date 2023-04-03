@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 
-export const IngredientsModal = (props) => {
+export const IngredientsModal = () => {
   let history = useHistory();
 
-  let back = (e) => {
+  let back = ():void => {
     history.goBack();
   };
 

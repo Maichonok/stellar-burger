@@ -4,10 +4,10 @@ import { IntlProvider } from "react-intl";
 import Modal from "../Modal/Modal";
 import { OrderInfo } from "../OrderInfo/OrderInfo";
 
-export const ProfileOrderModal = (props) => {
+export const ProfileOrderModal = () => {
   let history = useHistory();
 
-  let back = (e) => {
+  let back = () => {
     history.goBack();
   };
 

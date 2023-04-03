@@ -144,7 +144,9 @@ export interface FetchUserFailure {
 
 export interface SetUser {
   readonly type: typeof SET_USER;
-  payload: User;
+  payload: {
+    [key: number | string]: any;
+  };
 }
 
 export interface SaveUserRequest {
@@ -274,7 +276,9 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
     .catch((e) => dispatch({ type: FETCH_USER_FAILURE, payload: e }));
 };
 
-export const setUserData = (payload: User): TUser => {
+export const setUserData = (payload: {
+  [key: number | string]: any;
+}): TUser => {
   return {
     type: SET_USER,
     payload,

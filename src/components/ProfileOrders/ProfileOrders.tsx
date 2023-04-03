@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/models";
 import { Link, useLocation } from "react-router-dom";
 import {
   wsUserConnectedStart,
@@ -10,22 +10,21 @@ import profileOrdersStyles from "./ProfileOrders.module.css";
 
 export function ProfileOrders() {
   const orders = useSelector((store) => store.wsUserReducer.orders).sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    (a, b): number => +new Date(b.createdAt) - +new Date(a.createdAt)
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(wsUserConnectedStart());
+    dispatch(wsUserConnectedClosed());
   }, []);
-
-  useEffect(() => () => dispatch(wsUserConnectedClosed()), []);
 
   const location = useLocation();
   return (
     <div>
       <ul className={profileOrdersStyles.wrapper}>
-        {orders.map(el => (
+        {orders.map((el) => (
           <li key={el._id}>
             <Link
               to={{
